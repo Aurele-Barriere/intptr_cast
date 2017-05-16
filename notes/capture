@@ -1,0 +1,16 @@
+15/05
+
+Implementing capture on compcert
+capture function
+when casting, from logical to concrete block
+lowering to Clight
+Clight : (int)&x has no side effects (goal)
+inlined?
+currently, nop, no trace
+step semantics in Cexec.v
+explicit and implicit casting
+parenthesis operator?
+simplExpr.v (Compcert C -> Clight)
+
+
+CompCert memory model
