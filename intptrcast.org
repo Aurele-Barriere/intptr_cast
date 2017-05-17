@@ -1,0 +1,12 @@
+* DONE [INTPTR] meeting about the paper (14h)
+  SCHEDULED: <2017-05-17 Wed>
+* TODO [INTPTR] meeting 14h
+  SCHEDULED: <2017-05-18 Thu>
+* TODO [INTPTR][memupdate] semantics update on memory
+  DEADLINE: <2017-05-18 Thu>
+** TODO [INTPTR][memupdate] add p:option Z
+** TODO [INTPTR][memupdate] add consistency
+** TODO [INTPTR][memupdate] add realize/capture
+** TODO [INTPTR][memupdate] add properties of capture
+** TODO [INTPTR]{memupdate] change memory extension
+** TODO [INTPTR][memupdate] change memory injection
