@@ -1,12 +1,46 @@
 * DONE [INTPTR] meeting about the paper (14h)
   SCHEDULED: <2017-05-17 Wed>
-* TODO [INTPTR] meeting 14h
+* DONE [INTPTR] meeting 11h
   SCHEDULED: <2017-05-18 Thu>
 * TODO [INTPTR][memupdate] semantics update on memory
-  DEADLINE: <2017-05-18 Thu>
-** TODO [INTPTR][memupdate] add p:option Z
+  DEADLINE: <2017-05-22 Mon>
+  in [[/home/aurele/intptrcast/CompCert-intptr/common/Memory.v][Memory.v]]
+** DONE [INTPTR][memupdate] add p:option Z
+   called mem_concrete
+   what to do on free? -> don't change it for now. this needs to be discussed.
+   I think alloc should not change mem_concrete. is it right? yes, only cast.
 ** TODO [INTPTR][memupdate] add consistency
-** TODO [INTPTR][memupdate] add realize/capture
+*** DONE [INTPTR][memupdate][consistency] No overlap
+   no overlap: mem -> prop. 
+   no overlap empty.
+   no overlap m -> no overlap (alloc m lo hi) -> DONE (mem_concrete preservation)
+   is this ok? for now, yes
+   would we need some theorem: any "achievable" memory has no overlap?
+*** TODO [INTPTR][memupdate][consistency] First and last address
+   first and last memory address should not be assigned. mem -> prop?
+   finite memory?
+   size of blocks? -> given when performing a capture
+*** TODO [INTPTR][memupdate][consistency] contained in memory
+    address + size < max_memory for each block
+** DONE [INTPTR][memupdate] add realize/capture as a fifth operation
+   when trying to capture an already concrete block,
+   should it raise an error? should it return the same memory?
+
+   Implemented as a Predicate to get the non-determinism of the address.
+   However, I don't know how to get the appropriate size for the concretization.
+
+   In that case, we need the guarantee that, if (allocate m lo hi = (b,m')), then
+   b is never asked for offsets < lo or >= hi.
+
+   Currently, when allocating between lo and hi, all other offsets are set to None permission. 
+   This should be enough to be guaranteed of the above property.
+
+   What should be the initial value of the size? on an empty memory.
+
+   When freeing, should we put it back to 0?
+** TODO [INTPTR][memupdate] fix the proof of memory consistency
 ** TODO [INTPTR][memupdate] add properties of capture
 ** TODO [INTPTR]{memupdate] change memory extension
 ** TODO [INTPTR][memupdate] change memory injection
+* TODO [INTPTR][memupdate] Freeing: on blocks or addresses?
+  issue opened
