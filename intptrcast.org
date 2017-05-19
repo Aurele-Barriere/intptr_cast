@@ -6,49 +6,100 @@
   DEADLINE: <2017-05-22 Mon>
   in [[/home/aurele/intptrcast/CompCert-intptr/common/Memory.v][Memory.v]]
 ** DONE [INTPTR][memupdate] add p:option Z
-   called mem_concrete
-   what to do on free? -> don't change it for now. this needs to be discussed.
-   I think alloc should not change mem_concrete. is it right? yes, only cast.
+   called mem_concrete inside the memory
+
+   Remaining question:
+   Should a call of free set the option back to None or leave it unchanged?
+   It depends on the semantics we want to give to the casting of a freed pointer.
+   
 ** TODO [INTPTR][memupdate] add consistency
+
+   added as a Definition: mem -> Prop
+
 *** DONE [INTPTR][memupdate][consistency] No overlap
-   no overlap: mem -> prop. 
-   no overlap empty.
-   no overlap m -> no overlap (alloc m lo hi) -> DONE (mem_concrete preservation)
-   is this ok? for now, yes
-   would we need some theorem: any "achievable" memory has no overlap?
+
+    I've implemented the simple version of overlap (we don't look inside the blocks the free addresses)
+
+    To define this we need the size of each block.
+    This has been added inside the memory as a field mem_block_size : block -> Z.
+
+    
+    Two questions on the size field:
+    
+        What should be the initial value of the size? on an empty memory.
+    
+	When freeing, should we put it back to 0?
+
 *** DONE [INTPTR][memupdate][consistency] Next block logicals
+    
+    This says that every block after nextblock is a logical block.
+    Because we never want to capture a block that hasn't been allocated.
+    This is need to prove memory_consistency, so it has been added here.
+
 *** TODO [INTPTR][memupdate][consistency] First and last address
-   first and last memory address should not be assigned. -> first DONE
-   finite memory?
+    
+    For now, we only have a property that says that there is no concrete block
+    with concrete address 0.
+    How to deal with last address? At this point, the memory is infinite. 
+
+    Should it be done in a later pass of CompCert? Or right now because we are dealing with real addresses?
+    
 *** TODO [INTPTR][memupdate][consistency] contained in memory
-    address + size < max_memory for each block
+
+    We want to say that no block overflows the memory, i.e
+    forall b, address(b)+size(b) < max_memory.
+    Here again, we need the size of the memory.
+
+    Both of these properties using the max size make memory_consistency preservation hard to prove.
+    
+** DONE [INTPTR][memupdate] Proof of memory consistency
+
+   I have proved that empty is a consistent memory.
+
+   And for every operation in {store,storebytes,alloc,free,perm_drop,capture},
+   I have proved memory_consistency preservation.
+
 ** DONE [INTPTR][memupdate] add realize/capture as a fifth operation
-   when trying to capture an already concrete block,
-   should it raise an error? should it return the same memory?
 
-   Implemented as a Predicate to get the non-determinism of the address.
-   However, I don't know how to get the appropriate size for the concretization.
+   Capture should now be an operation, just like store,alloc,...
+   This has been implemented with a predicate rather than a function,
+   Because the address given to a block while capturing is undeterministic.
+   
+   Questions:
 
-   In that case, we need the guarantee that, if (allocate m lo hi = (b,m')), then
-   b is never asked for offsets < lo or >= hi.
+       When trying to capture an already concrete block, is this a capture?
 
-   Currently, when allocating between lo and hi, all other offsets are set to None permission. 
-   This should be enough to be guaranteed of the above property.
+       One of the hypothesis of the predicate is the memory_consistency preservation. Is that right?
 
-   What should be the initial value of the size? on an empty memory.
-
-   When freeing, should we put it back to 0?
-** DONE [INTPTR][memupdate] fix the proof of memory consistency
 ** TODO [INTPTR][memupdate] add properties of capture
-   done: memory_consistency preservation
+
+   Each operation has a lot of theorems. Some might be useful later.
+   What should we prove for the capture ?
+   DONE : memory_consistency preservation
+
 ** DONE [INTPTR][memupdate] add valid pointer
-   see page 6
+   
+   See page 6, section 4 of the paper.
+
 ** DONE [INTPTR][memupdate] add normalization of pointer (cast2int) and denormalization (cast2ptr)
-   see page 6
-** TODO [INTPTR]{memupdate] change memory extension
+
+   see page 6, section 4 of the paper.
+   The denormalize is a predicate, not a function.
+   Because I can't filter a Map on the Positive numbers.
+
+   Is it ok?
+
+** TODO [INTPTR][memupdate] change memory extension
+
+   This has not been done at all.
+
 ** TODO [INTPTR][memupdate] change memory injection
+
+   This has not been done at all.
+
 * TODO [INTPTR][memupdate] Freeing: on blocks or addresses?
-  issue opened
-  we can add that:
-     if overlapping is more permissive, then the unicity of the denormalization is more complicated:
-       we need to check each address if it is free or not.
+  
+  See the issue on Github.
+  For now, I added a field mem_valid: block -> bool.
+  But I haven't changed the freeing function or anything.
+  
