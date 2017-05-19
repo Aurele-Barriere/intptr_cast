@@ -16,10 +16,10 @@
    no overlap m -> no overlap (alloc m lo hi) -> DONE (mem_concrete preservation)
    is this ok? for now, yes
    would we need some theorem: any "achievable" memory has no overlap?
+*** DONE [INTPTR][memupdate][consistency] Next block logicals
 *** TODO [INTPTR][memupdate][consistency] First and last address
-   first and last memory address should not be assigned. mem -> prop?
+   first and last memory address should not be assigned. -> first DONE
    finite memory?
-   size of blocks? -> given when performing a capture
 *** TODO [INTPTR][memupdate][consistency] contained in memory
     address + size < max_memory for each block
 ** DONE [INTPTR][memupdate] add realize/capture as a fifth operation
@@ -38,9 +38,17 @@
    What should be the initial value of the size? on an empty memory.
 
    When freeing, should we put it back to 0?
-** TODO [INTPTR][memupdate] fix the proof of memory consistency
+** DONE [INTPTR][memupdate] fix the proof of memory consistency
 ** TODO [INTPTR][memupdate] add properties of capture
+   done: memory_consistency preservation
+** DONE [INTPTR][memupdate] add valid pointer
+   see page 6
+** DONE [INTPTR][memupdate] add normalization of pointer (cast2int) and denormalization (cast2ptr)
+   see page 6
 ** TODO [INTPTR]{memupdate] change memory extension
 ** TODO [INTPTR][memupdate] change memory injection
 * TODO [INTPTR][memupdate] Freeing: on blocks or addresses?
   issue opened
+  we can add that:
+     if overlapping is more permissive, then the unicity of the denormalization is more complicated:
+       we need to check each address if it is free or not.
