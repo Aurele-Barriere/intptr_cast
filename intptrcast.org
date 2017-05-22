@@ -3,7 +3,7 @@
 * DONE [INTPTR] meeting 11h
   SCHEDULED: <2017-05-18 Thu>
 * TODO [INTPTR][memupdate] semantics update on memory
-  DEADLINE: <2017-05-22 Mon>
+  DEADLINE: <2017-05-23 Tue>
   in [[/home/aurele/intptrcast/CompCert-intptr/common/Memory.v][Memory.v]]
 ** DONE [INTPTR][memupdate] add p:option Z
    called mem_concrete inside the memory
@@ -13,7 +13,7 @@
    It depends on the semantics we want to give to the casting of a freed pointer.
     -> the current decision is to leave it unchanged
    
-** TODO [INTPTR][memupdate] add consistency
+** DONE [INTPTR][memupdate] add consistency
 
    added as a Definition: mem -> Prop
 
@@ -37,7 +37,7 @@
     Because we never want to capture a block that hasn't been allocated.
     This is need to prove memory_consistency, so it has been added here.
 
-*** TODO [INTPTR][memupdate][consistency] First and last address
+*** DONE [INTPTR][memupdate][consistency] First and last address
     
     For now, we only have a property that says that there is no concrete block
     with concrete address 0.
@@ -45,7 +45,7 @@
 
     Should it be done in a later pass of CompCert? Or right now because we are dealing with real addresses?
     
-*** TODO [INTPTR][memupdate][consistency] contained in memory
+*** DONE [INTPTR][memupdate][consistency] contained in memory
 
     We want to say that no block overflows the memory, i.e
     forall b, address(b)+size(b) < max_memory.
@@ -79,14 +79,37 @@
    What should we prove for the capture ?
    DONE : memory_consistency preservation
 
+   We'll see later.
+
 ** DONE [INTPTR][memupdate] add valid pointer
    
    See page 6, section 4 of the paper.
 
-** TODO [INTPTR][memupdate] remove mem_valid
-** TODO [INTPTR][memupdate] remove size, remember low and high offsets
-** TODO [INTPTR][memupdate] rewrite overlap
-** TODO [INTPTR][memupdate] add memory parameter
+** DONE [INTPTR][memupdate] remove mem_valid
+** DONE [INTPTR][memupdate] rewrite valid_pointer
+** DONE [INTPTR][memupdate] remove size, remember low and high offsets
+   implemented with a field 
+   mem_offset_bounds
+   block -> Z*Z
+** DONE [INTPTR][memupdate] rewrite overlap
+** TODO [INTPTR][memupdate] rewrite consistency proofs
+** TODO [INTPTR][memupdate] rewrite normalize and denormalize
+   With the new block representation (p,lo,hi)
+** DONE [INTPTR][memupdate] add memory parameter
+   I use [if Archi.ptr64 then int64 else int].
+   Is it ok?
+   It seems that [Archi.ptr64] is set to false, will it be changed when compiling for x64?
+
+   Representing the addresses:
+   Either we use the types int and int64, and then for each operation,
+   we must prove they are in the right range.
+   Issues arise because we often add an address and something else (for instance, low offset bound)
+
+   Or we use type Z, and then we add a memory consistency invariant,
+   that says that every concrete address is in the right range.
+   But then we must cast the address from Z to int. Is it ok?
+
+** DONE [INTPTR][memupdate] finish consistency
 ** TODO [INTPTR][memupdate] rewrite with better coq style (no arrows)
 ** DONE [INTPTR][memupdate] add normalization of pointer (cast2int) and denormalization (cast2ptr)
 
@@ -96,6 +119,9 @@
 
    Is it ok?
 
+** TODO [INTPTR][memupdate] null pointer
+   Add it (page 6).
+   Raises undef when storing or loading null pointer.
 ** TODO [INTPTR][memupdate] change memory extension
 
    This has not been done at all.
@@ -104,7 +130,7 @@
 
    This has not been done at all.
 
-* TODO [INTPTR][memupdate] Freeing: on blocks or addresses?
+* DONE [INTPTR][memupdate] Freeing: on blocks or addresses?
   
   See the issue on Github.
   For now, I added a field mem_valid: block -> bool.
@@ -112,3 +138,7 @@
   -> We can free addresses, with permission set to None.
   Then overlapping has to be defined on addresses: 
     foreach address, there is not more than one concrete block in which the address is Freeable.
+    
+* DONE [INTPTR] Check if there are any cases of alloc with lo!=0
+  yes, in cfrontend/Cexec.v
+  Mem.alloc m (- size_chunk Mptr) (Ptrofs.unsigned sz) in
