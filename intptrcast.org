@@ -11,6 +11,7 @@
    Remaining question:
    Should a call of free set the option back to None or leave it unchanged?
    It depends on the semantics we want to give to the casting of a freed pointer.
+    -> the current decision is to leave it unchanged
    
 ** TODO [INTPTR][memupdate] add consistency
 
@@ -26,9 +27,9 @@
     
     Two questions on the size field:
     
-        What should be the initial value of the size? on an empty memory.
+        What should be the initial value of the size? on an empty memory. -> doesn't really matter
     
-	When freeing, should we put it back to 0?
+	When freeing, should we put it back to 0? -> NO
 
 *** DONE [INTPTR][memupdate][consistency] Next block logicals
     
@@ -67,7 +68,8 @@
    
    Questions:
 
-       When trying to capture an already concrete block, is this a capture?
+       When trying to capture an already concrete block, is this a capture? -> Yes, this sould be allowed
+       Maybe sometimes, we'll have to successives capture of the same pointer.
 
        One of the hypothesis of the predicate is the memory_consistency preservation. Is that right?
 
@@ -81,6 +83,11 @@
    
    See page 6, section 4 of the paper.
 
+** TODO [INTPTR][memupdate] remove mem_valid
+** TODO [INTPTR][memupdate] remove size, remember low and high offsets
+** TODO [INTPTR][memupdate] rewrite overlap
+** TODO [INTPTR][memupdate] add memory parameter
+** TODO [INTPTR][memupdate] rewrite with better coq style (no arrows)
 ** DONE [INTPTR][memupdate] add normalization of pointer (cast2int) and denormalization (cast2ptr)
 
    see page 6, section 4 of the paper.
@@ -102,4 +109,6 @@
   See the issue on Github.
   For now, I added a field mem_valid: block -> bool.
   But I haven't changed the freeing function or anything.
-  
+  -> We can free addresses, with permission set to None.
+  Then overlapping has to be defined on addresses: 
+    foreach address, there is not more than one concrete block in which the address is Freeable.
