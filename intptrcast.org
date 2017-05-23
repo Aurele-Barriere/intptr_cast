@@ -3,7 +3,7 @@
 * DONE [INTPTR] meeting 11h
   SCHEDULED: <2017-05-18 Thu>
 * TODO [INTPTR][memupdate] semantics update on memory
-  DEADLINE: <2017-05-23 Tue>
+  DEADLINE: <2017-05-24 Wed>
   in [[/home/aurele/intptrcast/CompCert-intptr/common/Memory.v][Memory.v]]
 ** DONE [INTPTR][memupdate] add p:option Z
    called mem_concrete inside the memory
@@ -92,9 +92,18 @@
    mem_offset_bounds
    block -> Z*Z
 ** DONE [INTPTR][memupdate] rewrite overlap
-** TODO [INTPTR][memupdate] rewrite consistency proofs
-** TODO [INTPTR][memupdate] rewrite normalize and denormalize
+** DONE [INTPTR][memupdate] rewrite consistency proofs
+   
+   Need proofs for alloc
+   
+   And issue:
+   I have zle lo addr, I want to prove lo<=addr.
+   However, zle is {x<=y}+{y>x}. -> DONE
+   
+** DONE [INTPTR][memupdate] rewrite normalize and denormalize
+
    With the new block representation (p,lo,hi)
+
 ** DONE [INTPTR][memupdate] add memory parameter
    I use [if Archi.ptr64 then int64 else int].
    Is it ok?
@@ -122,6 +131,7 @@
 ** TODO [INTPTR][memupdate] null pointer
    Add it (page 6).
    Raises undef when storing or loading null pointer.
+** DONE [INTPTR][memupdate] use Nonempty instead of Readable
 ** TODO [INTPTR][memupdate] change memory extension
 
    This has not been done at all.
