@@ -3,7 +3,7 @@
 * DONE [INTPTR] meeting 11h
   SCHEDULED: <2017-05-18 Thu>
 * TODO [INTPTR][memupdate] semantics update on memory
-  DEADLINE: <2017-05-24 Wed>
+  DEADLINE: <2017-05-25 Thu>
   in [[/home/aurele/intptrcast/CompCert-intptr/common/Memory.v][Memory.v]]
 ** DONE [INTPTR][memupdate] add p:option Z
    called mem_concrete inside the memory
@@ -73,7 +73,7 @@
 
        One of the hypothesis of the predicate is the memory_consistency preservation. Is that right?
 
-** TODO [INTPTR][memupdate] add properties of capture
+** DONE [INTPTR][memupdate] add properties of capture
 
    Each operation has a lot of theorems. Some might be useful later.
    What should we prove for the capture ?
@@ -118,8 +118,26 @@
    that says that every concrete address is in the right range.
    But then we must cast the address from Z to int. Is it ok?
 
-** DONE [INTPTR][memupdate] finish consistency
+** DONE [INTPTR][memupdate] finish consistency proofs
+** DONE [INTPTR][memupdate] pull request
+** TODO [INTPTR][memupdate] put consistency inside of mem'
+** TODO [INTPTR][memupdate] memory size?
+** TODO [INTPTR][memupdate] no let
+** TODO [INTPTR][memupdate] inductive addr_in_concrete_block. inductive consistency
+** TODO [INTPTR][memupdate] name hypothesis in weaker_access
+** TODO [INTPTR][memupdate] remove comment in empty
+** TODO [INTPTR][memupdate] change exists_at_most_one_block
 ** TODO [INTPTR][memupdate] rewrite with better coq style (no arrows)
+   
+   omit forall
+   name hypothesis
+   name goal with << >>
+   props in caps
+   a.(x)
+   exploit
+
+   using Sflib library
+
 ** DONE [INTPTR][memupdate] add normalization of pointer (cast2int) and denormalization (cast2ptr)
 
    see page 6, section 4 of the paper.
