@@ -119,15 +119,28 @@
    But then we must cast the address from Z to int. Is it ok?
 
 ** DONE [INTPTR][memupdate] finish consistency proofs
-** DONE [INTPTR][memupdate] pull request
-** TODO [INTPTR][memupdate] put consistency inside of mem'
-** TODO [INTPTR][memupdate] memory size?
-** TODO [INTPTR][memupdate] no let
-** TODO [INTPTR][memupdate] inductive addr_in_concrete_block. inductive consistency
-** TODO [INTPTR][memupdate] name hypothesis in weaker_access
-** TODO [INTPTR][memupdate] remove comment in empty
-** TODO [INTPTR][memupdate] change exists_at_most_one_block
-** TODO [INTPTR][memupdate] rewrite with better coq style (no arrows)
+** DONE [INTPTR][memupdate][review] pull request
+*** DONE [INTPTR][memupdate][review] put consistency inside of mem'
+*** DONE [INTPTR][memupdate][review] do every obligation
+*** DONE [INTPTR][memupdate][review] memory size?
+    
+    changed it to max_address for now
+    the issue of real memory size should be addressed later
+*** DONE [INTPTR][memupdate][review] no let
+*** DONE [INTPTR][memupdate][review] inductive addr_in_concrete_block. inductive consistency
+*** DONE [INTPTR][memupdate][review] name hypothesis in weaker_access
+*** DONE [INTPTR][memupdate][review] remove comment in empty
+*** DONE [INTPTR][memupdate][review] change exists_at_most_one_block
+*** DONE [INTPTR][memupdate][review] spaces
+*** DONE [INTPTR][memupdate][review] HRANGE instead of HLOW HHIGH
+*** DONE [INTPTR][memupdate][review] remove exists_at_most_one_block
+*** DONE [INTPTR][memupdate][review] addresses_in_range should rely on hi lo rather than address_in_block
+    We'll do it later, if we change our minds regarding the way permissions are given
+
+*** DONE [INTPTR][memupdate][review] rename weaker_access (access_le?)
+*** DONE [INTPTR][memupdate][review] concrete_nextblock needs to be changed
+*** DONE [INTPTR][memupdate][review] double capture
+** DONE [INTPTR][memupdate] rewrite with better coq style (no arrows)
    
    omit forall
    name hypothesis
