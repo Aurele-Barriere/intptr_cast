@@ -168,10 +168,17 @@
 ** TODO [INTPTR][memupdate] null pointer
    Add it (page 6).
    Raises undef when storing or loading null pointer.
+
+   Should we add it as a block and change the definitions of the operations?
+   
 ** DONE [INTPTR][memupdate] use Nonempty instead of Readable
 ** TODO [INTPTR][memupdate] change memory extension
 
-   This has not been done at all.
+   I think the definition should not change when we add the capture
+   It will only change because the definition of mem_inj might change
+   However, how does the capture preserves memory extension?
+
+   We'll see that after we agree on what changes to do to mem_inj, I guess.
 
 ** TODO [INTPTR][memupdate] change memory injection
 
@@ -185,6 +192,23 @@
    Concrete source block must be mapped to concrete logical block.
    Separation between public and private memory?
 
+   Private when exclusively owned by the current function.
+
+   In Memory model, v2, they say that unused local variables are "pulled out of memory".
+
+   Everything under memory injection is public.
+   The rest is private.
+   Look at ec_mem_inject to see how it is dealt with.
+
+   what about integer overflow? and mi_representable?
+   
+   in inject, I think we can add every constraint we want on PUBLIC memory.
+   
+   
+   
+** TODO [INTPTR][memupdate] Definition of max_address
+   This might just be Ptrofs.max_unsigned
+   
 * DONE [INTPTR][memupdate] Freeing: on blocks or addresses?
   
   See the issue on Github.
@@ -197,7 +221,13 @@
 * DONE [INTPTR] Check if there are any cases of alloc with lo!=0
   yes, in cfrontend/Cexec.v
   Mem.alloc m (- size_chunk Mptr) (Ptrofs.unsigned sz) in
-* TODO [INTPTR] Fatal error: out of memory on common/Separation.v
+* DONE [INTPTR] Fatal error: out of memory on common/Separation.v
   firstorder auto fails.
   do the proofs in the older version, and see what auto does,
   then inline the proofs in the new version?
+  
+  info_auto with *.
+  info ...
+  Show Proof.
+  Print thm.
+ 
