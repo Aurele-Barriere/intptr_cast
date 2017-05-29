@@ -3,7 +3,7 @@
 * DONE [INTPTR] meeting 11h
   SCHEDULED: <2017-05-18 Thu>
 * TODO [INTPTR][memupdate] semantics update on memory
-  DEADLINE: <2017-05-25 Thu>
+  DEADLINE: <2017-05-29 Mon>
   in [[/home/aurele/intptrcast/CompCert-intptr/common/Memory.v][Memory.v]]
 ** DONE [INTPTR][memupdate] add p:option Z
    called mem_concrete inside the memory
@@ -13,7 +13,7 @@
    It depends on the semantics we want to give to the casting of a freed pointer.
     -> the current decision is to leave it unchanged
    
-** DONE [INTPTR][memupdate] add consistency
+** DONE [INTPTR][memupdate][consistency] add consistency
 
    added as a Definition: mem -> Prop
 
@@ -140,6 +140,12 @@
 *** DONE [INTPTR][memupdate][review] rename weaker_access (access_le?)
 *** DONE [INTPTR][memupdate][review] concrete_nextblock needs to be changed
 *** DONE [INTPTR][memupdate][review] double capture
+*** DONE [INTPTR][memupdate][review] return offset in addr_in_concrete_block
+*** DONE [INTPTR][memupdate][review] predicate for addr in [p+lo, p+hi[
+*** DONE [INTPTR][memupdate][review] rename m_access
+*** DONE [INTPTR][memupdate][review] use uniqueness for exists_at_most_one
+*** DONE [INTPTR][memupdate][review] change addr_in_block for a pair
+*** DONE [INTPTR][memupdate][review] define range
 ** DONE [INTPTR][memupdate] rewrite with better coq style (no arrows)
    
    omit forall
@@ -151,7 +157,7 @@
 
    using Sflib library
 
-** DONE [INTPTR][memupdate] add normalization of pointer (cast2int) and denormalization (cast2ptr)
+** TODO [INTPTR][memupdate] add normalization of pointer (cast2int) and denormalization (cast2ptr)
 
    see page 6, section 4 of the paper.
    The denormalize is a predicate, not a function.
@@ -170,6 +176,14 @@
 ** TODO [INTPTR][memupdate] change memory injection
 
    This has not been done at all.
+   I don't think there should be an equality between the source's concrete addresses and 
+   the target's concrete addresses.
+   
+   Because we want the memory of x:=0;y:=1 to inject in the memory of 
+   y:=1;x:=0 to allow optimizations, and we have no guarantee on the concrete addresses (no order).
+
+   Concrete source block must be mapped to concrete logical block.
+   Separation between public and private memory?
 
 * DONE [INTPTR][memupdate] Freeing: on blocks or addresses?
   
@@ -183,3 +197,7 @@
 * DONE [INTPTR] Check if there are any cases of alloc with lo!=0
   yes, in cfrontend/Cexec.v
   Mem.alloc m (- size_chunk Mptr) (Ptrofs.unsigned sz) in
+* TODO [INTPTR] Fatal error: out of memory on common/Separation.v
+  firstorder auto fails.
+  do the proofs in the older version, and see what auto does,
+  then inline the proofs in the new version?
