@@ -3,7 +3,7 @@
 * DONE [INTPTR] meeting 11h
   SCHEDULED: <2017-05-18 Thu>
 * TODO [INTPTR][memupdate] semantics update on memory
-  DEADLINE: <2017-05-29 Mon>
+  DEADLINE: <2017-06-01 Thu>
   in [[/home/aurele/intptrcast/CompCert-intptr/common/Memory.v][Memory.v]]
 ** DONE [INTPTR][memupdate] add p:option Z
    called mem_concrete inside the memory
@@ -172,40 +172,61 @@
    Should we add it as a block and change the definitions of the operations?
    
 ** DONE [INTPTR][memupdate] use Nonempty instead of Readable
-** TODO [INTPTR][memupdate] change memory extension
+** DONE [INTPTR][memupdate] change memory extension
 
-   I think the definition should not change when we add the capture
-   It will only change because the definition of mem_inj might change
-   However, how does the capture preserves memory extension?
-
-   We'll see that after we agree on what changes to do to mem_inj, I guess.
-
-** TODO [INTPTR][memupdate] change memory injection
-
-   This has not been done at all.
-   I don't think there should be an equality between the source's concrete addresses and 
-   the target's concrete addresses.
+   We need to add something about mem_concrete in extension.
+   Because if we don't, I don't think we can prove the memory injection preservation.
    
-   Because we want the memory of x:=0;y:=1 to inject in the memory of 
-   y:=1;x:=0 to allow optimizations, and we have no guarantee on the concrete addresses (no order).
+   For now, equality of the fields mem_concrete.
 
-   Concrete source block must be mapped to concrete logical block.
+
+   Then, we need to change magree in Deadcodeproof.v
+
+** DONE [INTPTR][memupdate] change unchanged_on
+   
+   We need to add mem_concrete preservation, for the proof in Separation.v, I think
+   
+** TODO [INTPTR][memupdate][injection] change memory injection
+   
    Separation between public and private memory?
-
    Private when exclusively owned by the current function.
-
    In Memory model, v2, they say that unused local variables are "pulled out of memory".
-
    Everything under memory injection is public.
    The rest is private.
    Look at ec_mem_inject to see how it is dealt with.
-
    what about integer overflow? and mi_representable?
-   
    in inject, I think we can add every constraint we want on PUBLIC memory.
-   
-   
-   
+*** DONE [INTPTR][memupdate][injection] No source concrete and target logical in public
+    I think it should be in either mem_inj or inject.
+    Which one? It depends if we want the property to also hold for memory extension.
+
+
+    mi_source_concrete
+      b1 b2 delta addr
+      (INJECT: f b1 = Some(b2, delta))
+      (CONCRETE: m1.(mem_concrete)#b1 = Some addr):
+      m2.(mem_concrete)#b2 = Some (addr+delta);
+
+      addr+delta to be able to access b1 and b2 with the same indexes. 
+*** DONE [INTPTR][memupdate][injection][proofs] prove the new injection
+**** DONE [INTPTR][memupdate][injection][proofs] Memory.v
+     the two last proofs require a better version of extends
+     extends must preserve the field mem_concrete, I think.
+**** DONE [INTPTR][memupdate][injection][proofs] Separation.v
+     We just need to change the unchanged_on definition to add that mem_concrete is preserved.
+     Then the proof will be ok.
+**** DONE [INTPTR][memupdate][injection][proofs] ValueDomain.v
+**** DONE [INTPTR][memupdate][injection][proofs] Unusedglobproof.v
+     I don't know how to do that.
+*** TODO [INTPTR][memupdate][injection] No source concrete in private
+
+    where is private memory?
+
+*** DONE [INTPTR][memupdate][injection] Concrete addresses equality?
+    The paper says that they must coincide.
+    Isn't equality too strong? I'm not sure.
+
+    I added concrete address equality (with an offset)
 ** TODO [INTPTR][memupdate] Definition of max_address
    This might just be Ptrofs.max_unsigned
    
