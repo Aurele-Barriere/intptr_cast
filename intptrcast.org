@@ -172,7 +172,11 @@
    Should we add it as a block and change the definitions of the operations?
    
 ** DONE [INTPTR][memupdate] use Nonempty instead of Readable
-** DONE [INTPTR][memupdate] change memory extension
+** TODO [INTPTR][meminj] Definition of max_address
+   This might just be Ptrofs.max_unsigned   
+
+* TODO [INTPTR][meminj] Memory Injection
+** DONE [INTPTR][meminj] change memory extension
 
    We need to add something about mem_concrete in extension.
    Because if we don't, I don't think we can prove the memory injection preservation.
@@ -182,11 +186,11 @@
 
    Then, we need to change magree in Deadcodeproof.v
 
-** DONE [INTPTR][memupdate] change unchanged_on
+** DONE [INTPTR][meminj] change unchanged_on
    
    We need to add mem_concrete preservation, for the proof in Separation.v, I think
    
-** TODO [INTPTR][memupdate][injection] change memory injection
+** DONE [INTPTR][meminj] change public memory injection
    
    Separation between public and private memory?
    Private when exclusively owned by the current function.
@@ -196,7 +200,7 @@
    Look at ec_mem_inject to see how it is dealt with.
    what about integer overflow? and mi_representable?
    in inject, I think we can add every constraint we want on PUBLIC memory.
-*** DONE [INTPTR][memupdate][injection] No source concrete and target logical in public
+*** DONE [INTPTR][meminj] No source concrete and target logical in public
     I think it should be in either mem_inj or inject.
     Which one? It depends if we want the property to also hold for memory extension.
 
@@ -208,29 +212,31 @@
       m2.(mem_concrete)#b2 = Some (addr+delta);
 
       addr+delta to be able to access b1 and b2 with the same indexes. 
-*** DONE [INTPTR][memupdate][injection][proofs] prove the new injection
-**** DONE [INTPTR][memupdate][injection][proofs] Memory.v
+*** DONE [INTPTR][meminj][proofs] prove the new injection
+**** DONE [INTPTR][meminj][proofs] Memory.v
      the two last proofs require a better version of extends
      extends must preserve the field mem_concrete, I think.
-**** DONE [INTPTR][memupdate][injection][proofs] Separation.v
+**** DONE [INTPTR][meminj][proofs] Separation.v
      We just need to change the unchanged_on definition to add that mem_concrete is preserved.
      Then the proof will be ok.
-**** DONE [INTPTR][memupdate][injection][proofs] ValueDomain.v
-**** DONE [INTPTR][memupdate][injection][proofs] Unusedglobproof.v
+**** DONE [INTPTR][meminj][proofs] ValueDomain.v
+**** DONE [INTPTR][meminj][proofs] Unusedglobproof.v
      I don't know how to do that.
-*** TODO [INTPTR][memupdate][injection] No source concrete in private
-
-    where is private memory?
-
-*** DONE [INTPTR][memupdate][injection] Concrete addresses equality?
+*** DONE [INTPTR][meminj] Concrete addresses equality?
     The paper says that they must coincide.
     Isn't equality too strong? I'm not sure.
 
     I added concrete address equality (with an offset)
-** TODO [INTPTR][memupdate] Definition of max_address
-   This might just be Ptrofs.max_unsigned
-   
-* DONE [INTPTR][memupdate] Freeing: on blocks or addresses?
+** DONE [INTPTR][meminj] prove memory injection preserved with capture
+** TODO [INTPTR][meminj] No source concrete in private memory
+*** DONE [INTPTR][meminj] change inject'
+
+    The blocks that are mapped to None with the mem injection.
+    We must say that if a block is mapped to None, then it is logical.
+    This should be added in inject'.
+    
+*** TODO [INTPTR][meminj] proofs
+* DONE [INTPTR] Freeing: on blocks or addresses?
   
   See the issue on Github.
   For now, I added a field mem_valid: block -> bool.
