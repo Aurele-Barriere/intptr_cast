@@ -236,6 +236,11 @@
     This should be added in inject'.
     
 *** TODO [INTPTR][meminj] proofs
+**** DONE [INTPTR][meminj][proofs] Memory.v
+**** DONE [INTPTR][meminj][proofs] Separation.v
+**** TODO [INTPTR][meminj][proofs] ValueDomain.v
+     I think we need to change mmatch
+**** DONE [INTPTR][meminj][proofs] Unusedglobproof.v
 * DONE [INTPTR] Freeing: on blocks or addresses?
   
   See the issue on Github.
