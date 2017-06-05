@@ -3,7 +3,7 @@
 * DONE [INTPTR] meeting 11h
   SCHEDULED: <2017-05-18 Thu>
 * TODO [INTPTR][memupdate] semantics update on memory
-  DEADLINE: <2017-06-01 Thu>
+  DEADLINE: <2017-06-05 Mon>
   in [[/home/aurele/intptrcast/CompCert-intptr/common/Memory.v][Memory.v]]
 ** DONE [INTPTR][memupdate] add p:option Z
    called mem_concrete inside the memory
@@ -186,10 +186,18 @@
 
    Then, we need to change magree in Deadcodeproof.v
 
-** DONE [INTPTR][meminj] change unchanged_on
+** TODO [INTPTR][meminj] change unchanged_on
    
-   We need to add mem_concrete preservation, for the proof in Separation.v, I think
+   We need to add mem_concrete preservation, for the proof in Separation.v.
+ 
+   If there is any address in a block such that P b ofs, then concrete#b must be preserved?
+
+   Is it different for logical and concrete blocks?
+   For logical blocks, any ofs such that P b ofs means concrete preservation.
+   For concrete blocks, the offset must be correponding to a real, used address of this block (see permissions)
    
+   But anyway, this will be used for loc_unmapped, whoch does not depend on the offset.
+
 ** DONE [INTPTR][meminj] change public memory injection
    
    Separation between public and private memory?
@@ -239,7 +247,10 @@
 **** DONE [INTPTR][meminj][proofs] Memory.v
 **** DONE [INTPTR][meminj][proofs] Separation.v
 **** TODO [INTPTR][meminj][proofs] ValueDomain.v
-     I think we need to change mmatch
+     I think we need to change mmatch.
+     Or mmatch_inj.
+
+     Neither worked. I don't know what to do.
 **** DONE [INTPTR][meminj][proofs] Unusedglobproof.v
 * DONE [INTPTR] Freeing: on blocks or addresses?
   
@@ -263,3 +274,7 @@
   Show Proof.
   Print thm.
  
+* TODO [INTPTR][sem] Capture semantics
+** TODO [INTPTR][sem] implement extcall_capture_sem
+*** TODO [INTPTR][sem] what should be the return value of a capture?
+** TODO [INTPTR][sem] prove extcall_capture_ok
