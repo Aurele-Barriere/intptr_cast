@@ -2,7 +2,7 @@
   SCHEDULED: <2017-05-17 Wed>
 * DONE [INTPTR] meeting 11h
   SCHEDULED: <2017-05-18 Thu>
-* TODO [INTPTR][memupdate] semantics update on memory
+* DONE [INTPTR][memupdate] semantics update on memory
   DEADLINE: <2017-06-05 Mon>
   in [[/home/aurele/intptrcast/CompCert-intptr/common/Memory.v][Memory.v]]
 ** DONE [INTPTR][memupdate] add p:option Z
@@ -157,24 +157,7 @@
 
    using Sflib library
 
-** TODO [INTPTR][memupdate] add normalization of pointer (cast2int) and denormalization (cast2ptr)
-
-   see page 6, section 4 of the paper.
-   The denormalize is a predicate, not a function.
-   Because I can't filter a Map on the Positive numbers.
-
-   Is it ok?
-
-** TODO [INTPTR][memupdate] null pointer
-   Add it (page 6).
-   Raises undef when storing or loading null pointer.
-
-   Should we add it as a block and change the definitions of the operations?
-   
 ** DONE [INTPTR][memupdate] use Nonempty instead of Readable
-** TODO [INTPTR][meminj] Definition of max_address
-   This might just be Ptrofs.max_unsigned   
-
 * TODO [INTPTR][meminj] Memory Injection
 ** DONE [INTPTR][meminj] change memory extension
 
@@ -186,7 +169,7 @@
 
    Then, we need to change magree in Deadcodeproof.v
 
-** TODO [INTPTR][meminj] change unchanged_on
+** DONE [INTPTR][meminj] change unchanged_on
    
    We need to add mem_concrete preservation, for the proof in Separation.v.
  
@@ -196,7 +179,35 @@
    For logical blocks, any ofs such that P b ofs means concrete preservation.
    For concrete blocks, the offset must be correponding to a real, used address of this block (see permissions)
    
-   But anyway, this will be used for loc_unmapped, whoch does not depend on the offset.
+   But anyway, this will be used for loc_unmapped, which does not depend on the offset.
+
+   There is a problem in minjection (in Separation.v).
+   The image is restricted to the map of blocks that have a permission.
+   Why?
+
+** TODO [INTPTR][meminj] freed or non-declared distinction
+   Change the distinction between usable and not usable addresses that is made using permission.
+   Because it does not distinguish addresses that have never been allocated, and those that have been freed.
+   I think we should make the difference, because using a freed pointer has real use cases.
+   I think that this difference can be found by looking at the offset_bounds field that we added.
+
+   Then, in the definition of mi_source_concrete, we would state mem_concrete preservation only 
+   for the addresses in the right range.
+   And in the minjection, the image of an injection should use th same definition.
+   Then minjection obligation should be provable, and other results should be too.
+   Those proofs are alloc_parallel_rule and exteral_call_parrallel_rule.
+
+   Stackingproof.v should not have any problem, because it hadn't when the definition of minjection was larger.
+*** DONE [INTPTR][meminj][free] Summary of discussion
+*** TODO [INTPTR][meminj][free] Read Separation.v with more on Separation logic
+    try to see if the choice to enlarge the image to freed addresses is sound
+*** TODO [INTPTR][meminj][free] Replace the definition of minjection
+    Try to do it without changing mi_source_concrete at first.
+    We should replace the perm m1... with in_range ofs m1 lo hi...
+
+    Then we'll see if it is needed.
+    If it is, it should look like:
+    (PERM: exists ofs, perm m1 b1 ofs Max Nonempty)
 
 ** DONE [INTPTR][meminj] change public memory injection
    
@@ -247,10 +258,8 @@
 **** DONE [INTPTR][meminj][proofs] Memory.v
 **** DONE [INTPTR][meminj][proofs] Separation.v
 **** TODO [INTPTR][meminj][proofs] ValueDomain.v
-     I think we need to change mmatch.
-     Or mmatch_inj.
+     Change the footprint
 
-     Neither worked. I don't know what to do.
 **** DONE [INTPTR][meminj][proofs] Unusedglobproof.v
 * DONE [INTPTR] Freeing: on blocks or addresses?
   
@@ -278,3 +287,20 @@
 ** TODO [INTPTR][sem] implement extcall_capture_sem
 *** TODO [INTPTR][sem] what should be the return value of a capture?
 ** TODO [INTPTR][sem] prove extcall_capture_ok
+* TODO [INTPTR] add normalization of pointer (cast2int) and denormalization (cast2ptr)
+
+  see page 6, section 4 of the paper.
+  The denormalize is a predicate, not a function.
+  Because I can't filter a Map on the Positive numbers.
+
+  Is it ok?
+
+* TODO [INTPTR] null pointer
+  Add it (page 6).
+  Raises undef when storing or loading null pointer.
+
+  Should we add it as a block and change the definitions of the operations?
+   
+* TODO [INTPTR] Definition of max_address
+  This might just be Ptrofs.max_unsigned   
+
