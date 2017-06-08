@@ -199,8 +199,17 @@
 
    Stackingproof.v should not have any problem, because it hadn't when the definition of minjection was larger.
 *** DONE [INTPTR][meminj][free] Summary of discussion
-*** TODO [INTPTR][meminj][free] Read Separation.v with more on Separation logic
+*** DONE [INTPTR][meminj][free] Read Separation.v with more on Separation logic
     try to see if the choice to enlarge the image to freed addresses is sound
+*** TODO [INTPTR][meminj][free] Add offset_bounds preservation to unchanged_on
+    I'm not sure.
+*** TODO [INTPTR][meminj][free] Add memory consistency
+    Mem.perm m0 b1 ofs k p -> in_range ofs (m0.offset_bounds#b1)
+    With this, we will be able to prove the obligation with the new definition.
+
+    2 obligagtions left.
+    They are true.
+
 *** TODO [INTPTR][meminj][free] Replace the definition of minjection
     Try to do it without changing mi_source_concrete at first.
     We should replace the perm m1... with in_range ofs m1 lo hi...
@@ -208,6 +217,15 @@
     Then we'll see if it is needed.
     If it is, it should look like:
     (PERM: exists ofs, perm m1 b1 ofs Max Nonempty)
+
+    I think it is not needed if we can prove that no block is allocated with size 0.
+    Maybe this can be added as an hypothesis to mi_source_concrete
+    (SIZE: snd(offset_bounds b) - fst(offset_bounds b) > 0)
+    
+    Then we can map a concrete, 0 block to a logical one.
+    Is this an issue?
+
+    It has ben changed, now doing the proofs.
 
 ** DONE [INTPTR][meminj] change public memory injection
    
@@ -258,7 +276,6 @@
 **** DONE [INTPTR][meminj][proofs] Memory.v
 **** DONE [INTPTR][meminj][proofs] Separation.v
 **** TODO [INTPTR][meminj][proofs] ValueDomain.v
-     Change the footprint
 
 **** DONE [INTPTR][meminj][proofs] Unusedglobproof.v
 * DONE [INTPTR] Freeing: on blocks or addresses?
