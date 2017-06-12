@@ -1,0 +1,48 @@
+More on this issue.
+
+There is still the issue of empty blocks, in the current version.
+I think we can agree that one of the three definitions must be changed:
+  Mem.inject, Mem.unchanged_on or the footprint of minjection.
+  Or maybe the theorem alloc_parallel_rule?
+
+
+
+- Mem.inject.
+  I don't like changing the injection.
+  I think that the current definition is good.
+  Regarding concrete blocks, it simply says that no concrete block can be mapped to a logical block.
+  No distinction is made for empty blocks, or freed blocks... And I think that this is good.
+
+
+- Mem.unchanged_on
+  (Please do not consider the unchanged_bounds predicate, I added it very recently and I think that it needs some reformulation. Right now, it is too strong, we should only say that if an address in within range in the before memory, then it is within range as well in the after memory. However, it has never been used in any proof for now s I think we can just disregard it for now).
+  I think that we need to agree on the intuitive definition of unchanged_on.
+  This is a very 'address-wise' definition, meaning that the predicate of unchanged concerns addresses, not blocks.
+  I think that `unchanged_on P m1 m2` should intuitively mean: 'm2 can be obtained from m1, but without the rights to modify in any way the set of addresses described by P'.
+  In that sense, I think we should keep the current definition.
+
+  If we tried to make it stronger, for instance by adding, as suggested before, that empty blocks are preserved, I think we will lose this meaning.
+  If we tried to make it weaker, we would the property that, if `P b ofs`, then the concrete address of `(b,ofs)` is the same in m1 and m2.
+
+  So I think we should keep the current definition (only changing the unchanged_bounds part).
+
+
+
+  No, we change it. We remove unchanged_bounds. And in unchanged_concrete, it should not depend on P. in m_before, if a block is concrete, it keeps the same address after the external call.
+
+
+
+
+
+
+
+
+- The footprint of minjection
+  With the current definitions of unchanged_on and inject, the definition is false (see counter-example above with empty blocks).
+  I think that a correct definition would be the following:
+    `fun b ofs => exists b0 delta addr, j b0 = (Some(b, delta) /\ Mem.in_range (ofs-delta) (m0.(Mem.mem_offset_bounds)#b0))   \/   (m0.(Mem.mem_concrete)#b0 = Some addr)`
+    Add concrete blocks or empty blocks?
+    
+
+  Compared to the previous definition, we add that if you want the injection between m0 and m to be preserved, you cannot touch in m the image of the concrete blocks of m0.
+  This would solve the previous counterexample with empty blocks, and I think it is still enough to prove the other properties.

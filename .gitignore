@@ -7,3 +7,5 @@ CompCert-3.0.1
 CompCert-3.0.1.zip
 memalloc
 save
+test
+add_capture

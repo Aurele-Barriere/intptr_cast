@@ -185,7 +185,7 @@
    The image is restricted to the map of blocks that have a permission.
    Why?
 
-** TODO [INTPTR][meminj] freed or non-declared distinction
+** DONE [INTPTR][meminj] freed or non-declared distinction
    Change the distinction between usable and not usable addresses that is made using permission.
    Because it does not distinguish addresses that have never been allocated, and those that have been freed.
    I think we should make the difference, because using a freed pointer has real use cases.
@@ -201,16 +201,13 @@
 *** DONE [INTPTR][meminj][free] Summary of discussion
 *** DONE [INTPTR][meminj][free] Read Separation.v with more on Separation logic
     try to see if the choice to enlarge the image to freed addresses is sound
-*** TODO [INTPTR][meminj][free] Add offset_bounds preservation to unchanged_on
+*** DONE [INTPTR][meminj][free] Add offset_bounds preservation to unchanged_on
     I'm not sure.
-*** TODO [INTPTR][meminj][free] Add memory consistency
+*** DONE [INTPTR][meminj][free] Add memory consistency
     Mem.perm m0 b1 ofs k p -> in_range ofs (m0.offset_bounds#b1)
     With this, we will be able to prove the obligation with the new definition.
 
-    2 obligagtions left.
-    They are true.
-
-*** TODO [INTPTR][meminj][free] Replace the definition of minjection
+*** DONE [INTPTR][meminj][free] Replace the definition of minjection
     Try to do it without changing mi_source_concrete at first.
     We should replace the perm m1... with in_range ofs m1 lo hi...
 
@@ -226,6 +223,15 @@
     Is this an issue?
 
     It has ben changed, now doing the proofs.
+
+*** DONE [INTPTR][meminj][free] Change extcall_properties
+    Add one property saying that external calls cannot decrease the bounds.
+    This is not needed for now.
+
+*** DONE [INTPTR][meminj][free] Handle the case of empty blocks
+    Either by adding an hypothesis in inject, or by changing unchanged_on, I think.
+    This is why the obligation in Sepration.v is Admitted, I cannot find one 'good' address.
+    This has been handled with the new unchanged_on predicate, with concrete blocks preservation.
 
 ** DONE [INTPTR][meminj] change public memory injection
    
@@ -276,6 +282,28 @@
 **** DONE [INTPTR][meminj][proofs] Memory.v
 **** DONE [INTPTR][meminj][proofs] Separation.v
 **** TODO [INTPTR][meminj][proofs] ValueDomain.v
+     BCinvalid?
+     mmatch theorems.
+
+     Since I've added the memory injection constraint saying that there can be no concrete source private block,
+     there is one failing proof: mmatch_inj.
+     This is located in backend/ValueDomain.v, where they try to prove a memory injection between a memory and itself,
+     using the function inj_of_bc, which maps the block classified 'BCinvalid' to None.
+
+     But I have no guarantee that BCinvalid blocks are logical, so I cannot prove the theorem.
+
+     The reading of ValueDomain.v and ValueAnalysis.v lets me believe that BCinvalid blocks are
+     - either previous stacks that get hidden when doing a privat function call
+     - either blocks that haven't been defined yet.
+       (even though, I don't have a theorem to say it)
+
+     In the second case, these blocks will be logical. In the first case, I don't know.
+
+     The mmatch_inj theorem is used only in external_call_match.
+     This is because we need the injection to use the theorem external_call_mem_inject in Events.v
+
+     Changing inj_of_bc might seem like a solution, but it would make the theorem inj_of_bc_inv false 
+     and it is used in many places.
 
 **** DONE [INTPTR][meminj][proofs] Unusedglobproof.v
 * DONE [INTPTR] Freeing: on blocks or addresses?
@@ -301,17 +329,27 @@
   Print thm.
  
 * TODO [INTPTR][sem] Capture semantics
+** TODO [INTPTR][sem] Determinism of capture
+   This should remain non-deterministic.
+   Then we will not have all the deterministic theorems.
+   -> Mixed Bisimulations.
+
+** TODO [INTPTR][sem] Change no op
+   Define it with predicate?
+   Use Mem.capture
+
 ** TODO [INTPTR][sem] implement extcall_capture_sem
 *** TODO [INTPTR][sem] what should be the return value of a capture?
-** TODO [INTPTR][sem] prove extcall_capture_ok
-* TODO [INTPTR] add normalization of pointer (cast2int) and denormalization (cast2ptr)
+*** TODO [INTPTR][sem] prove extcall_capture_ok
+** TODO [INTPTR][sem] add normalization of pointer (cast2int) and denormalization (cast2ptr)
 
-  see page 6, section 4 of the paper.
-  The denormalize is a predicate, not a function.
-  Because I can't filter a Map on the Positive numbers.
+   see page 6, section 4 of the paper.
+   The denormalize is a predicate, not a function.
+   Because I can't filter a Map on the Positive numbers.
 
-  Is it ok?
+   Is it ok?
 
+** TODO [INTPTR][sem] add cast semantics
 * TODO [INTPTR] null pointer
   Add it (page 6).
   Raises undef when storing or loading null pointer.
