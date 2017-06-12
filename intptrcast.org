@@ -329,18 +329,16 @@
   Print thm.
  
 * TODO [INTPTR][sem] Capture semantics
-** TODO [INTPTR][sem] Determinism of capture
+** DONE [INTPTR][sem] Determinism of capture?
    This should remain non-deterministic.
    Then we will not have all the deterministic theorems.
    -> Mixed Bisimulations.
 
-** TODO [INTPTR][sem] Change no op
-   Define it with predicate?
-   Use Mem.capture
-
-** TODO [INTPTR][sem] implement extcall_capture_sem
-*** TODO [INTPTR][sem] what should be the return value of a capture?
+** DONE [INTPTR][sem] implement extcall_capture_sem
+*** DONE [INTPTR][sem] what should be the return value of a capture?
+    Vundef, like free, I think
 *** TODO [INTPTR][sem] prove extcall_capture_ok
+    two subproofs left
 ** TODO [INTPTR][sem] add normalization of pointer (cast2int) and denormalization (cast2ptr)
 
    see page 6, section 4 of the paper.
