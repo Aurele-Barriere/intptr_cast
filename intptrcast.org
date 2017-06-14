@@ -304,7 +304,18 @@
 
      Changing inj_of_bc might seem like a solution, but it would make the theorem inj_of_bc_inv false 
      and it is used in many places.
-
+***** DONE [INTPTR][meminj][proofs][abstract] Change stack_soundness
+      add that the stack should be logical for private calls
+      No, just mmatch and bc sp = BCinvalid should be enough
+***** TODO [INTPTR][meminj][proofs][abstract] Add abstract concrete in amem
+      with an abstract boolean?
+      only one, for the stack frame
+***** TODO [INTPTR][meminj][proofs][abstract] Change analyze_call
+      if the stack might be concrete, then we should be doing public call?
+***** DONE [INTPTR][meminj][proofs][abstract] Add property invalid_logical bc m
+      This should be added inside mmatch
+***** TODO [INTPTR][meminj][proofs][abstract] Show preservation of invalid_logical
+      Two fails: external calls, and soundness of private calls
 **** DONE [INTPTR][meminj][proofs] Unusedglobproof.v
 * DONE [INTPTR] Freeing: on blocks or addresses?
   
@@ -338,7 +349,14 @@
 *** DONE [INTPTR][sem] what should be the return value of a capture?
     Vundef, like free, I think
 *** TODO [INTPTR][sem] prove extcall_capture_ok
-    two subproofs left
+**** TODO [INTPTR][sem][extcall_properties] ec_mem_inject
+     This predicate should be changed using mixed simulations
+**** TODO [INTPTR][sem][extcall_properties] ec_mem_extends
+     Same thing.
+     I don't think this one is true right now. We don't know if there exists a memory 
+     such that it is the result of the capture.
+     Since the extended memory can be bigger, maybe it can take all of the concrete memory?
+     And then we can't capture the block.
 ** TODO [INTPTR][sem] add normalization of pointer (cast2int) and denormalization (cast2ptr)
 
    see page 6, section 4 of the paper.
