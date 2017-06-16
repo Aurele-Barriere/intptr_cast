@@ -1,0 +1,200 @@
+
+%  http://tex.stackexchange.com/questions/46434/how-to-highlight-text-formals-with-tikz
+\makeatletter
+%
+% Highlighter code
+%
+
+\tikzset{%
+  remember picture with id/.style={%
+    remember picture,
+    overlay,
+    save picture id=#1,
+  },
+  save picture id/.code={%
+    \edef\pgf@temp{#1}%
+    \immediate\write\pgfutil@auxout{%
+      \noexpand\savepointas{\pgf@temp}{\pgfpictureid}}%
+  }
+}
+
+\def\savepointas#1#2{%
+  \expandafter\gdef\csname save@pt@#1\endcsname{#2}%
+}
+
+\tikzdeclarecoordinatesystem{pic}{%
+  \@ifundefined{save@pt@#1}{%
+    \pgfpointorigin
+  }{%
+  \pgfsys@getposition{\csname save@pt@#1\endcsname}\save@orig@pic%
+  \pgfsys@getposition{\pgfpictureid}\save@this@pic%
+  \pgf@process{\pgfpointorigin\save@this@pic}%
+  \pgf@xa=\pgf@x
+  \pgf@ya=\pgf@y
+  \pgf@process{\pgfpointorigin\save@orig@pic}%
+  \advance\pgf@x by -\pgf@xa
+  \advance\pgf@y by -\pgf@ya
+  }%
+}
+
+\newcounter{highlight}
+\newcommand{\hlstart}{\tikz[remember picture with id=hlstart\the\value{highlight},baseline=-0.7ex];\hl@start}
+\newcommand{\hlend}{\tikz[remember picture with id=hlend\the\value{highlight},baseline=-0.7ex];\hl@end\stepcounter{highlight}}
+\newcommand{\fdstart}{\tikz[remember picture with id=hlstart\the\value{highlight},baseline=-0.7ex];\fd@start}
+\newcommand{\fdend}{\tikz[remember picture with id=hlend\the\value{highlight},baseline=-0.7ex];\fd@end\stepcounter{highlight}}
+\newcommand{\vlstart}{\tikz[remember picture with id=hlstart\the\value{highlight},baseline=-1em];\vl@start}
+\newcommand{\vlend}{\tikz[remember picture with id=hlend\the\value{highlight},baseline=0.3ex];\vl@end\stepcounter{highlight}}
+
+\newcommand{\hl@start}[1][]{%
+  \hl@draw{highlighter}{#1}{\the\value{highlight}}}
+
+\newcommand{\hl@end}{}
+
+\newcommand{\fd@start}[1][]{%
+  \def\fd@args{#1}}
+
+\newcommand{\fd@end}{\def\@tempa{\hl@draw{fader}}\expandafter\@tempa\expandafter{\fd@args}{\the\value{highlight}}\def\fd@args{}}
+
+\newcommand{\vl@start}[1][]{%
+  \vl@draw{highlighter}{#1}{\the\value{highlight}}}
+
+\newcommand{\vl@end}{}
+
+
+\def\hl@sets{%
+  \edef\hl@sx{\the\pgf@x}%
+  \edef\hl@sy{\the\pgf@y}%
+}
+\def\hl@sete{%
+  \edef\hl@ex{\the\pgf@x}%
+  \edef\hl@ey{\the\pgf@y}%
+}
+
+\@ifclassloaded{beamer}{
+
+\def\page@node{
+  \path (current page.south east)
+      ++(-\beamer@rightmargin,\footheight)
+  node[
+    minimum width=\textwidth,
+    minimum height=\textheight,
+    anchor=south east
+  ] (page) {};
+}
+
+}{
+
+  \def\page@node{
+    \path (current page.north west)
+    ++(\hoffset + 1in + \oddsidemargin + \leftskip,\voffset + 1in + \topmargin + \headheight + \headsep)
+    node[
+      minimum width=\textwidth - \leftskip - \rightskip,
+      minimum height=\textheight,
+      anchor=north west
+    ] (page) {};
+  }
+
+}
+
+\newcommand{\hl@draw}[3]{%
+  \begin{tikzpicture}[remember picture,overlay]%
+  \page@node
+  \tikzset{#2,highlight=#1,every path/.append style={highlight=#1}}%
+  \pgfmathsetlengthmacro{\hl@width}{\the\pgflinewidth - 1pt}%
+  \coordinate (hlstart) at (pic cs:hlstart#3);
+  \coordinate (hlend) at (pic cs:hlend#3);
+  \tikz@scan@one@point\hl@sets(pic cs:hlstart#3)
+  \tikz@scan@one@point\hl@sete(pic cs:hlend#3)
+  \ifdim\hl@sy=\hl@ey\relax
+  \draw (hlstart) -- (hlend);
+  \else
+  \draw (hlstart) -- (hlstart -| page.east);
+  \pgfmathsetlengthmacro{\hl@sy}{\hl@sy -\hl@width}%
+  \pgfmathsetlengthmacro{\hl@ey}{\hl@ey +\hl@width}%
+  \loop\ifdim\hl@sy>\hl@ey\relax
+  \draw (0,\hl@sy -| page.west) -- (0,\hl@sy -| page.east);
+  \pgfmathsetlengthmacro{\hl@sy}{\hl@sy -\hl@width}%
+  \repeat
+  \draw (hlend -| page.west) -- (hlend);
+  \fi
+  \end{tikzpicture}%
+}
+
+\newcommand{\vl@draw}[3]{%
+  \begin{tikzpicture}[remember picture,overlay]%
+  \page@node
+  \tikzset{#2,highlight=#1,every path/.append style={highlight=#1}}%
+  \pgfmathsetlengthmacro{\hl@width}{\the\pgflinewidth - 1pt}%
+  \coordinate (hlstart) at (pic cs:hlstart#3);
+  \coordinate (hlend) at (pic cs:hlend#3);
+  \tikz@scan@one@point\hl@sets(pic cs:hlstart#3)
+  \tikz@scan@one@point\hl@sete(pic cs:hlend#3)
+  \ifdim\hl@sx=\hl@ex\relax
+  \draw (hlstart) -- (hlend);
+  \else
+  \draw (hlstart) -- (hlstart |- page.south);
+  \pgfmathsetlengthmacro{\hl@sx}{\hl@sx -\hl@width}%
+  \pgfmathsetlengthmacro{\hl@ex}{\hl@ex +\hl@width}%
+  \loop\ifdim\hl@sx>\hl@ex\relax
+  \draw (\hl@sx,0 |- page.north) -- (\hl@sx,0 |- page.south);
+  \pgfmathsetlengthmacro{\hl@sx}{\hl@sx -\hl@width}%
+  \repeat
+  \draw (hlend |- page.north) -- (hlend);
+  \fi
+  \end{tikzpicture}%
+}
+
+\tikzset{%
+  highlight/.default=highlighter,
+  highlight/.style={
+    color=\pgfkeysvalueof{/tikz/#1 colour},
+    line width=\pgfkeysvalueof{/tikz/#1 width},
+    line cap=\pgfkeysvalueof{/tikz/#1 cap},
+    opacity=\pgfkeysvalueof{/tikz/#1 opacity},
+  },
+  highlighter colour/.initial=yellow,
+  highlighter width/.initial=14pt,% <-- Tweak (was 12pt)
+  highlighter cap/.initial=butt,
+  highlighter opacity/.initial=1,
+  fader colour/.initial=gray,
+  fader width/.initial=12pt,
+  fader cap/.initial=butt,
+  fader opacity/.initial=.5,
+}
+
+
+
+\@ifclassloaded{beamer}{
+
+%% Beamer variants
+
+\setbeamercolor{highlighted text}{bg=yellow}
+\setbeamercolor{faded text}{fg=gray}
+
+\newcommand<>{\highlight}[2][]{%
+  \only#3{\hlstart[#1]}#2\only#3{\hlend}}
+
+\newcommand<>{\fade}[2][]{%
+  \only#3{\fdstart[#1]}#2\only#3{\fdend}}
+
+\newcommand<>{\vhighlight}[2][]{%
+  \only#3{\vlstart[#1]}#2\only#3{\vlend}}
+
+}{
+
+\newcommand{\highlight}[2][]{%
+\hlstart[#1]#2\hlend}
+
+\newcommand{\fade}[2][]{%
+\fdstart[#1]#2\fdend}
+
+\newcommand{\vhighlight}[2][]{%
+\vlstart[#1]#2\vlend}
+
+}
+
+
+\newcommand{\diam}[1]{\!<\!\!#1\!\!>\!}
+
+\newcommand{\dlenv}[1]{\lightenv{basicGreen}{#1}}
+\newcommand{\slenv}[1]{\lightenv{basicCyan}{#1}}

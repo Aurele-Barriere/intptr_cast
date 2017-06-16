@@ -1,0 +1,63 @@
+\documentclass[page number]{beamer}
+\usepackage{etex}
+\usepackage{graphicx, booktabs} % For tabulars
+\usepackage{pgf,tikz}
+\usepackage{ulem}
+\usetikzlibrary{arrows}
+\usetikzlibrary{positioning,shapes,fit}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{multicol}
+\usepackage{syntax}
+\usepackage{xcolor, color, colortbl}
+\usepackage{tikz-qtree}
+\usepackage{listings}
+
+\input{style}
+
+\makeatletter
+\input{cmds}
+\makeatother
+
+\setcounter{tocdepth}{1} % remove subsection from table of contents
+
+%counting frames
+\newcommand{\backupbegin}{
+   \newcounter{framenumberappendix}
+   \setcounter{framenumberappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \addtocounter{framenumberappendix}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{framenumberappendix}}
+}
+
+
+\begin{document}
+\title[Int-Ptr casts in CompCert]{Implementing a memory model supporting int-ptr casts in CompCert}
+
+
+\author{Aur\`ele Barri\`ere}
+
+
+\def\outline{
+  \begin{frame}
+    \frametitle{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{frame}[plain]
+  \titlepage%
+\end{frame}
+
+\begin{frame}{testframe}
+  Test Frame
+  \begin{block}{Test block}
+    \begin{itemize}
+    \item item1
+    \item item2
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,112 @@
+\setbeamertemplate{navigation symbols}{}
+\beamertemplatenavigationsymbolsempty% remove navigation bar
+
+\definecolor{basicBlue}{HTML}{297FB8} % #297FB8
+\definecolor{basicCyan}{HTML}{16A086} % #16A086
+\definecolor{basicGreen}{HTML}{9BBB58} % #9BBB58
+\definecolor{basicRed}{HTML}{C1392B} % #C1392B
+
+\colorlet{darkBlue}{basicBlue!70!black}
+\colorlet{darkCyan}{basicCyan!80!black}
+\colorlet{darkGreen}{basicGreen!80!black}
+
+\setbeamercolor{titlelike}{fg=darkBlue}
+\setbeamercolor{separation line}{fg=basicGreen}
+\setbeamercolor{local structure}{fg=basicBlue}
+\setbeamercolor{section in toc}{fg=darkBlue}
+\setbeamercolor{block title}{fg=darkCyan!60!black, bg=darkCyan!20}
+\setbeamercolor{block body}{bg=darkCyan!10}
+\setbeamercolor{block title example}{fg=darkGreen!60!black, bg=darkGreen!20}
+\setbeamercolor{block body example}{bg=darkGreen!10}
+\setbeamercolor{block title alerted}{fg=basicRed!50!black, bg=basicRed!20}
+\setbeamercolor{block body alerted}{bg=basicRed!10}
+\setbeamercolor{section in head/foot}{bg=basicBlue!60!black, fg=white}
+
+
+
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+\setbeamertemplate{headline}{
+  \begin{beamercolorbox}[ht=12pt]{section in head/foot}
+    \insertsectionnavigationhorizontal{.5\textwidth}{\hskip5pt }{}
+    \vspace{2pt}
+  \end{beamercolorbox}%
+}
+
+\setbeamertemplate{footline}{
+
+  \begin{beamercolorbox}[ht=10pt]{section in head/foot}
+
+      \raisebox{2pt}[0pt][0pt] {
+        \makebox[0.5\textwidth][l]{\hskip10pt \insertshorttitle}%
+        \makebox[0.5\textwidth][r]{\insertframenumber/ \inserttotalframenumber \hskip10pt }%
+      }
+  \end{beamercolorbox}%
+  % \hfill\color{basicBlue}
+  % \makebox[20pt][c]{%
+  %   \raisebox{5pt}[0pt][0pt] {%
+  %   }
+  % }
+}
+
+\setbeamertemplate{title page} {
+  \begin{center}
+    {
+    \color{basicBlue}
+    \HRule{0.5pt} \\
+    \vspace{2pt}
+    { \Large \color{darkBlue}
+    \textsc{\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}}
+    \HRule{2pt} \\
+    }
+    \vspace{10pt}
+
+    {\footnotesize
+    \begin{minipage}[t]{0.4\textwidth}
+    \begin{flushleft}
+    {\it \color{darkCyan}Authors:}\\
+    \color{darkBlue}Aur\`ele \textsc{Barri\`ere}
+    \end{flushleft}
+    \end{minipage}
+    \begin{minipage}[t]{0.4\textwidth}
+    \begin{flushright}
+    {\it \color{darkCyan}Supervisor:}\\
+    \color{darkBlue} \textsc{}
+    \end{flushright}
+    \end{minipage}\\
+    }
+  { \color{darkCyan}
+    \vspace{10pt}
+  \insertdate%
+  }
+  \end{center}
+}
+
+  \newsavebox{\contentbox}
+  \newlength{\heightBox}
+
+
+
+\newcommand{\lightenv}[2]{
+  \savebox{\contentbox}{
+  \begin{minipage}{0.8\textwidth}
+    \vspace{5pt}
+  #2
+    \vspace{5pt}
+  \end{minipage}
+  }
+  \setlength{\heightBox}{\dimexpr\ht\contentbox+\dp\contentbox}
+  {\setlength\tabcolsep{2pt}
+  \begin{tabular}{l c}
+    {\begin{minipage}{4pt}
+      \centering%
+      \begin{tikzpicture}%
+        \draw[line width=4pt,line cap=butt,color=#1] (0,\heightBox)--(0,0);
+      \end{tikzpicture}%
+    \end{minipage}}%
+    &
+    \usebox{\contentbox}%
+  \end{tabular}
+  }
+}
