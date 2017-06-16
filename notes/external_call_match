@@ -1,0 +1,23 @@
+The second point has been solved.
+
+The first point still has an issue.
+As you said, the block is indeed private for one memory injection: (inj_of_bc bc).
+If we use the fact that private blocks are logical here, we will only get that b is logical in m, not m', the new memory after the extcall.
+
+But the block can still be public for j', the new injection from ec_mem_inject.
+Recall that ec_mem_inject says that, after an external call, the memory injection can be modified: it can make some blocks public that used to be private.
+
+This is described by inject_incr. We have that inject_incr (inj_of_bc bc) j'.
+
+I still think that, right now, the theorem is unprovable.
+However, I think we could modify ec_mem_inject.
+
+I think that inject_incr is not precise enough. When we look at all the defined external calls (malloc, store, memcpy, annot...), they all use the same injection before and after the call, except for malloc.
+Because malloc has to make public the new allocated block, which was private before (blocks that have never been used are considered private).
+So I think that we could say that, after an external call, the private blocks that can be made public are only blocks which had never been used before, or blocks which are not BCinvalid.
+
+It would solve the proof of external_call_match.
+It would be true for all defined extcalls (only the proof for malloc will change, and it will still be true).
+
+But if we do that, we must choose if it's ok to restrict unknown external functions.
+Should it be possible, for an external function, to make public an already defined private block that was mapped to BCinvalid?
