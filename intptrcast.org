@@ -292,8 +292,8 @@
       if the stack might be concrete, then we should be doing public call
 ***** DONE [INTPTR][meminj][proofs][abstract] Add property invalid_logical bc m
       This should be added inside mmatch
-***** TODO [INTPTR][meminj][proofs][abstract] Show preservation of invalid_logical
-      Two fails: external calls, and soundness of private calls
+***** DONE [INTPTR][meminj][proofs][abstract] Show preservation of invalid_logical
+***** TODO [INTPTR][meminj][proofs][abstract] Prove external_call_match
 ***** DONE [INTPTR][meminj][proofs][abstract] Show that the boolean is a sound abstraction
       I don't know how to do that without initializing with true everywhere.
       where is amem initialization really done?
