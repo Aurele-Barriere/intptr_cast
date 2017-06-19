@@ -348,7 +348,13 @@
    The denormalize is a predicate, not a function.
 ** TODO [INTPTR][sem] add cast semantics
 * TODO [INTPTR][mixedsim] Mixed Simulations
-** TODO [INTPTR][mixedsim] understand the proof of mixed sim -> backwards sim
+** DONE [INTPTR][mixedsim] understand the proof of mixed sim -> backwards sim
+   each time we use forward reasonning, we have 
+   local determinate_at and local receptive_at
+** DONE [INTPTR][mixedsim] understand the atomic of a semantics
+   Basically cutting steps with big traces into smaller steps
+   Why do we keep the same order? shouldn't we consider the length of the trace to unload?
+   when the target stutters (each time there have been new states in the target)
 ** TODO [INTPTR][mixedsim] understand the strongly receptive notion
 ** TODO [INTPTR][mixedsim] understand the proof with atomic
    where strongly receptive is used
