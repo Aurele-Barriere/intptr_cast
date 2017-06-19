@@ -271,17 +271,17 @@
 
     I added concrete address equality (with an offset)
 ** DONE [INTPTR][meminj] prove memory injection preserved with capture
-** TODO [INTPTR][meminj] No source concrete in private memory
+** DONE [INTPTR][meminj] No source concrete in private memory
 *** DONE [INTPTR][meminj] change inject'
 
     The blocks that are mapped to None with the mem injection.
     We must say that if a block is mapped to None, then it is logical.
     This should be added in inject'.
     
-*** TODO [INTPTR][meminj] proofs
+*** DONE [INTPTR][meminj] proofs
 **** DONE [INTPTR][meminj][proofs] Memory.v
 **** DONE [INTPTR][meminj][proofs] Separation.v
-**** TODO [INTPTR][meminj][proofs] ValueDomain.v
+**** DONE [INTPTR][meminj][proofs] ValueDomain.v
 ***** DONE [INTPTR][meminj][proofs][abstract] Change stack_soundness
       add that the stack should be logical for private calls
       No, just mmatch and bc sp = BCinvalid should be enough
@@ -293,12 +293,14 @@
 ***** DONE [INTPTR][meminj][proofs][abstract] Add property invalid_logical bc m
       This should be added inside mmatch
 ***** DONE [INTPTR][meminj][proofs][abstract] Show preservation of invalid_logical
-***** TODO [INTPTR][meminj][proofs][abstract] Prove external_call_match
+***** DONE [INTPTR][meminj][proofs][abstract] Prove external_call_match
 ***** DONE [INTPTR][meminj][proofs][abstract] Show that the boolean is a sound abstraction
       I don't know how to do that without initializing with true everywhere.
       where is amem initialization really done?
       try to change the definition of mfunction_entry, and others.
 **** DONE [INTPTR][meminj][proofs] Unusedglobproof.v
+** TODO [INTPTR][meminj] pull request
+*** TODO [INTPTR][meminj][PR] remove perm_range?
 * DONE [INTPTR] Freeing: on blocks or addresses?
   
   See the issue on Github.

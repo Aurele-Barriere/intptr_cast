@@ -10,3 +10,7 @@ save
 test
 add_capture
 presentation/pres.pdf
+*.log
+*.aux
+*.toc
+report/report.pdf
