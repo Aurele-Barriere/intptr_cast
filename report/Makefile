@@ -1,6 +1,6 @@
 all: report.pdf
 
-report.pdf: report.tex
+report.pdf: report.tex introduction.tex preliminaries.tex contribution.tex evaluation.tex conclusion.tex
 	pdflatex report.tex
 	bibtex report.aux
 	pdflatex report.tex

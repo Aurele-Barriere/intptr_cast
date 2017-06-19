@@ -2,6 +2,7 @@
 %
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage{graphicx}
+\usepackage{color}
 %
 \begin{document}
 %
@@ -49,12 +50,23 @@ There will be two blank lines before and after the Abstract. \dots
 \end{abstract}
 %
 \newpage
-\section{section1}
-%
 
-%
-\subsection{subsection1}
-%
+\def\todo#1{{\color{red}TODO:\quad#1}}
+
+\section{Introduction}
+\input{introduction.tex}
+
+\section{Preliminaries}
+\input{preliminaries.tex}
+
+\section{Contribution}
+\input{contribution.tex}
+
+\section{Evaluation}
+\input{evaluation.tex}
+
+\section{Conclusion}
+\input{conclusion.tex}
 
 %
 % ---- Bibliography ----

@@ -347,6 +347,15 @@
    see page 6, section 4 of the paper.
    The denormalize is a predicate, not a function.
 ** TODO [INTPTR][sem] add cast semantics
+* TODO [INTPTR][mixedsim] Mixed Simulations
+** TODO [INTPTR][mixedsim] understand the proof of mixed sim -> backwards sim
+** TODO [INTPTR][mixedsim] understand the strongly receptive notion
+** TODO [INTPTR][mixedsim] understand the proof with atomic
+   where strongly receptive is used
+   S forward T implies atomic(S) backward T
+** TODO [INTPTR][mixedsim] new proof for mixed simulation
+   where strongly receptive is used
+   S mixed T implies atomic(S) backward T
 * TODO [INTPTR] null pointer
   Add it (page 6).
   Raises undef when storing or loading null pointer.
@@ -355,6 +364,32 @@
    
 * TODO [INTPTR] Definition of max_address
   This might just be Ptrofs.max_unsigned   
-
+  
 * TODO [INTPTR][report] Report
   DEADLINE: <2017-08-04 Fri>
+  Outline:
+** Introduction
+*** C semantics
+*** Coq
+*** CompCert
+** Preliminaries
+*** Logical model
+*** Concrete model
+*** Quasi-concrete model
+    be clear with the assumptions for optimizations
+** Contribution
+*** memory update
+    adding the consistency, new fields
+    validity boolean removed, replaced with permission system
+    -> what does it change?
+    freeing concrete blocks...
+*** memory injection
+    new theorems to prove for injection
+    what does in change in abstract analysis: new definition to reflect the concreteness of stack
+*** mixed simulations
+*** semantics
+** Evaluation?
+   Anything admitted? 
+   Maybe test the changes made to abstract analysis to see if we don't loose too much private calls
+   See what optimizations are successful
+** Conclusion
