@@ -1,12 +1,13 @@
 \documentclass{llncs2e/llncs}
 %
 \usepackage{makeidx}  % allows for indexgeneration
+\usepackage{graphicx}
 %
 \begin{document}
 %
 \pagestyle{headings}  % switches on printing of running heads
 %
-\title{Implementing a new C memory model supporting Integer-Pointer Casts in CompCert}
+\title{Implementing a C Memory Model Supporting Integer-Pointer Casts in CompCert}
 %
 \titlerunning{Integer-Pointer Casts Semantics in CompCert}  % abbreviated title (for running head)
 \author{Aur\`ele Barri\`ere}
@@ -14,15 +15,31 @@
 \authorrunning{Aur\`ele Barri\`ere} % abbreviated author list (for running head)
 %
 \institute{\'Ecole Normale Sup\'erieure de Rennes, France,\\
-\email{aurele.barriere@ens-rennes.fr},\\ 
+\email{aurele.barriere@ens-rennes.fr}\\ 
 }
 
 \maketitle              % typeset the title of the contribution
 
-% add supervisor
-% add place of internship
-% add dates if internship
+\hrulefill
 
+\begin{center}
+  \textbf{Supervisor: } Professor Chung-Kil Hur\\
+  Seoul National University
+\end{center}
+
+\hrulefill
+
+\begin{center}
+  \textbf{May 15 2017 - August 4 2017}
+\end{center}
+
+\vfill
+\begin{center}
+\includegraphics[width=4cm]{img/enslogo.png}
+\quad\quad\quad
+\includegraphics[width=4cm]{img/snulogo.png}
+\end{center}
+\vfill
 \begin{abstract}
 The abstract should summarize the contents of the paper
 using at least 70 and at most 150 words. It will be set in 9-point
@@ -31,6 +48,7 @@ There will be two blank lines before and after the Abstract. \dots
 \keywords{keywords}
 \end{abstract}
 %
+\newpage
 \section{section1}
 %
 
@@ -41,4 +59,9 @@ There will be two blank lines before and after the Abstract. \dots
 %
 % ---- Bibliography ----
 %
+\newpage
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{../bib/intptrcast.bib}
+
 \end{document}

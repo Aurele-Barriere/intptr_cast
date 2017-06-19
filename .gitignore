@@ -13,4 +13,6 @@ presentation/pres.pdf
 *.log
 *.aux
 *.toc
+*.blg
+*.bbl
 report/report.pdf
