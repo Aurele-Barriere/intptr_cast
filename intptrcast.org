@@ -425,3 +425,11 @@
    Maybe test the changes made to abstract analysis to see if we don't loose too much private calls
    See what optimizations are successful
 ** Conclusion
+* TODO [INTPTR][pres] Presentation
+  DEADLINE: <2017-08-04 Fri>
+** TODO [INTPTR][pres] Presentations at the ENS
+   SCHEDULED: <2017-08-31 Thu>
+** TODO [INTPTR][pres] Presentations at the ENS
+   SCHEDULED: <2017-09-05 Tue>
+** TODO [INTPTR][pres] Presentations at the ENS
+   SCHEDULED: <2017-09-06 Wed>
