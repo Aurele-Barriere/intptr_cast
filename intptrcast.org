@@ -158,7 +158,7 @@
    using Sflib library
 
 ** DONE [INTPTR][memupdate] use Nonempty instead of Readable
-* TODO [INTPTR][meminj] Memory Injection
+* DONE [INTPTR][meminj] Memory Injection
 ** DONE [INTPTR][meminj] change memory extension
 
    We need to add something about mem_concrete in extension.
@@ -299,8 +299,20 @@
       where is amem initialization really done?
       try to change the definition of mfunction_entry, and others.
 **** DONE [INTPTR][meminj][proofs] Unusedglobproof.v
-** TODO [INTPTR][meminj] pull request
-*** TODO [INTPTR][meminj][PR] remove perm_range?
+** DONE [INTPTR][meminj] pull request
+*** DONE [INTPTR][meminj][PR] remove perm_range
+*** DONE [INTPTR][meminj][PR] inductive captured
+    removed
+*** DONE [INTPTR][meminj][PR] double match on is_captured
+    removed
+*** DONE [INTPTR][meminj][PR] replace captured_iff_is_captured
+    removed
+*** DONE [INTPTR][meminj][PR] change name of source_concrete, source_private
+    the second should say logical.
+    Maybe public_concrete and private_source_logical?
+    keep the same name now, just put src instead of source
+*** DONE [INTPTR][meminj][PR] revert instead of generalize dependent
+*** DONE [INTPTR][meminj][PR] don't instantiate variables
 * DONE [INTPTR] Freeing: on blocks or addresses?
   
   See the issue on Github.
@@ -355,13 +367,27 @@
    Basically cutting steps with big traces into smaller steps
    Why do we keep the same order? shouldn't we consider the length of the trace to unload?
    when the target stutters (each time there have been new states in the target)
-** TODO [INTPTR][mixedsim] understand the strongly receptive notion
+** DONE [INTPTR][mixedsim] understand the strongly receptive notion
+** TODO [INTPTR][mixedsim] understand the order in the factor proof
+** TODO [INTPTR][mixedsim] strongly_receptive_at ?
+   stronger or weaker? will it preserve the mixed -> backward proof?
+** TODO [INTPTR][mixedsim] prove mixed A B -> mixed (atomic A) B ?
+   i'm not sure if this is ok.
+   i think that with the right definition of msim_forward it should be
+** TODO [INTPTR][mixedsim] check if the suggested plan seems ok
 ** TODO [INTPTR][mixedsim] understand the proof with atomic
    where strongly receptive is used
    S forward T implies atomic(S) backward T
+** TODO [INTPTR][mixedsim] understand the changes when switching forward to mixed
+   we had the proof forward -> backward
+   then jeehoon wrote the proof mixed -> backward
+   it's very similar, and the changes should look like what we'll use in the next proof 
 ** TODO [INTPTR][mixedsim] new proof for mixed simulation
    where strongly receptive is used
    S mixed T implies atomic(S) backward T
+
+   we had the proof fwd + strongly -> atomic bckwd
+   we want the proof mixed + strongly -> atomic bckwd
 * TODO [INTPTR] null pointer
   Add it (page 6).
   Raises undef when storing or loading null pointer.
