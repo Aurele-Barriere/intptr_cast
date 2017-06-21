@@ -1,7 +1,29 @@
 \todo{General introduction on C semantics, Coq, CompCert, intptr casts...}
 \todo{Contribution pesentation}
-\subsection{C semantics}
-\subsection{Coq}
-\subsection{CompCert}
-\subsection{Integer Pointer Casts}
-\subsection{Contribution and outline}
+\paragraph{Notes}
+
+Compcert: certified C compiler. it means that the semantics of the source program are the same than those of the ASM compiled program. Proved in Coq, trusted proof assistant. (http://compcert.inria.fr/compcert-C.html)
+Supports almost all of ISO C. However, ISO C does not reflect the behavior of every used C program.
+
+No semantics for integer-pointer cast, in the standard and in CompCert.
+
+However, the casts are used in real C programs. Give examples: Linux Kernel, JVM, others could be found in (http://www.cl.cam.ac.uk/~pes20/cerberus/notes50-survey-discussion.html).
+It means that some intuitive semantics exists in the mind of programmers, and in most C compilers.
+
+Defining a precise, formal semantics should stop the introduction of bugs (examples), and give to CompCert the power to compile even more programs in a certified way.
+
+The behavior of pointers depend on the memory model.
+In CompCert, logical memory model, where one can never change block or access the bit representation.
+Then we can do a lot of optimizations because we know what can be accessed.
+
+This isn't enough to deal with integer-pointer use cases, where we want to access a bit representation and change blocks.
+
+A completely concrete memory model would not allow for optimizations, because everything would always be accessible.
+
+Then, Kang et al. suggest quasi-concrete model. In which there are logical and concrete blocks. This allows optimizations with logical blocks and casts with concrete blocks.
+
+Thus, we implement it.
+But there are many problems: the memory is not the same that what was written in the paper (functions over blocks or addresses),
+we need to change the way abstract analysis is done, and it introduces non-deterministic semantics while the proofs relied on determinism very much.
+
+We present how we intend to solve each problem. We evaluate the result with optimizations.
