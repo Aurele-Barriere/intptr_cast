@@ -15,7 +15,7 @@
 %
 \authorrunning{Aur\`ele Barri\`ere} % abbreviated author list (for running head)
 %
-\institute{\'Ecole Normale Sup\'erieure de Rennes, France,\\
+\institute{\'Ecole Normale Sup\'erieure de Rennes, France\\
 \email{aurele.barriere@ens-rennes.fr}\\ 
 }
 
@@ -25,7 +25,7 @@
 
 \begin{center}
   \textbf{Supervisor: } Professor Chung-Kil Hur\\
-  Seoul National University
+  Seoul National University, South Korea
 \end{center}
 
 \hrulefill
@@ -42,11 +42,9 @@
 \end{center}
 \vfill
 \begin{abstract}
-The abstract should summarize the contents of the paper
-using at least 70 and at most 150 words. It will be set in 9-point
-font size and be inset 1.0 cm from the right and left margins.
-There will be two blank lines before and after the Abstract. \dots
-\keywords{keywords}
+  The ISO C standard does not define semantics for integer-pointer casts. The certified C compiler CompCert uses an abstract memory model which allows for many optimizations, but in which the behavior of such casts is undefined. In \cite{DBLP:conf/pldi/KangHMGZV15}, Kang et al. present a formal memory model that supports integer-pointer casts semantics, while still allowing common optimizations.
+  We show the relevance of this model by implementing both the memory model and the cast semantics in CompCert. We present the changes that need to be done, both in the way CompCert transforms C programs and in the proofs.
+\keywords{CompCert, C Memory Model, Integer-Pointer Cast, Optimization}
 \end{abstract}
 %
 \newpage
@@ -55,6 +53,9 @@ There will be two blank lines before and after the Abstract. \dots
 
 \section{Introduction}
 \input{introduction.tex}
+
+\section{Related Works}
+\input{relatedworks.tex}
 
 \section{Preliminaries}
 \input{preliminaries.tex}

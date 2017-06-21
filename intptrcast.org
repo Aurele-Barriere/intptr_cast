@@ -368,26 +368,33 @@
    Why do we keep the same order? shouldn't we consider the length of the trace to unload?
    when the target stutters (each time there have been new states in the target)
 ** DONE [INTPTR][mixedsim] understand the strongly receptive notion
-** TODO [INTPTR][mixedsim] understand the order in the factor proof
+** DONE [INTPTR][mixedsim] understand the order in the factor proof
+   Because L2 is sinle events. Then there already exists intermediate steps that corresponds to
+   the intermediate steps of (atomic L1).
+   
+   I think we could have a more generalized theorem without single events for L2?
+   And with a smaller definition of ffs_match, here it is bigger than needed, because 
+   intermediate atomic states will match any intermediate state of L2.
 ** TODO [INTPTR][mixedsim] strongly_receptive_at ?
    stronger or weaker? will it preserve the mixed -> backward proof?
-** TODO [INTPTR][mixedsim] prove mixed A B -> mixed (atomic A) B ?
-   i'm not sure if this is ok.
-   i think that with the right definition of msim_forward it should be
+   it adds the well_behaved_traces, but otherwise it seems wery similar because match traces only for [e]
 ** TODO [INTPTR][mixedsim] check if the suggested plan seems ok
-** TODO [INTPTR][mixedsim] understand the proof with atomic
-   where strongly receptive is used
-   S forward T implies atomic(S) backward T
+   maybe use factor_backward instead of behavior inclusion
+   we would need receptivity and well_behaved traces for each language (only for Cstrategy right now)
+   strong_receptivity everywhere should be good
+** DONE [INTPTR][mixedsim] understand the proof with atomic
 ** TODO [INTPTR][mixedsim] understand the changes when switching forward to mixed
    we had the proof forward -> backward
    then jeehoon wrote the proof mixed -> backward
    it's very similar, and the changes should look like what we'll use in the next proof 
+** TODO [INTPTR][mixedsim] change mixed simulation
+   Maybe remove receptivity completely.
+   Then add it as an hypothesis when doing the mixed2backward proof.
+   The mixed2backward proof won't be used anymore, maybe it can just be modified into the next theorem.
+   When we add receptivity, we only need it for the "forward" states: all states but extcalls.
 ** TODO [INTPTR][mixedsim] new proof for mixed simulation
-   where strongly receptive is used
-   S mixed T implies atomic(S) backward T
-
-   we had the proof fwd + strongly -> atomic bckwd
-   we want the proof mixed + strongly -> atomic bckwd
+   maybe mixed A B /\ strongly_receptive A -> backward (atomic A) B
+   Why will it be easier to prove for (atomic A) and not A?
 * TODO [INTPTR] null pointer
   Add it (page 6).
   Raises undef when storing or loading null pointer.
@@ -401,6 +408,7 @@
   DEADLINE: <2017-08-04 Fri>
   Outline:
 ** Introduction
+   Introduction, context and motivation should be one third of the paper...
 *** C semantics
 *** Coq
 *** CompCert
@@ -424,6 +432,9 @@
    Anything admitted? 
    Maybe test the changes made to abstract analysis to see if we don't loose too much private calls
    See what optimizations are successful
+** RELATED WORKS!
+   concrete implementations? 
+   other model?
 ** Conclusion
 * TODO [INTPTR][pres] Presentation
   DEADLINE: <2017-08-04 Fri>
@@ -433,3 +444,5 @@
    SCHEDULED: <2017-09-05 Tue>
 ** TODO [INTPTR][pres] Presentations at the ENS
    SCHEDULED: <2017-09-06 Wed>
+* TODO [INTPTR] Abstract
+  DEADLINE: <2017-06-30 Fri>
