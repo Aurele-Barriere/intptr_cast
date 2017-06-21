@@ -375,26 +375,31 @@
    I think we could have a more generalized theorem without single events for L2?
    And with a smaller definition of ffs_match, here it is bigger than needed, because 
    intermediate atomic states will match any intermediate state of L2.
-** TODO [INTPTR][mixedsim] strongly_receptive_at ?
-   stronger or weaker? will it preserve the mixed -> backward proof?
-   it adds the well_behaved_traces, but otherwise it seems wery similar because match traces only for [e]
-** TODO [INTPTR][mixedsim] check if the suggested plan seems ok
+** DONE [INTPTR][mixedsim] check if the suggested plan seems ok
    maybe use factor_backward instead of behavior inclusion
    we would need receptivity and well_behaved traces for each language (only for Cstrategy right now)
    strong_receptivity everywhere should be good
 ** DONE [INTPTR][mixedsim] understand the proof with atomic
-** TODO [INTPTR][mixedsim] understand the changes when switching forward to mixed
+** DONE [INTPTR][mixedsim] understand the changes when switching forward to mixed
    we had the proof forward -> backward
    then jeehoon wrote the proof mixed -> backward
    it's very similar, and the changes should look like what we'll use in the next proof 
-** TODO [INTPTR][mixedsim] change mixed simulation
-   Maybe remove receptivity completely.
-   Then add it as an hypothesis when doing the mixed2backward proof.
-   The mixed2backward proof won't be used anymore, maybe it can just be modified into the next theorem.
-   When we add receptivity, we only need it for the "forward" states: all states but extcalls.
+** DONE [INTPTR][mixedsim] strongly_receptive_at ?
+   weaker theorem.
+** DONE [INTPTR][mixedsim] change mixed simultaion
+   The receptivity predicate must be given as a parameter.
+   Then we will have two kinds of mixed simulations: with receptive_at, and with strongly_receptive_at
+   Then we need to prove that mixed(strong_r) A B -> mixed(r) A B.
+   And we keep the proof that mixed(r) A B -> backward A B.
 ** TODO [INTPTR][mixedsim] new proof for mixed simulation
-   maybe mixed A B /\ strongly_receptive A -> backward (atomic A) B
-   Why will it be easier to prove for (atomic A) and not A?
+   mixed_SR A B -> mixed_R (atomic A) B
+   it should look like the proof of factor_forward
+   maybe you'll need single_events L2 as an hypothesis?
+   in that case there is an issue.
+   or maybe if there are multiple events then we can do bacward reasonning for a while?
+   or maybe we should direclty prove the bacward simulation, and have only one type of mixed_simulation.
+** TODO [INTPTR][mixedsim] every intermediate language is strongly_receptive
+   except maybe for external calls? I don't know how to do that now.
 * TODO [INTPTR] null pointer
   Add it (page 6).
   Raises undef when storing or loading null pointer.
