@@ -1,29 +1,39 @@
-\todo{General introduction on C semantics, Coq, CompCert, intptr casts...}
-\todo{Contribution pesentation}
-\paragraph{Notes}
+When compiling critical software written in C, one expects from the compiler to not introduce any bugs, or any behavior that wasn't specified in the C source code.
 
-Compcert: certified C compiler. it means that the semantics of the source program are the same than those of the ASM compiled program. Proved in Coq, trusted proof assistant. (http://compcert.inria.fr/compcert-C.html)
-Supports almost all of ISO C. However, ISO C does not reflect the behavior of every used C program.
+% compcert and coq
+To meet this expectation, CompCert \addref{leroy} is a formally verified C compiler.
+It uses the Coq Proof Assistant \addref{ref} to prove that the compiled code and the source code have the same observable behavior, as defined by the ISO C Standard \addref{ISO}. CompCert also aims to provide performance of the generated code, and implements several common optimizations. Compiled code runs approximately 10\% slower than code compiled with \texttt{GCC4 -O1} \addref{compcert website}.
+As of today, CompCert is a trusted compiler; despite many efforts \addref{finding bugs}, no bug have been discovered within the verified parts of CompCert.
+CompCert currently supports all of the ISO C 99 Standard, with very few exceptions \addref{compcert website}.
 
-No semantics for integer-pointer cast, in the standard and in CompCert.
+% iso c and semantics
+However, the ISO C standard itself does not define semantics for every syntactically valid C program.
+Many C programs are said to have \textit{unspecified behavior} or \textit{undefined behavior}, meaning that conforming compilers can produce any compiled code.
+Despite the lack of semantics, many C programmers are using such programs and expect a precise result. %not a very good sentence
+This leads to difficult bugs \addref{bugs} and the impossibility of proving that the compiled code behaves as expected.
 
-However, the casts are used in real C programs. Give examples: Linux Kernel, JVM, others could be found in (http://www.cl.cam.ac.uk/~pes20/cerberus/notes50-survey-discussion.html).
-It means that some intuitive semantics exists in the mind of programmers, and in most C compilers.
+% integer pointer casts
+One popular unspecified feature of the C language is the casting between integer and pointer values.
+Such casts have many uses in real C programs. \todo{examples: Linux Kernel, JVM, others could be found in (http://www.cl.cam.ac.uk/~pes20/cerberus/notes50-survey-discussion.html).}
+When compiled with most compilers, those programs behave as expected from the programmers. But these intuitive semantics have not been formalized in the C standard yet.
 
-Defining a precise, formal semantics should stop the introduction of bugs (examples), and give to CompCert the power to compile even more programs in a certified way.
+% motivation of the Kanget al. paper
+Defining a precise, formal semantics for integer-pointer casting and pointer manipulation would allow CompCert to compile even more C programs in a certified way.
+The semantics of pointer manipulation depends on the memory model of the compiler.
+As of today, CompCert uses a logical memory model \addref{compcert memory model v2}, where every memory block is an abstract object without a concrete memory address. Such a memory model enables many optimizations, because a program can never guess the location of a block and modify it without a pointer. \todo{example}.
+However, integer-pointer casting isn't possible.
+Other works have investigated using a concrete memory model, to reflect the state of a real machine's memory \addref{ref}. But then, most optimizations cannot be done anymore without changing the behavior of the program \todo{either go back to the example or reference a later section}.
+In \addref{kang et al}, Kang et al suggest a quasi-concrete model, in which there are both logical and concrete memory blocks. The main idea is to use logical blocks by default, that can allow optimizations, and use concrete blocks when the concrete address of a memory block is needed.
 
-The behavior of pointers depend on the memory model.
-In CompCert, logical memory model, where one can never change block or access the bit representation.
-Then we can do a lot of optimizations because we know what can be accessed.
+% contribution
+This new memory model has been implemented in CompCert.
+In this paper, we discuss this implementation.
+We show that it is relevant and supports integer-pointer casts while still allowing common optimizations.
+We present the difficulties of the implementation, and the changes that needed to be done in CompCert.
+% this should be bigger
 
-This isn't enough to deal with integer-pointer use cases, where we want to access a bit representation and change blocks.
-
-A completely concrete memory model would not allow for optimizations, because everything would always be accessible.
-
-Then, Kang et al. suggest quasi-concrete model. In which there are logical and concrete blocks. This allows optimizations with logical blocks and casts with concrete blocks.
-
-Thus, we implement it.
-But there are many problems: the memory is not the same that what was written in the paper (functions over blocks or addresses),
-we need to change the way abstract analysis is done, and it introduces non-deterministic semantics while the proofs relied on determinism very much.
-
-We present how we intend to solve each problem. We evaluate the result with optimizations.
+% outline
+At first, we remind the reader about the different memory models.
+Then we present the implementation of the new memory model. The next part shows how the notion of memory injections had to be changed. Then, we present our mixed simulation reasoning, used to prove the correctness of the extended language. After that, we present the semantics of integer-pointer casting and of the \texttt{capture} function.
+Finally, we discuss the results of the implementation and its effect on optimizations. 
+% related works?

@@ -395,9 +395,7 @@
    mixed_SR A B -> mixed_R (atomic A) B
    it should look like the proof of factor_forward
    maybe you'll need single_events L2 as an hypothesis?
-   in that case there is an issue.
-   or maybe if there are multiple events then we can do bacward reasonning for a while?
-   or maybe we should direclty prove the bacward simulation, and have only one type of mixed_simulation.
+   It seems that single_events is true after CStrategy, so we can require it.
 ** TODO [INTPTR][mixedsim] every intermediate language is strongly_receptive
    except maybe for external calls? I don't know how to do that now.
 * TODO [INTPTR] null pointer
