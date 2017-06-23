@@ -396,6 +396,10 @@
    it should look like the proof of factor_forward
    maybe you'll need single_events L2 as an hypothesis?
    It seems that single_events is true after CStrategy, so we can require it.
+   
+   For mam_match_buffer, I need to show that if we are in an intermediate state (with t<>E0),
+   then it corresponds to a forward step of s1.
+
 ** TODO [INTPTR][mixedsim] every intermediate language is strongly_receptive
    except maybe for external calls? I don't know how to do that now.
 * TODO [INTPTR] null pointer
