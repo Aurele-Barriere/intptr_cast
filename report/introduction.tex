@@ -2,7 +2,8 @@ When compiling critical software written in C, one expects from the compiler to 
 
 % compcert and coq
 To meet this expectation, CompCert \cite{DBLP:journals/cacm/Leroy09} is a formally verified C compiler.
-It uses the Coq Proof Assistant \cite{coq} to prove that the compiled code and the source code have the same observable behavior, as defined by the ISO C Standard \cite{iso}. CompCert also aims to provide performance of the generated code, and implements several common optimizations. Compiled code runs approximately 10\% slower than code compiled with \texttt{GCC4 -O1} \cite{compcertwebsite}.
+It uses the Coq Proof Assistant \cite{coq} to prove that the compiled code and the source code have the same observable behavior, as defined by the ISO C Standard \cite{iso}.
+CompCert also aims to provide performance of the generated code, and implements several common optimizations. Compiled code runs approximately 10\% slower than code compiled with \texttt{GCC4 -O1} \cite{compcertwebsite}.
 As of today, CompCert is a trusted compiler; despite many efforts \cite{DBLP:conf/pldi/YangCER11}, no bug have been discovered within the verified parts of CompCert.
 CompCert currently supports all of the ISO C 99 Standard, with very few exceptions \cite{compcertwebsite}.
 
@@ -10,7 +11,7 @@ CompCert currently supports all of the ISO C 99 Standard, with very few exceptio
 However, the ISO C standard itself does not define semantics for every syntactically valid C program.
 Many C programs are said to have \textit{unspecified behavior} or \textit{undefined behavior}, meaning that conforming compilers can produce any compiled code.
 Despite the lack of semantics, many C programmers are using such programs and expect a precise result. %not a very good sentence
-This leads to difficult bugs \addref{bugs} and the impossibility of proving that the compiled code behaves as expected.
+This leads to difficult bugs \cite{DBLP:conf/apsys/WangCCJZK12} and the impossibility of proving that the compiled code behaves as expected.
 
 % integer pointer casts
 One popular unspecified feature of the C language is the casting between integer and pointer values.

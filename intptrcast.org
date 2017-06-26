@@ -424,6 +424,17 @@
 *** Concrete model
 *** Quasi-concrete model
     be clear with the assumptions for optimizations
+** Related Works
+   UB can have a negative effect [ub_bugs] when optimizing
+   First approach: identify code whose optim depends on UB [ub_impact] against "optimization-unstable code"
+
+   Second approach: extend semantics expressiveness by ruling out UBs.   
+   Low-level memory model [low_level]. Or [c_hol]..
+   New abstract memory model with symbolic values [wilke], for the same issues.
+   However, some cases won't be given semantics with this solution (determinism).
+
+   Finally, the model seems to be compatible with other works, with some adaptation.
+   [6][7]Krebber
 ** Contribution
 *** memory update
     adding the consistency, new fields
@@ -433,12 +444,16 @@
 *** memory injection
     new theorems to prove for injection
     what does in change in abstract analysis: new definition to reflect the concreteness of stack
+
+    see what is written in concrete_compcert.pdf, section 5.
 *** mixed simulations
 *** semantics
 ** Evaluation?
    Anything admitted? 
    Maybe test the changes made to abstract analysis to see if we don't loose too much private calls
    See what optimizations are successful
+
+   [13][2] of symbolic values are said to bebenchmarks with low-level pointer arithmetics
 ** RELATED WORKS!
    concrete implementations? 
    other model?
