@@ -1,10 +1,10 @@
 When compiling critical software written in C, one expects from the compiler to not introduce any bugs, or any behavior that wasn't specified in the C source code.
 
 % compcert and coq
-To meet this expectation, CompCert \addref{leroy} is a formally verified C compiler.
-It uses the Coq Proof Assistant \addref{ref} to prove that the compiled code and the source code have the same observable behavior, as defined by the ISO C Standard \addref{ISO}. CompCert also aims to provide performance of the generated code, and implements several common optimizations. Compiled code runs approximately 10\% slower than code compiled with \texttt{GCC4 -O1} \addref{compcert website}.
-As of today, CompCert is a trusted compiler; despite many efforts \addref{finding bugs}, no bug have been discovered within the verified parts of CompCert.
-CompCert currently supports all of the ISO C 99 Standard, with very few exceptions \addref{compcert website}.
+To meet this expectation, CompCert \cite{DBLP:journals/cacm/Leroy09} is a formally verified C compiler.
+It uses the Coq Proof Assistant \cite{coq} to prove that the compiled code and the source code have the same observable behavior, as defined by the ISO C Standard \cite{iso}. CompCert also aims to provide performance of the generated code, and implements several common optimizations. Compiled code runs approximately 10\% slower than code compiled with \texttt{GCC4 -O1} \cite{compcertwebsite}.
+As of today, CompCert is a trusted compiler; despite many efforts \cite{DBLP:conf/pldi/YangCER11}, no bug have been discovered within the verified parts of CompCert.
+CompCert currently supports all of the ISO C 99 Standard, with very few exceptions \cite{compcertwebsite}.
 
 % iso c and semantics
 However, the ISO C standard itself does not define semantics for every syntactically valid C program.
@@ -20,10 +20,10 @@ When compiled with most compilers, those programs behave as expected from the pr
 % motivation of the Kanget al. paper
 Defining a precise, formal semantics for integer-pointer casting and pointer manipulation would allow CompCert to compile even more C programs in a certified way.
 The semantics of pointer manipulation depends on the memory model of the compiler.
-As of today, CompCert uses a logical memory model \addref{compcert memory model v2}, where every memory block is an abstract object without a concrete memory address. Such a memory model enables many optimizations, because a program can never guess the location of a block and modify it without a pointer. \todo{example}.
+As of today, CompCert uses a logical memory model \cite{leroy:hal-00703441}, where every memory block is an abstract object without a concrete memory address. Such a memory model enables many optimizations, because a program can never guess the location of a block and modify it without a pointer. \todo{example}.
 However, integer-pointer casting isn't possible.
 Other works have investigated using a concrete memory model, to reflect the state of a real machine's memory \addref{ref}. But then, most optimizations cannot be done anymore without changing the behavior of the program \todo{either go back to the example or reference a later section}.
-In \addref{kang et al}, Kang et al suggest a quasi-concrete model, in which there are both logical and concrete memory blocks. The main idea is to use logical blocks by default, that can allow optimizations, and use concrete blocks when the concrete address of a memory block is needed.
+In \cite{DBLP:conf/pldi/KangHMGZV15}, Kang et al suggest a quasi-concrete model, in which there are both logical and concrete memory blocks. The main idea is to use logical blocks by default, that can allow optimizations, and use concrete blocks when the concrete address of a memory block is needed.
 
 % contribution
 This new memory model has been implemented in CompCert.
