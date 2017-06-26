@@ -1,13 +1,20 @@
+% problems with UB
 It has been established that writing programs with undefined behavior can lead to difficult-to-find bugs.
-For instance, some compilers can optimize code with the assumption that the program never encounters undefined behavior. This can result in produced code that does not behave as expected by the programmers \cite{DBLP:conf/apsys/WangCCJZK12}.
+For instance, some compilers can optimize code with the assumption that the program never encounters undefined behavior. This can result in produced code that does not behave as expected by the programmers~\cite{DBLP:conf/apsys/WangCCJZK12}.
 
-A first solution to this issue is to identify the code whose optimization is based on undefined behaviors, as presented in \cite{DBLP:conf/sosp/WangZKS13}.
+% identify UB-unstable code
+A first solution to this issue is to identify the code whose optimization is based on undefined behaviors, as presented in~\cite{DBLP:conf/sosp/WangZKS13}.
 
+% refine semantics
 However, a more common approach is to extend the semantics expressiveness of the C language, ruling out undefined behaviors.
 Many works have revolved around giving a formal semantics to the C language refining the informal semantics of the ISO standard.
-This is what \cite{DBLP:conf/pldi/KangHMGZV15} and this paper aim to achieve by refining the C semantics for pointer manipulation.
+This is what~\cite{DBLP:conf/pldi/KangHMGZV15} and this paper aim to achieve by refining the C semantics for pointer manipulation.
 
-For the same purposes, some have investigated the use of a concrete memory model for C semantics \cite{DBLP:conf/popl/TuchKN07}\cite{Norrish98cformalised}.
-More recently, \cite{besson:hal-01093312} and \cite{DBLP:conf/itp/BessonBW15} present the use of a new memory model using symbolic values. The idea is to use symbolic values instead of expressions to delay their evaluation. This successfully gives semantics to several C idioms: alignment constraints, bit-fields\dots However, being a deterministic semantics, programs that introduce non-deterministic behaviors due to allocation will still be undefined.
+% Symbolic values
+For the same purposes, some have investigated the use of a concrete memory model for C semantics~\cite{DBLP:conf/popl/TuchKN07}\cite{Norrish98cformalised}.
+More recently,~\cite{besson:hal-01093312} and~\cite{DBLP:conf/itp/BessonBW15} present the use of a new memory model using symbolic values. The idea is to use symbolic values instead of expressions to delay their evaluation. This successfully gives semantics to several C idioms: alignment constraints, bit-fields\dots However, being a deterministic semantics, programs that introduce non-deterministic behaviors due to allocation will still be undefined.
 
+% back to our work
 In this work, we present a new approach to deal with non-determinism in CompCert, and give semantics to every integer-pointer casts and pointer manipulation.
+
+\todo{talk about CompCert TSO and Krebber, see how this can interact with our approach}

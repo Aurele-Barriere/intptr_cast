@@ -7,10 +7,10 @@
 \end{figure}
 \end{center}
 
-The compiler used in this work is CompCert \cite{compcertmanual}.
+The compiler used in this work is CompCert~\cite{compcertmanual}.
 It supports most of the ISO-C-99 Standard.
 It can generate PowerPC, ARM and x86 assembly code.
-Because formal program verification is often done at source level, CompCert is a promising tool for the development of critical software \cite{bedinfranca:hal-00653367}.
+Because formal program verification is often done at source level, CompCert is a promising tool for the development of critical software~\cite{bedinfranca:hal-00653367}.
 
 Between the source code and the target assembly code, CompCert goes through 25 passes, including several changes of language, all of which using the same memory model.
 The first three parse and convert the source code to CompCert C, and the last three perform printing of the assembly code, assembling and linking.
@@ -24,7 +24,7 @@ The correctness theorem of CompCert states that the behavior of the generated co
 
 \subsubsection{Optimizations}
 CompCert performs the following optimizations:
-Instruction selection, Common sub-expression elimination, Tail call elimination, Dead code elimination, Function inlining, Branch tuneling, Constant propagation and Register allocation \cite{compcertoverview}.
+Instruction selection, Common sub-expression elimination, Tail call elimination, Dead code elimination, Function inlining, Branch tuneling, Constant propagation and Register allocation~\cite{compcertoverview}.
 \todo{Examples the ones that will be used: DCE, DAE, CP}
  
 
@@ -33,7 +33,7 @@ In this section, we present the logical and concrete models with their limits, w
 
 In C semantics, the memory is divided in several \textit{memory blocks}, that contain several memory addresses. Memory blocks can be allocated (through the \texttt{malloc} function for instance), loaded, freed\dots A memory block can contain the values of several variables. 
 \subsubsection{Logical Model}
-The logical model described here is similar to the one used in \cite{DBLP:conf/pldi/KangHMGZV15}. However, it slightly differs from CompCert's current logical model described in \cite{leroy:hal-00703441} (see section \addref{memupdate?}).
+The logical model described here is similar to the one used in~\cite{DBLP:conf/pldi/KangHMGZV15}. However, it slightly differs from CompCert's current logical model described in~\cite{leroy:hal-00703441} (see section \addref{memupdate?}).
 In this model, blocks are all logical, meaning that they are not mapped to a physical memory address.
 Blocks are a fixed-size array of values.
 A validity flag $v$ indicates if the block has been freed.
@@ -60,7 +60,7 @@ In the concrete model, integer-pointer cast is possible because concrete address
 
 However, optimizations such as constant propagation and dead allocation elimination are not supported in many cases, because external functions might change the value of any address. In the concrete model, there is no ownership notion, and every address is always accessible.
 \subsubsection{Quasi-concrete model}
-In \cite{DBLP:conf/pldi/KangHMGZV15}, a new memory model is presented. The motivation is to have a memory model which allows integer-pointer casting, but still supports common optimizations.
+In~\cite{DBLP:conf/pldi/KangHMGZV15}, a new memory model is presented. The motivation is to have a memory model which allows integer-pointer casting, but still supports common optimizations.
 This is achieved with the following definitions.
 A block can be either logical or concrete, in which case it has a concrete address. This is represented by the value $p$.
 $$\texttt{Block}=\{(v,p,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{n},p\in\texttt{int32}\cup\{\undef\}\}$$
@@ -74,7 +74,7 @@ To allow as many optimizations as possible, we should use as many logical blocks
 However, for each pointer to integer cast, we need a concrete block. Then we transform each pointer to integer cast by adding a \textit{capture} function just before it. This function transforms a logical block into a concrete one, giving it a concrete address that still satisfy the memory consistency. Its semantics are described section \addref{section sem}.
 It introduces non-determinism in every language of CompCert (including the assembly). This is handled in section \addref{section mixedsim}.
 
-The quasi-concrete is described in many details in \cite{DBLP:conf/pldi/KangHMGZV15}.
+The quasi-concrete is described in many details in~\cite{DBLP:conf/pldi/KangHMGZV15}.
 \subsubsection{Optimization and casts examples}
 ...
 \todo{examples of optimizations and casts for the 3 models}

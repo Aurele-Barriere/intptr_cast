@@ -44,7 +44,7 @@
 \end{center}
 \vfill
 \begin{abstract}
-  The ISO C standard does not define semantics for integer-pointer casts. The certified C compiler CompCert uses an abstract memory model which allows for many optimizations, but in which the behavior of such casts is undefined. In \cite{DBLP:conf/pldi/KangHMGZV15}, Kang et al. present a formal memory model that supports integer-pointer casts semantics, while still allowing common optimizations.
+  The ISO C standard does not define semantics for integer-pointer casts. The certified C compiler CompCert uses an abstract memory model which allows for many optimizations, but in which the behavior of such casts is undefined. In~\cite{DBLP:conf/pldi/KangHMGZV15}, Kang et al. present a formal memory model that supports integer-pointer casts semantics, while still allowing common optimizations.
   We show the relevance of this model by implementing both the memory model and the cast semantics in CompCert. We present the changes that need to be done, both in the way CompCert transforms C programs and in the proofs.
 \keywords{CompCert, C Memory Model, Integer-Pointer Cast, Optimization}
 \end{abstract}
