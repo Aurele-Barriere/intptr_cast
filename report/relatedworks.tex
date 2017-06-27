@@ -12,7 +12,7 @@ This is what~\cite{DBLP:conf/pldi/KangHMGZV15} and this paper aim to achieve by 
 
 % Symbolic values
 For the same purposes, some have investigated the use of a concrete memory model for C semantics~\cite{DBLP:conf/popl/TuchKN07}\cite{Norrish98cformalised}.
-More recently,~\cite{besson:hal-01093312} and~\cite{DBLP:conf/itp/BessonBW15} present the use of a new memory model using symbolic values. The idea is to use symbolic values instead of expressions to delay their evaluation. This successfully gives semantics to several C idioms: alignment constraints, bit-fields\dots However, being a deterministic semantics, programs that introduce non-deterministic behaviors due to allocation will still be undefined.
+More recently,~\cite{besson:hal-01093312} and~\cite{DBLP:conf/itp/BessonBW15} present the use of a new memory model using symbolic values. The idea is to use symbolic values instead of expressions to delay their evaluation. This successfully gives semantics to several C idioms: alignment constraints, bit-fields\dots However, as it is a deterministic semantics, programs that introduce non-deterministic behaviors due to allocation are still undefined.
 
 % back to our work
 In this work, we present a new approach to deal with non-determinism in CompCert, and give semantics to every integer-pointer casts and pointer manipulation.
