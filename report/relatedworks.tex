@@ -17,4 +17,6 @@ More recently,~\cite{besson:hal-01093312} and~\cite{DBLP:conf/itp/BessonBW15} pr
 % back to our work
 In this work, we present a new approach to deal with non-determinism in CompCert, and give semantics to every integer-pointer casts and pointer manipulation.
 
-\todo{talk about CompCert TSO and Krebber, see how this can interact with our approach}
+%Other related works
+Another approach to deal with finite memories has been used in CompCertTSO~\cite{DBLP:journals/jacm/SevcikVNJS13}, where all memory operations are done on a single finite logical block. Even if the memory model not the quasi-concrete model, the authors of~\cite{DBLP:conf/pldi/KangHMGZV15} are confident that the quasi-concrete model could handle address threads like CompCertTSO.
+The quasi-concrete model could also be used with other works of semantics extension, such as the union types and strict aliasing of~\cite{DBLP:conf/cpp/Krebbers13} or the universal pointer type of~\cite{DBLP:conf/itp/KrebbersLW14}.

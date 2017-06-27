@@ -419,11 +419,6 @@
 *** C semantics
 *** Coq
 *** CompCert
-** Preliminaries
-*** Logical model
-*** Concrete model
-*** Quasi-concrete model
-    be clear with the assumptions for optimizations
 ** Related Works
    UB can have a negative effect [ub_bugs] when optimizing
    First approach: identify code whose optim depends on UB [ub_impact] against "optimization-unstable code"
@@ -435,6 +430,12 @@
 
    Finally, the model seems to be compatible with other works, with some adaptation.
    [6][7]Krebber
+
+** Preliminaries
+*** Logical model
+*** Concrete model
+*** Quasi-concrete model
+    be clear with the assumptions for optimizations
 ** Contribution
 *** memory update
     adding the consistency, new fields
@@ -454,10 +455,10 @@
    See what optimizations are successful
 
    [13][2] of symbolic values are said to bebenchmarks with low-level pointer arithmetics
-** RELATED WORKS!
-   concrete implementations? 
-   other model?
 ** Conclusion
+** Annex
+   Examples of optimizations? 
+   With and without pointers (see [Kang et al] for examples in the quasi concrete model)
 * TODO [INTPTR][pres] Presentation
   DEADLINE: <2017-08-04 Fri>
 ** TODO [INTPTR][pres] Presentations at the ENS

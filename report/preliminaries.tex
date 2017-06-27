@@ -55,7 +55,7 @@ Blocks are simply a pair of a concrete address and a size.
 $$\texttt{Block}=\{(p,n)~|~p\in\texttt{int32},n\in\texttt{int32}\}$$
 The concrete memory should require from the allocated blocks to be consistent:
 $$\textit{No overflow:}\quad\forall (p,n)\in\texttt{Allocated}, [p,p+n]\subseteq]0,2^{32}[$$
-$$\textit{No overlap:}\quad\forall (p_1,n_1), (p_2,n_2)\in\texttt{Allocated}, [p_1,n_1]\text{ and }[p_2,n_2]\text{ are disjoint.}$$
+$$\textit{No overlap:}\quad\forall (p_1,n_1), (p_2,n_2)\in\texttt{Allocated}, [p_1,p_1+n_1]\text{ and }[p_2,p_2+n_2]\text{ are disjoint.}$$
 In the concrete model, integer-pointer cast is possible because concrete addresses are already integer values.
 
 However, optimizations such as constant propagation and dead allocation elimination are not supported in many cases, because external functions might change the value of any address. In the concrete model, there is no ownership notion, and every address is always accessible.
@@ -66,7 +66,7 @@ A block can be either logical or concrete, in which case it has a concrete addre
 $$\texttt{Block}=\{(v,p,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{n},p\in\texttt{int32}\cup\{\undef\}\}$$
 The concrete blocks need to be consistent:
 $$\textit{No overflow:}\quad\forall (v,p,n,c)\in\texttt{Blocks}, (p\neq\undef~\wedge~ v=\textit{true})\implies[p,p+n]~\subseteq~]0,2^{32}[$$
-$$\textit{No overlap:}\quad\forall (p_1,n_1), (p_2,n_2)\in\texttt{Blocks}, (p_1\neq\undef~\wedge~p_2\neq\undef ~\wedge~ v_1=v_2=\textit{true})\implies$$ $$[p_1,n_1]\text{ and }[p_2,n_2]\text{ are disjoint.}$$
+$$\textit{No overlap:}\quad\forall (p_1,n_1), (p_2,n_2)\in\texttt{Blocks}, (p_1\neq\undef~\wedge~p_2\neq\undef ~\wedge~ v_1=v_2=\textit{true})\implies$$ $$[p_1,p_1+n_1]\text{ and }[p_2,p_2+n_2]\text{ are disjoint.}$$
 A pointer is a pair $(l,i)$ of a block identifier and an offset inside that block. If the block $l$ starts at the address $p\neq\undef$, then $(l,i)$ can be cast as the integer $p+i$ and vice versa (thanks to the property of no overlapping, an integer can correspond to at most one valid concrete block).
 
 Optimizations are still be possible with logical blocks, because they do not have concrete addresses, and integer-pointer casts are possible with concrete blocks.
