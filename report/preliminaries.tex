@@ -20,7 +20,7 @@ For this work, the pass from CompCert C to Clight is important, because \todo{..
 \subsubsection{Correctness}
 The parser and most of the back-end passes (see \textbf{Fig.\ref{fig:compcertpasses}.}) are verified with Coq\todo{foot note on Coq?}.
 In CompCert, the behavior of a program is a trace (a list of I/O operations) and an indication on the program's termination (does it terminates? is it on an error?). %this might need better phrasing
-The correctness theorem of CompCert states that the behavior of the generated code is one of the possible behaviors of the source code (C is non-deterministic). To prove it, it uses a backward simulation (see section \todo{cite section}).
+The correctness theorem of CompCert states that the behavior of the generated code is one of the possible behaviors of the source code (C is non-deterministic). To prove it, it uses a backward simulation (see section~\ref{sec:mixedsim}).
 
 \subsubsection{Optimizations}
 CompCert performs the following optimizations:
@@ -33,7 +33,7 @@ In this section, we present the logical and concrete models with their limits, w
 
 In C semantics, the memory is divided in several \textit{memory blocks}, that contain several memory addresses. Memory blocks can be allocated (through the \texttt{malloc} function for instance), loaded, freed\dots A memory block can contain the values of several variables. 
 \subsubsection{Logical Model}
-The logical model described here is similar to the one used in~\cite{DBLP:conf/pldi/KangHMGZV15}. However, it slightly differs from CompCert's current logical model described in~\cite{leroy:hal-00703441} (see section \addref{memupdate?}).
+The logical model described here is similar to the one used in~\cite{DBLP:conf/pldi/KangHMGZV15}. However, it slightly differs from CompCert's current logical model described in~\cite{leroy:hal-00703441} (see section~\ref{sec:memupdate}).
 In this model, blocks are all logical, meaning that they are not mapped to a physical memory address.
 Blocks are a fixed-size array of values.
 A validity flag $v$ indicates if the block has been freed.
@@ -43,7 +43,7 @@ $$\texttt{Block}=\{(v,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{
 
 With a logical model, programs have infinite memory.
 Moreover, a logical model can allow functions to have exclusive control over a logical block.
-When a block identifier does not escape when calling a function (\textit{i.e.} if the block identifier cannot be found inside the global variables or the function arguments), then the called function cannot access the block \addref{section memupdate on abstract analysis?}.% too long sentence?
+When a block identifier does not escape when calling a function (\textit{i.e.} if the block identifier cannot be found inside the global variables or the function arguments), then the called function cannot access the block (see section~\ref{sec:memupdate}).% too long sentence?
 This allow for many optimizations. \todo{example}.
 
 However, logical models do not support integer-pointer casts. They can allow some arithmetic operations on offsets, but is impossible to get a physical address from a block.
@@ -71,8 +71,8 @@ A pointer is a pair $(l,i)$ of a block identifier and an offset inside that bloc
 
 Optimizations are still be possible with logical blocks, because they do not have concrete addresses, and integer-pointer casts are possible with concrete blocks.
 To allow as many optimizations as possible, we should use as many logical blocks as possible. Thus, new blocks should be made logical when allocated.
-However, for each pointer to integer cast, we need a concrete block. Then we transform each pointer to integer cast by adding a \textit{capture} function just before it. This function transforms a logical block into a concrete one, giving it a concrete address that still satisfy the memory consistency. Its semantics are described section \addref{section sem}.
-It introduces non-determinism in every language of CompCert (including the assembly). This is handled in section \addref{section mixedsim}.
+However, for each pointer to integer cast, we need a concrete block. Then we transform each pointer to integer cast by adding a \textit{capture} function just before it. This function transforms a logical block into a concrete one, giving it a concrete address that still satisfy the memory consistency. Its semantics are described section~\ref{sec:capturesem}.
+It introduces non-determinism in every language of CompCert (including the assembly). This is handled in section~\ref{sec:mixedsim}.
 
 The quasi-concrete is described in many details in~\cite{DBLP:conf/pldi/KangHMGZV15}.
 \subsubsection{Optimization and casts examples}
