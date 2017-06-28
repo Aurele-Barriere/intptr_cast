@@ -15,7 +15,7 @@ This leads to difficult bugs~\cite{DBLP:conf/apsys/WangCCJZK12} and the impossib
 
 % integer pointer casts
 One popular unspecified feature of the C language is the casting between integer and pointer values.
-Such casts have many uses in real C programs. \todo{examples: Linux Kernel, JVM, others could be found in (http://www.cl.cam.ac.uk/~pes20/cerberus/notes50-survey-discussion.html).}
+Such casts have many uses in real C programs. For instance, pointer to integer cast is used in the Linux Kernel or JVM implementations for bitwise operations on pointers. Integer arithmetic on pointers is used in Linux, FreeBSD, QEMU and others~\cite{cerberus}. Another common usage is to use the bit represenation of a pointer as indexing key of a hash table (used for instance in the C++ standard library).
 When compiled with most compilers, those programs behave as expected from the programmers. But these intuitive semantics have not been formalized in the C standard yet.
 
 % motivation of the Kanget al. paper

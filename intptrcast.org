@@ -341,7 +341,7 @@
    Then we will not have all the deterministic theorems.
    -> Mixed Bisimulations.
 
-** DONE [INTPTR][sem] implement extcall_capture_sem
+** TODO [INTPTR][sem] implement extcall_capture_sem
 *** DONE [INTPTR][sem] what should be the return value of a capture?
     Vundef, like free, I think
 *** TODO [INTPTR][sem] rewrite extcall_properties
@@ -359,6 +359,9 @@
    see page 6, section 4 of the paper.
    The denormalize is a predicate, not a function.
 ** TODO [INTPTR][sem] add cast semantics
+** TODO [INTPTR][sem] what should be the rule for pointer equality?
+   see [4/15] of cerberus. what if different type ([6/15]) ? pointer comparison ([7/15]) ?
+   should we just cast to int before.
 * TODO [INTPTR][mixedsim] Mixed Simulations
 ** DONE [INTPTR][mixedsim] understand the proof of mixed sim -> backwards sim
    each time we use forward reasonning, we have 
@@ -391,17 +394,19 @@
    Then we will have two kinds of mixed simulations: with receptive_at, and with strongly_receptive_at
    Then we need to prove that mixed(strong_r) A B -> mixed(r) A B.
    And we keep the proof that mixed(r) A B -> backward A B.
-** TODO [INTPTR][mixedsim] new proof for mixed simulation
+** DONE [INTPTR][mixedsim] new proof for mixed simulation
    mixed_SR A B -> mixed_R (atomic A) B
    it should look like the proof of factor_forward
-   maybe you'll need single_events L2 as an hypothesis?
    It seems that single_events is true after CStrategy, so we can require it.
-   
-   For mam_match_buffer, I need to show that if we are in an intermediate state (with t<>E0),
-   then it corresponds to a forward step of s1.
 
-** TODO [INTPTR][mixedsim] every intermediate language is strongly_receptive
-   except maybe for external calls? I don't know how to do that now.
+   I need determinacy when emptying buffer -> it's ok.
+** TODO [INTPTR][mixedsim] every intermediate language is well_behaved_traces
+   It should be true because it is for Cstrategy
+** TODO [INTPTR][mixedsim] every intermediate language is single_events
+   after CStrategy
+** TODO [INTPTR][mixedsim] prove each mixed simulation
+   with strongly_receptive_at
+** TODO [INTPTR][mixedsim] finish the correctness proof
 * TODO [INTPTR] null pointer
   Add it (page 6).
   Raises undef when storing or loading null pointer.
@@ -450,9 +455,7 @@
        We wanted to keep this in case it is useful.
        
        This will change memory consistency.
-
     2) Write a formalized change (like in section 2), then show how it was implemented
-
     3) adding memory consistency
        nextblocks_logical: just a side-effect of how the memory is defined in CompCert,
          it is not a list but a map on Z
@@ -461,7 +464,6 @@
 	 the address of the block itself does not matter.
        no_concrete_overlap:
 	 once again, just look at the addresses. only one non-free address at one given concrete address
-
     4) show the implem (or link to it in Annex)
     5) proofs of consistency
     6) freeing concrete blocks?
@@ -471,13 +473,31 @@
 
        It should not be allowed to use the address of a concrete block, because maybe something was defined at the same place
        Then an external call could guess the address of this new thing.
-
 *** TODO memory injection
-    new theorems to prove for injection
-    what does in change in abstract analysis: new definition to reflect the concreteness of stack
+    1) remind memory injection
+       injection is what defines public and private memory in CompCert
+       injection is what links memory before and after optimization
+    2) memory injection in the quasi concrete model
+       explain why the source should not have more concrete blocks than the target
+    3) what needs to be changed
+       src_concrete
+       src_private
+       unchanged_on -> perhaps this should go in the memupdate part?
+    4) proofs of injection
+       initial memory for a program, etc...
+    5) abstract analysis
+       why do we need to analyze the private calls
+       how do we change the abstract memory
+       how do we change the analysis
 
     see what is written in concrete_compcert.pdf, section 5.
 *** TODO mixed simulations
+    1) simulations
+       bisimulations, forward, backward
+    2) the proof of correctness in CompCert
+    3) Non-determinism
+    4) Mixed simulations and properties
+    5) The new proof of correctness
 *** TODO semantics
 ** TODO Evaluation?
    Anything admitted? 
