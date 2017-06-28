@@ -344,7 +344,7 @@
 ** DONE [INTPTR][sem] implement extcall_capture_sem
 *** DONE [INTPTR][sem] what should be the return value of a capture?
     Vundef, like free, I think
-*** TODO rewrite extcall_properties
+*** TODO [INTPTR][sem] rewrite extcall_properties
     Rewrite them for backward simulation.
 *** TODO [INTPTR][sem] prove extcall_capture_ok
 **** TODO [INTPTR][sem][extcall_properties] ec_mem_inject
@@ -414,12 +414,17 @@
 * TODO [INTPTR][report] Report
   DEADLINE: <2017-08-04 Fri>
   Outline:
-** Introduction
+** TODO Introduction
    Introduction, context and motivation should be one third of the paper...
-*** C semantics
-*** Coq
-*** CompCert
-** Related Works
+*** DONE C semantics
+*** TODO Coq
+*** DONE CompCert
+** DONE Preliminaries
+*** DONE Logical model
+*** DONE Concrete model
+*** DONE Quasi-concrete model
+    be clear with the assumptions for optimizations
+** DONE Related Works
    UB can have a negative effect [ub_bugs] when optimizing
    First approach: identify code whose optim depends on UB [ub_impact] against "optimization-unstable code"
 
@@ -431,32 +436,57 @@
    Finally, the model seems to be compatible with other works, with some adaptation.
    [6][7]Krebber
 
-** Preliminaries
-*** Logical model
-*** Concrete model
-*** Quasi-concrete model
-    be clear with the assumptions for optimizations
-** Contribution
-*** memory update
-    adding the consistency, new fields
-    validity boolean removed, replaced with permission system
-    -> what does it change?
-    freeing concrete blocks...
-*** memory injection
+** TODO Contribution
+*** DONE memory update
+    1) adding fields
+       mem_concrete, mem_offset_bounds
+
+       mem_offset_bounds instead of size because allocation does not start at 0.
+       memory overhead?
+
+       no validity flag: use of permissions instead.
+       In CompCert, more precise : free addresses and not whole blocks.
+       See for instance the free, alloc etc...
+       We wanted to keep this in case it is useful.
+       
+       This will change memory consistency.
+
+    2) Write a formalized change (like in section 2), then show how it was implemented
+
+    3) adding memory consistency
+       nextblocks_logical: just a side-effect of how the memory is defined in CompCert,
+         it is not a list but a map on Z
+       addresses_in_range:
+         not a lot of changes. remember that only the addresses (with offset) are important,
+	 the address of the block itself does not matter.
+       no_concrete_overlap:
+	 once again, just look at the addresses. only one non-free address at one given concrete address
+
+    4) show the implem (or link to it in Annex)
+    5) proofs of consistency
+    6) freeing concrete blocks?
+       maybe we need to discuss this a little more
+       Right now, the concrete field isn't changed, meaning that you can use the address of a freed variable?
+       I'm not sure
+
+       It should not be allowed to use the address of a concrete block, because maybe something was defined at the same place
+       Then an external call could guess the address of this new thing.
+
+*** TODO memory injection
     new theorems to prove for injection
     what does in change in abstract analysis: new definition to reflect the concreteness of stack
 
     see what is written in concrete_compcert.pdf, section 5.
-*** mixed simulations
-*** semantics
-** Evaluation?
+*** TODO mixed simulations
+*** TODO semantics
+** TODO Evaluation?
    Anything admitted? 
    Maybe test the changes made to abstract analysis to see if we don't loose too much private calls
    See what optimizations are successful
 
    [13][2] of symbolic values are said to bebenchmarks with low-level pointer arithmetics
-** Conclusion
-** Annex
+** TODO Conclusion
+** TODO Annex
    Examples of optimizations? 
    With and without pointers (see [Kang et al] for examples in the quasi concrete model)
 * TODO [INTPTR][pres] Presentation

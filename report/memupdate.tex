@@ -1,2 +1,55 @@
 \label{sec:memupdate}
-\todo{memupdate}
+To begin, the quasi-concrete memory model described in~\cite{DBLP:conf/pldi/KangHMGZV15} has been implemented in CompCert. 
+
+However, the definition has to be changed a little to adapt to CompCert's current memory model~\cite{leroy:hal-00703441}.
+
+\subsubsection{Adapting the definition to CompCert}
+In CompCert, the memory is not a list of blocks, but several maps.
+The first one, \texttt{mem\_contents}, is a map from block identifiers and offsets to memory values. It describes the content of the memory.
+The second one, \texttt{mem\_access}, is a map from block identifiers and offsets to permissions. It gives a permission to each logical address of the memory.
+The memory also contains the identifier of the next block to be allocated.
+
+We start by adding to the memory a map \texttt{mem\_concrete} from blocks to a value that is either \texttt{None}, for logical blocks, or \texttt{Some} address, for concrete blocks.
+
+Because the size of blocks was not remembered by CompCert, we add a map \texttt{mem\_offset\_bounds} from blocks to a pair of numbers, describing the range of offsets for which the block has been allocated. We need to add both bounds, because CompCert does not always allocate blocks starting at offset 0. \todo{example, memory overhead when doing malloc?}
+
+CompCert uses the permissions to know what address have been freed. This differs from the block-wise validity boolean described in section~\ref{subsec:models}.
+In fact, CompCert \texttt{free} operation is not performed on whole blocks, but on a range of offsets of a block. It allows memory blocks to contain more than one variable. This is the case for instance when \todo{stackframe? other cases?}.
+
+\subsubsection{Consistency}
+Because we added concrete addresses to some blocks, we need to define several consistency properties.
+
+We add the predicate \texttt{addresses\_in\_range}, implementing the \textit{No overflow} property of section~\ref{subsec:models}. It states that every allocated address is in the range $]0,2^{32}[$ \todo{explain why first and last address are reserved}.
+
+We add the predicate \texttt{no\_concrete\_overlap}, implementing the \textit{No overlap} property of section~\ref{subsec:models}. Because the permissions are address-wise in CompCert, and blocks can be freed partially, we change the definition of \textit{No overlap}. Informally, we use the following definition: for each concrete address, there is at most one block where the address is inside the allocated range and hasn't been freed. This allows to allocate blocks over freed memory.
+
+For every memory operation that changes the memory (allocation, store, free, capture), we prove that it preserves the memory consistency.
+
+\subsubsection{Implementation}
+Here is the new memory, as written in CompCert.
+{\footnotesize
+\begin{lstlisting}
+Record mem' : Type := mkmem {
+  mem_contents: PMap.t (ZMap.t memval);  (**r [block -> offset -> memval] *)
+  mem_access: PMap.t (Z -> perm_kind -> option permission);
+  (**r [block -> offset -> kind -> option permission] *)
+  mem_concrete: PMap.t (option Z); (** [block -> option Z] **)
+  mem_offset_bounds : PMap.t (Z*Z); (** [block -> Z * Z ] **)
+  nextblock: block;
+  access_max:
+    forall b ofs, perm_order'' (mem_access#b ofs Max) (mem_access#b ofs Cur);
+  nextblock_noaccess:
+    forall b ofs k, ~(Plt b nextblock) -> mem_access#b ofs k = None;
+  contents_default:
+    forall b, fst mem_contents#b = Undef;
+  nextblocks_logical:
+    forall b, ~(Plt b nextblock) -> mem_concrete#b = None;
+  addresses_in_range:
+    forall bo addr
+    (IN_BLOCK: addr_in_block mem_concrete mem_offset_bounds mem_access addr bo),
+      in_range addr (1,max_address);
+  no_concrete_overlap:
+    forall addr, uniqueness
+          (addr_in_block mem_concrete mem_offset_bounds mem_access addr);
+}.
+\end{lstlisting}}
