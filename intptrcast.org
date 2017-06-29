@@ -406,7 +406,9 @@
    after CStrategy
 ** TODO [INTPTR][mixedsim] prove each mixed simulation
    with strongly_receptive_at
-** TODO [INTPTR][mixedsim] finish the correctness proof
+** DONE [INTPTR][mixedsim] finish the correctness proof
+** TODO [INTPTR][mixedsim] fix the proof of transf_cstrategy_program_preservation
+   in driver/Complements.v
 * TODO [INTPTR] null pointer
   Add it (page 6).
   Raises undef when storing or loading null pointer.

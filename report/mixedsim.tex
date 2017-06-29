@@ -1,8 +1,54 @@
 \label{sec:mixedsim}
-\subsection{Simulations in CompCert}
-\subsubsection{Forward Simulations}
-\subsubsection{Bacward Simulations}
+In the quasi-concrete memory model, with the addition of the \textit{capture} function, every language of CompCert is now non-deterministic. Indeed, giving a concrete address to a logical block is a non-deterministic operation, whereas the logical allocation used so far in CompCert was deterministic.
+
+\subsection{Simulations in CompCert and properties}
+To prove the correctness of CompCert, one must prove that the behavior of the generated target code is one of the behaviors of the original source code. 
+To do so, CompCert uses \textit{backward simulations} between the semantics of the source code and the generated code.
+In CompCert, the semantics of each language is defined. The semantics of a program is a set of states (with initial and final states) and a relation between states meaning that one can go from one state to another whith a given observable trace.
+\todo{pictures? see compcert\_overview.pdf}
+
+\subsubsection{Definition: Semantics of a program p}: $\mathit{Sem}(p) = (\states{p},I_p,F_p,\step{p})$ where $\step{p}\subseteq\states {p}\times\traces\times\states{p}$ and $I,F\subseteq\states{p}$. $t\in\traces$ is a trace, \textit{i.e.} a list of observable events (system call, store or load).
+
+A straightforward way to show that two programs $p_s$ and $p_t$ are semantically equivalent could be to show that their semantics are \textit{bisimulated}, meaning that there exists a relation between states of the source and target semantics such that every time the source program takes a step to a new state, the target program takes a step with the same trace to a matching state, and vice versa. However, such a relation is in general too strong, as it does not allow basic optimizations.
+
+A backward simulation is a weaker simulation that proves semantics preservation while still allowing optimizations.
+
+\subsubsection{Definition: Backward Simulation} Let $sp$ a source program and $tp$ a target program. A backward simulation is a relation $R$ such that
+\begin{itemize}
+\item $\forall i\in I_{tp}, \exists i'\in I_{sp}, (i,i')\in R$
+\item $\forall t\in\traces, ss_1\in\states{sp},st_1,st_2\in\states{tp},$\\
+      $\quad(ss_1,st_1)\in R~\wedge~(st_1,t,st_2)\in\step{tp}\implies$\\
+      $\exists ss_2\in\states{sp}, (ss_1,t,ss_2)\in\step{sp}$
+\end{itemize}
+Informally, each time the target program takes a step to a new state, the source program also takes a step to a matching state. This is enough to claim that the target's behavior is a refinment of the source's behavior.
+\todo{some tree picture to describe backward sim}
+
+\subsubsection{Forward Simulations} One can similarly define a forward simulation in a symmetric way: each time the source program takes a step to a newt state, the target program also takes a step to a matchin state. This means that the target's behavior extends the source's behavior.
+
+\subsubsection{Theorem: forward to backward} If the target language is \textit{determinate} and the source language is \textit{receptive} and there is a forward simulation between the semantics of $sp$ and $tp$, then we can construct a backward simulation between the semantics of $sp$ and $tp$. \todo{definition of receptive and determinate}
+
+\subsubsection{Theorems: simulation composition} Let $S_1,S_2,S_3$ be semantics.
+If there is are forward simulations between $S_1$ and $S_2$, and between $S_2$ and $S_3$, then there is a forward simulation between $S_1$ and $S_3$.
+If there is are backward simulations between $S_1$ and $S_2$, and between $S_2$ and $S_3$, then there is a backward simulation between $S_1$ and $S_3$.
+
+
+\subsection{Atomic Semantics and properties}
+\subsubsection{Definition: Atomic Semantics} $\mathit{Atomic}(\states{p},I_p,F_p,\step{p}) = (\traces\times\states{p},\{[]\}\times I_p,\{[]\}\times F_p,\atstep{p})$ where $[]$ is the empty trace and $\atstep{p}$ is defined as follow:
+\begin{itemize}
+\item $(s_1,[],s_2)\in\step{p}\implies(([],s_1),[],([],s_2))\in\atstep{p}$
+\item $(s_1,ev::t,s_2)\in\step{p}\implies(([],s_1),[ev],(t,s_2))\in\atstep{p}$
+\item $((ev::t,s),[ev],(t,s))\in\atstep{p}$
+\end{itemize}
+Informally, $\mathit{Atomic}$ of a semantics is the same semantics where steps with multiple events have been replaced with several single-event steps. This is illustrated figure \todo{example}.
+
+\subsubsection{Theorem: Factor forward simulation} If there is a forward simulation between $S_1$ and $S_2$ and $S_2$ has \textit{single events}, then there is a forward simulation between $\mathit{Atomic}(S_1)$ and $S_2$.
+
+\subsubsection{Theorem: Factor backward simulation} If there is a backward simulation between $S_1$ and $S_2$ and $S_1$ has \textit{single events}, then there is a forward simulation between $S_1$ and $\mathit{Atomic}(S_2)$.
+
 \subsection{The correctness proof in CompCert}
+To prove the correctness of the compilation, we need to prove that for every source C program $sp$, if $tp$ is the compiled ASM program, then we have a backward simulation between $\mathit{Sem}(sp)$ and $\mathit{Sem}(tp)$.
+
+
 \subsection{Non-determinism}
-\subsection{Mixed simulation}
+\subsection{Mixed simulations and properties}
 \subsection{The new correctness proof}
