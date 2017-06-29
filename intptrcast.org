@@ -478,6 +478,8 @@
        injection is what defines public and private memory in CompCert
        injection is what links memory before and after optimization
     2) memory injection in the quasi concrete model
+       compcert tso : out of memory is no behavior (section 2.3)
+       if more concrete blocks in the source: source can succeed but target fail
        explain why the source should not have more concrete blocks than the target
     3) what needs to be changed
        src_concrete
@@ -509,6 +511,12 @@
 ** TODO Annex
    Examples of optimizations? 
    With and without pointers (see [Kang et al] for examples in the quasi concrete model)
+** TODO Add limits of quasi-concrete
+   see section 3.7
+   this could be added into the preliminaries
+** TODO Add the state of int-ptr cast in CompCert
+   see section 2.2
+   this could be added to preliminaries or introduction
 * TODO [INTPTR][pres] Presentation
   DEADLINE: <2017-08-04 Fri>
 ** TODO [INTPTR][pres] Presentations at the ENS

@@ -10,9 +10,24 @@ Private memory is the set of blocks that are mapped to \texttt{None}. These bloc
 For instance, when performing an unknown external call in both the source and target programs, CompCert assumes that it preserves the memory injection. Thus, the new public memories are equivalent but the call may have changed the private part.
 
 \subsection{Memory injection in the quasi-concrete model}
+
+\begin{figure}
+\includegraphics[scale=0.35]{img/meminj.png}
+\caption{Memory Injection, taken from~\cite{DBLP:conf/pldi/KangHMGZV15}}
+\label{fig:meminj}
+\end{figure}
+
+
 As described in~\cite{DBLP:conf/pldi/KangHMGZV15}, memory injection using the quasi-concrete model should be stronger.
 
+To preserve behavior refinement, any successful memory access in the source memory should succeed as well in the private memory. This has several consequences (Fig.~\ref{fig:meminj}).
+Firstly, when a source concrete block is mapped to another target block with a given offset in a memory injection, the target should be concrete and their concrete addresses should differ with the same offset.
+Finally, there should be no concrete block in the source's private memory.
+Formally:
+$$\forall b_1,b_2,o,p,\quad f(b_1)=(b_2,o)\wedge b_1\text{ has address }p\implies b_2\text{ has address }p+o$$
+$$\forall b_1,\quad f(b_1)=\texttt{None}\implies b_1\text{ has address }\texttt{None}$$
 
-\subsection{Implementation}
-\subsection{Procing the new injection}
+These two properties have been added to CompCert's memory injection. \todo{add implem in Annex}
+
+\subsection{Proving the new injection}
 \subsection{Abstract Analysis}
