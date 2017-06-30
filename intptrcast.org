@@ -400,15 +400,20 @@
    It seems that single_events is true after CStrategy, so we can require it.
 
    I need determinacy when emptying buffer -> it's ok.
-** TODO [INTPTR][mixedsim] every intermediate language is well_behaved_traces
+** DONE [INTPTR][mixedsim] every intermediate language is well_behaved_traces
    It should be true because it is for Cstrategy
-** TODO [INTPTR][mixedsim] every intermediate language is single_events
+** DONE [INTPTR][mixedsim] every intermediate language is single_events
    after CStrategy
+** TODO [INTPTR][mixedsim] add the same proofs for arm and powerpc Asm
+   I can't compile it right now. It should be the same proof than for x86
+   there should be well_behaved_traces and sinle_events as well
 ** TODO [INTPTR][mixedsim] prove each mixed simulation
    with strongly_receptive_at
 ** DONE [INTPTR][mixedsim] finish the correctness proof
-** TODO [INTPTR][mixedsim] fix the proof of transf_cstrategy_program_preservation
+** DONE [INTPTR][mixedsim] fix the proof of transf_cstrategy_program_preservation
    in driver/Complements.v
+   we should maybe just remove it
+   write about it on Github
 * TODO [INTPTR] null pointer
   Add it (page 6).
   Raises undef when storing or loading null pointer.
@@ -527,5 +532,5 @@
    SCHEDULED: <2017-09-05 Tue>
 ** TODO [INTPTR][pres] Presentations at the ENS
    SCHEDULED: <2017-09-06 Wed>
-* TODO [INTPTR] Abstract
+* DONE [INTPTR] Abstract
   DEADLINE: <2017-06-30 Fri>
