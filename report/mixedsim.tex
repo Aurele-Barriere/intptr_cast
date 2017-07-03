@@ -48,7 +48,22 @@ Informally, $\mathit{Atomic}$ of a semantics is the same semantics where steps w
 \subsection{The correctness proof in CompCert}
 To prove the correctness of the compilation, we need to prove that for every source C program $sp$, if $tp$ is the compiled ASM program, then we have a backward simulation between $\mathit{Sem}(sp)$ and $\mathit{Sem}(tp)$.
 
+The previous proof in CompCert used the following reasoning:
+\begin{itemize}
+\item Prove a forward simulation for each pass between CStrategy and ASM.
+\item Use the simulation composition theorem to deduce a forward simulation between CStrategy and ASM
+\item Use the Factor forward simulation theorem to deduce a forward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
+\item Use the forward to backward theorem to deduce a backward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
+\item Prove a bacward simulation between CompCert C and Cstrategy.
+\item Use the factor backward theorem to prove a simulation between CompCert C and $\mathit{Atomic}(\text{CStrategy})$.
+\item Use the simulation composition theorem to deduce a backward simulation between CompCert C and ASM.
+\end{itemize}
+\todo{figure}
 
 \subsection{Non-determinism}
+In the quasi-concrete model, the intermediate and target languages of CompCert are no longer \textit{determinate}. Indeed, the \textit{capture} function can give any address to a logical block, as long as it doesn't overlap with other blocks.
+
+The use of forward reasoning is no longer relevant, because \todo{...}
+
 \subsection{Mixed simulations and properties}
 \subsection{The new correctness proof}
