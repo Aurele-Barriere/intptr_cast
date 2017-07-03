@@ -449,7 +449,7 @@
 
    Finally, the model seems to be compatible with other works, with some adaptation.
    [6][7]Krebber
-
+   
 ** TODO Contribution
 *** DONE memory update
     1) adding fields
@@ -516,6 +516,15 @@
    See what optimizations are successful
 
    [13][2] of symbolic values are said to bebenchmarks with low-level pointer arithmetics
+   
+   Maybe it can be simpler.
+   Just admit the correctness (it should be proved or almost proved).
+   Then show that there are optimizations that are done.
+   This proves that it is better than concrete model, and we know we are more expressive than logical model.
+   How to show that optim are done? Can we print the AST of intermediate languages?
+   
+   Add a little time comparison to show that the compilation isn't slower and I think it should be anough.
+
 ** TODO Conclusion
 ** TODO Annex
    Examples of optimizations? 
