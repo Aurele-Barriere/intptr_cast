@@ -409,6 +409,8 @@
    there should be well_behaved_traces and sinle_events as well
 ** TODO [INTPTR][mixedsim] prove each mixed simulation
    with strongly_receptive_at
+   Started the proof of backend/Linearizeproof.v. Still need the determinacy, the initial states backward, 
+   the strong receptivity, and the nostep on final states.
 ** DONE [INTPTR][mixedsim] finish the correctness proof
 ** DONE [INTPTR][mixedsim] fix the proof of transf_cstrategy_program_preservation
    in driver/Complements.v
@@ -534,3 +536,23 @@
    SCHEDULED: <2017-09-06 Wed>
 * DONE [INTPTR] Abstract
   DEADLINE: <2017-06-30 Fri>
+* DONE [INTPTR] Abstract analysis
+  I think it used to be true for logical model, but now false for quasi-concrete.
+  Provide an example?
+  I don't think there was a bug.
+* DONE [INTPTR] va_strict, Strict/Relaxed mode for value analysis
+  strict or relaxed? what's the impact on private/public calls?
+  Strict mode is made to comply exactly with CompCert Semantics.
+  However, sometimes, it is a bit different than what we expect from real code
+  Relaxed mode tries to be more realistic.
+  For instance, pointer arithmetics can give a pointer and not undef.
+  One question left: are the assumptions made in relaxed mode still sound with regards to the new memory model?
+  Assumptions: 
+  - synthetized addresses do not point to the stack (aptr_of_aval)
+  - Pointer arithmetics does not escape from the block (xor)
+* TODO [INTPTR] Find a bug
+  in abstract analysis,
+  try to find a bug in relaxed mode with regards to standard C semantics.
+  in standard C semantics, casting to integer then to pointer should give the same result.
+  Also, we can assume that continuous values have continuous pointers.
+  We should use the fact that analysis assumes that xor on pointers stays in the same block
