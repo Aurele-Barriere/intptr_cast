@@ -23,7 +23,7 @@ A backward simulation is a weaker simulation that proves semantics preservation 
 Informally, each time the target program takes a step to a new state, the source program also takes a step to a matching state. This is enough to claim that the target's behavior is a refinment of the source's behavior.
 \todo{some tree picture to describe backward sim}
 
-\subsubsection{Forward Simulations} One can similarly define a forward simulation in a symmetric way: each time the source program takes a step to a newt state, the target program also takes a step to a matchin state. This means that the target's behavior extends the source's behavior.
+\subsubsection{Forward Simulations} One can similarly define a forward simulation in a symmetric way: each time the source program takes a step to a new state, the target program also takes a step to a matching state. This means that the target's behavior extends the source's behavior.
 
 \subsubsection{Theorem: forward to backward} If the target language is \textit{determinate} and the source language is \textit{receptive} and there is a forward simulation between the semantics of $sp$ and $tp$, then we can construct a backward simulation between the semantics of $sp$ and $tp$. \todo{definition of receptive and determinate}
 
@@ -54,7 +54,7 @@ The previous proof in CompCert used the following reasoning:
 \item Use the simulation composition theorem to deduce a forward simulation between CStrategy and ASM
 \item Use the Factor forward simulation theorem to deduce a forward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
 \item Use the forward to backward theorem to deduce a backward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
-\item Prove a bacward simulation between CompCert C and Cstrategy.
+\item Prove a backward simulation between CompCert C and Cstrategy.
 \item Use the factor backward theorem to prove a simulation between CompCert C and $\mathit{Atomic}(\text{CStrategy})$.
 \item Use the simulation composition theorem to deduce a backward simulation between CompCert C and ASM.
 \end{itemize}
@@ -63,7 +63,34 @@ The previous proof in CompCert used the following reasoning:
 \subsection{Non-determinism}
 In the quasi-concrete model, the intermediate and target languages of CompCert are no longer \textit{determinate}. Indeed, the \textit{capture} function can give any address to a logical block, as long as it doesn't overlap with other blocks.
 
-The use of forward reasoning is no longer relevant, because \todo{...}
+The use of forward reasoning is no longer relevant, because \todo{no determinate, and no forward external call properties}
 
 \subsection{Mixed simulations and properties}
+To prove the correctness of CompCert with the new memory model, we introduce \textit{mixed simulations}. Informally, at each state of the semantics, either we have a local forward simulation, or a local backward simulation. For most steps, we use the forward reasoning, but for external calls (such as \textit{capture} and other unknown functions that might capture blocks), we use a backward reasoning.
+
+\subsubsection{Definition: Mixed Simulation} Let $sp$ a source program and $tp$ a target program. A mixed simulation is a relation $R$ such that
+\begin{itemize}
+\item $\forall i\in I_{tp}, \exists i'\in I_{sp}, (i,i')\in R$
+\item \todo{...}
+\item $\forall t\in\traces, ss_1\in\states{sp},st_1,st_2\in\states{tp},$\\
+      $\quad(ss_1,st_1)\in R~\wedge~(st_1,t,st_2)\in\step{tp}\implies$\\
+      $\exists ss_2\in\states{sp}, (ss_1,t,ss_2)\in\step{sp}$\todo{change it for mixed definition}
+\end{itemize}
+
+\subsubsection{Theorem: Factor mixed simulation}
+.\todo{...}
+\subsubsection{Theorem: Mixed to Backward simulation}
+.\todo{...}
+
 \subsection{The new correctness proof}
+\begin{itemize}
+\item Prove a mixed simulation for each pass between CStrategy and ASM.
+\item Use the Factor mixed simulation theorem for each pass between CStrategy and ASM.
+\item Use the Mixed to Backward simulation theorem for each pass between CStrategy and ASM.
+\item Use the Factor backward simulation theorem for each pass between CStrategy and ASM.
+\item Use the Simulation composition theorem to deduce a backward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
+\item Prove a backward simulation between CompCert C and Cstrategy.
+\item Use the factor backward theorem to prove a simulation between CompCert C and $\mathit{Atomic}(\text{CStrategy})$.
+\item Use the simulation composition theorem to deduce a backward simulation between CompCert C and ASM.
+\end{itemize}
+\todo{figure}

@@ -408,9 +408,27 @@
    I can't compile it right now. It should be the same proof than for x86
    there should be well_behaved_traces and sinle_events as well
 ** TODO [INTPTR][mixedsim] prove each mixed simulation
-   with strongly_receptive_at
-   Started the proof of backend/Linearizeproof.v. Still need the determinacy, the initial states backward, 
-   the strong receptivity, and the nostep on final states.
+*** DONE [INTPTR][mixedsim][simulations] define the is_external prop
+    For states
+    Not only CallStates, but also States where builtins can be called
+*** DONE [INTPTR][mixedsim][simulations] change the step_simulation theorem
+    Only for non external states (ie forward states)
+*** TODO [INTPTR][mixedsim][simulations] Apply the mixed simulation
+    for the RTL->RTL proof in backend/Deadcodeproof.v
+**** TODO [INTPTR][mixedsim][simulations][proof] init states backward
+**** TODO [INTPTR][mixedsim][simulations][proof] final states
+**** DONE [INTPTR][mixedsim][simulations][proof] destruct is_external
+**** TODO [INTPTR][mixedsim][simulations][proof] external calls
+**** DONE [INTPTR][mixedsim][simulations][proof] final states (for forward sim)
+**** DONE [INTPTR][mixedsim][simulations][proof] stongly_receptive_at
+**** TODO [INTPTR][mixedsim][simulations][proof] determinate_at
+     I just need to finish the proof of match_not_external
+**** TODO [INTPTR][mixedsim][simulations][proof] sound_state
+**** DONE [INTPTR][mixedsim][simulations][proof] no step
+** TODO [INTPTR][mixedsim] prove the new external_call properties
+   on each builtin function
+   there's an issue with ec_mem_inject and volatile_load
+   Maybe the ex_mem_inject does not need the varg lessdef?
 ** DONE [INTPTR][mixedsim] finish the correctness proof
 ** DONE [INTPTR][mixedsim] fix the proof of transf_cstrategy_program_preservation
    in driver/Complements.v
@@ -523,6 +541,8 @@
    This proves that it is better than concrete model, and we know we are more expressive than logical model.
    How to show that optim are done? Can we print the AST of intermediate languages?
    
+   Then we show when there are optimizations and where they cannot be done (concrete blocks).
+   Discuss why it should be ok.
    Add a little time comparison to show that the compilation isn't slower and I think it should be anough.
 
 ** TODO Conclusion
