@@ -349,12 +349,14 @@
 *** TODO [INTPTR][sem] prove extcall_capture_ok
 **** TODO [INTPTR][sem][extcall_properties] ec_mem_inject
      This predicate should be changed using mixed simulations
+     -> see what have been done in the mixedsim branch
 **** TODO [INTPTR][sem][extcall_properties] ec_mem_extends
      Same thing.
      I don't think this one is true right now. We don't know if there exists a memory 
      such that it is the result of the capture.
      Since the extended memory can be bigger, maybe it can take all of the concrete memory?
      And then we can't capture the block.
+     -> see what have been done in the mixedsim branch
 ** TODO [INTPTR][sem] add normalization of pointer (cast2int) and denormalization (cast2ptr)
    see page 6, section 4 of the paper.
    The denormalize is a predicate, not a function.
@@ -413,22 +415,33 @@
     Not only CallStates, but also States where builtins can be called
 *** DONE [INTPTR][mixedsim][simulations] change the step_simulation theorem
     Only for non external states (ie forward states)
-*** TODO [INTPTR][mixedsim][simulations] Apply the mixed simulation
+*** TODO [INTPTR][mixedsim][simulations] prove the Deadcodeproof mixed simulation
     for the RTL->RTL proof in backend/Deadcodeproof.v
 **** TODO [INTPTR][mixedsim][simulations][proof] init states backward
 **** TODO [INTPTR][mixedsim][simulations][proof] final states
+     the safety ensures that either we keep going or we're on a terminal state
+     but what if the program is infinite?
 **** DONE [INTPTR][mixedsim][simulations][proof] destruct is_external
 **** TODO [INTPTR][mixedsim][simulations][proof] external calls
+     we need to take a look at the extcall_properties first
 **** DONE [INTPTR][mixedsim][simulations][proof] final states (for forward sim)
-**** DONE [INTPTR][mixedsim][simulations][proof] stongly_receptive_at
+**** DONE [INTPTR][mixedsim][simulations][proof] strongly_receptive_at
 **** TODO [INTPTR][mixedsim][simulations][proof] determinate_at
      I just need to finish the proof of match_not_external
-**** TODO [INTPTR][mixedsim][simulations][proof] sound_state
+**** DONE [INTPTR][mixedsim][simulations][proof] sound_state
 **** DONE [INTPTR][mixedsim][simulations][proof] no step
+**** TODO [INTPTR][mixedsim][simulations][proof] safety in backward simulation
 ** TODO [INTPTR][mixedsim] prove the new external_call properties
    on each builtin function
-   there's an issue with ec_mem_inject and volatile_load
    Maybe the ex_mem_inject does not need the varg lessdef?
+   I removed the varg_lessdef so it might be an issue.
+   Or maybe load Vundef should give Vundef?
+   There's an issue if we remove the Val.inject_list in ec_mem_inject for volatile_store.
+*** TODO [INTPTR][mixedsim][extcall] prove the builtins lemma
+    volatile_load_inject
+    volatile_load_extends
+    volatile_store_inject
+    volatile_store_extends
 ** DONE [INTPTR][mixedsim] finish the correctness proof
 ** DONE [INTPTR][mixedsim] fix the proof of transf_cstrategy_program_preservation
    in driver/Complements.v
