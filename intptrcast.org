@@ -433,17 +433,18 @@
 **** DONE [INTPTR][mixedsim][simulations][proof] no step
 **** TODO [INTPTR][mixedsim][simulations][proof] safety in backward simulation
 *** TODO [INTPTR][mixedsim][simulations][determ] Determinacy of languages
-**** TODO [INTPTR][mixedsim][simulations][determ] prove determinacy of Clight
+**** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of Clight
      need the determinacy of assign_loc, eval_lvalue, eval_expr
      Or maybe I didn't pick enough external states. But if we add more, we need to make sure that
      backward reasoning is possible in these states.
-**** TODO [INTPTR][mixedsim][simulations][determ] prove determinacy of Csharpminor
+**** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of Csharpminor
      we will need a lot of determ theorems
-**** TODO [INTPTR][mixedsim][simulations][determ] prove determinacy of Cminor
+**** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of Cminor
 **** TODO [INTPTR][mixedsim][simulations][determ] prove determinacy of CminorSel
-**** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of RLT
+     There is an issue with external calls!
+**** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of RTL
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of LTL
-**** TODO [INTPTR][mixedsim][simulations][determ] prove determinacy of Mach
+**** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of Mach
      determinacy of rao and store_stack
      rao is just any function, with only one other hypothesis.
      Can we simply add the determinism of return_address_offset as an hypothesis?
