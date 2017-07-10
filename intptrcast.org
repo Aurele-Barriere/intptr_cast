@@ -418,20 +418,21 @@
     Only for non external states (ie forward states)
 *** TODO [INTPTR][mixedsim][simulations] prove the Deadcodeproof mixed simulation
     for the RTL->RTL proof in backend/Deadcodeproof.v
-**** TODO [INTPTR][mixedsim][simulations][proof] init states backward
+**** DONE [INTPTR][mixedsim][simulations][proof] init states backward
 **** TODO [INTPTR][mixedsim][simulations][proof] final states
      the safety ensures that either we keep going or we're on a terminal state
      but what if the program is infinite?
+     Now we just need to prove that we're not on an external state
 **** DONE [INTPTR][mixedsim][simulations][proof] destruct is_external
 **** TODO [INTPTR][mixedsim][simulations][proof] external calls
      we need to take a look at the extcall_properties first
 **** DONE [INTPTR][mixedsim][simulations][proof] final states (for forward sim)
 **** DONE [INTPTR][mixedsim][simulations][proof] strongly_receptive_at
-**** TODO [INTPTR][mixedsim][simulations][proof] determinate_at
+**** DONE [INTPTR][mixedsim][simulations][proof] determinate_at
      I just need to finish the proof of match_not_external
 **** DONE [INTPTR][mixedsim][simulations][proof] sound_state
 **** DONE [INTPTR][mixedsim][simulations][proof] no step
-**** TODO [INTPTR][mixedsim][simulations][proof] safety in backward simulation
+**** TODO [INTPTR][mixedsim][simulations][proof] progress in backward simulation
 *** TODO [INTPTR][mixedsim][simulations][determ] Determinacy of languages
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of Clight
      need the determinacy of assign_loc, eval_lvalue, eval_expr
