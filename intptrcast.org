@@ -344,7 +344,7 @@
 ** TODO [INTPTR][sem] implement extcall_capture_sem
 *** DONE [INTPTR][sem] what should be the return value of a capture?
     Vundef, like free, I think
-*** TODO [INTPTR][sem] rewrite extcall_properties
+*** DONE [INTPTR][sem] rewrite extcall_properties
     Rewrite them for backward simulation.
     see slack
 *** TODO [INTPTR][sem] prove extcall_capture_ok
@@ -416,10 +416,22 @@
     Not only CallStates, but also States where builtins can be called
 *** DONE [INTPTR][mixedsim][simulations] change the step_simulation theorem
     Only for non external states (ie forward states)
-*** TODO [INTPTR][mixedsim][simulations] prove the Deadcodeproof mixed simulation
+*** TODO [INTPTR][mixedsim][simulations] SimplExprProof | Cstrategy -> Clight1
+    I need more Csem theorems. Right now I'm not sure they are true.
+*** TODO [INTPTR][mixedsim][simulations] SimplLocalsProof | Clight1 -> Clight2
+*** TODO [INTPTR][mixedsim][simulations] CshmgenProof | Clight2 -> Csharpminor
+*** TODO [INTPTR][mixedsim][simulations] Cminorgenproof | Csharpminor -> Cminor
+*** TODO [INTPTR][mixedsim][simulations] Selectionproof | Cminor -> CminorSel
+*** TODO [INTPTR][mixedsim][simulations] RTLgenproog | CminorSel -> RTL
+*** TODO [INTPTR][mixedsim][simulations] Tailcallproof | RTL -> RTL
+*** TODO [INTPTR][mixedsim][simulations] Inliningproof | RTL -> RTL
+*** TODO [INTPTR][mixedsim][simulations] Renumberproof | RTL -> RTL
+*** TODO [INTPTR][mixedsim][simulations] Constpropproof | RTL -> RTL
+*** TODO [INTPTR][mixedsim][simulations] CSEproof | RTL -> RTL
+*** DONE [INTPTR][mixedsim][simulations] prove the Deadcodeproof mixed simulation
     for the RTL->RTL proof in backend/Deadcodeproof.v
 **** DONE [INTPTR][mixedsim][simulations][proof] init states backward
-**** TODO [INTPTR][mixedsim][simulations][proof] final states
+**** DONE [INTPTR][mixedsim][simulations][proof] final states
      the safety ensures that either we keep going or we're on a terminal state
      but what if the program is infinite?
      Now we just need to prove that we're not on an external state
@@ -432,8 +444,15 @@
      I just need to finish the proof of match_not_external
 **** DONE [INTPTR][mixedsim][simulations][proof] sound_state
 **** DONE [INTPTR][mixedsim][simulations][proof] no step
-**** TODO [INTPTR][mixedsim][simulations][proof] progress in backward simulation
-*** TODO [INTPTR][mixedsim][simulations][determ] Determinacy of languages
+*** TODO [INTPTR][mixedsim][simulations] Unusedglobproof | RTL -> RTL
+*** TODO [INTPTR][mixedsim][simulations] Allocproof | RTL -> LTL
+*** TODO [INTPTR][mixedsim][simulations] Tunelingproof | LTL -> LTL
+*** TODO [INTPTR][mixedsim][simulations] Linearizeproof | LTL -> Linear
+*** TODO [INTPTR][mixedsim][simulations] Cleanuplabelsproof | Linear -> Linear
+*** TODO [INTPTR][mixedsim][simulations] Debugvarproof | Linear -> Linear
+*** TODO [INTPTR][mixedsim][simulations] Stackingproof | Linear -> Mach
+*** TODO [INTPTR][mixedsim][simulations] Asmgenproofproof | Mach -> ASM
+*** DONE [INTPTR][mixedsim][simulations][determ] Determinacy of languages
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of Clight
      need the determinacy of assign_loc, eval_lvalue, eval_expr
      Or maybe I didn't pick enough external states. But if we add more, we need to make sure that
@@ -441,7 +460,7 @@
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of Csharpminor
      we will need a lot of determ theorems
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of Cminor
-**** TODO [INTPTR][mixedsim][simulations][determ] prove determinacy of CminorSel
+**** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of CminorSel
      There is an issue with external calls!
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of RTL
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of LTL
