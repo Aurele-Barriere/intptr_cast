@@ -410,7 +410,7 @@
 ** TODO [INTPTR][mixedsim] add the same proofs for arm and powerpc Asm
    I can't compile it right now. It should be the same proof than for x86
    there should be well_behaved_traces and sinle_events as well
-** TODO [INTPTR][mixedsim] prove each mixed simulation
+** TODO [INTPTR][mixedsim] prove each mixed simulation without backward step
 *** DONE [INTPTR][mixedsim][simulations] define the is_external prop
     For states
     Not only CallStates, but also States where builtins can be called
@@ -427,7 +427,9 @@
 *** TODO [INTPTR][mixedsim][simulations] Inliningproof | RTL -> RTL
 *** TODO [INTPTR][mixedsim][simulations] Renumberproof | RTL -> RTL
 *** TODO [INTPTR][mixedsim][simulations] Constpropproof | RTL -> RTL
-*** TODO [INTPTR][mixedsim][simulations] CSEproof | RTL -> RTL
+    backward step, mixed_forward_progress and match_not_external remaining.
+*** DONE [INTPTR][mixedsim][simulations] CSEproof | RTL -> RTL
+    only the backward step remaining
 *** DONE [INTPTR][mixedsim][simulations] prove the Deadcodeproof mixed simulation
     for the RTL->RTL proof in backend/Deadcodeproof.v
 **** DONE [INTPTR][mixedsim][simulations][proof] init states backward
@@ -436,8 +438,6 @@
      but what if the program is infinite?
      Now we just need to prove that we're not on an external state
 **** DONE [INTPTR][mixedsim][simulations][proof] destruct is_external
-**** TODO [INTPTR][mixedsim][simulations][proof] external calls
-     we need to take a look at the extcall_properties first
 **** DONE [INTPTR][mixedsim][simulations][proof] final states (for forward sim)
 **** DONE [INTPTR][mixedsim][simulations][proof] strongly_receptive_at
 **** DONE [INTPTR][mixedsim][simulations][proof] determinate_at
@@ -451,7 +451,7 @@
 *** TODO [INTPTR][mixedsim][simulations] Cleanuplabelsproof | Linear -> Linear
 *** TODO [INTPTR][mixedsim][simulations] Debugvarproof | Linear -> Linear
 *** TODO [INTPTR][mixedsim][simulations] Stackingproof | Linear -> Mach
-*** TODO [INTPTR][mixedsim][simulations] Asmgenproofproof | Mach -> ASM
+*** TODO [INTPTR][mixedsim][simulations] Asmgenproof | Mach -> ASM
 *** DONE [INTPTR][mixedsim][simulations][determ] Determinacy of languages
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of Clight
      need the determinacy of assign_loc, eval_lvalue, eval_expr
@@ -465,11 +465,12 @@
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of RTL
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of LTL
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of Mach
-     determinacy of rao and store_stack
-     rao is just any function, with only one other hypothesis.
-     Can we simply add the determinism of return_address_offset as an hypothesis?
-     
-     Store_stack is a call to Mem.storev, which should be deterministic.
+     There is an issue with the determinacy of retun_address_offset, because the result is an int (value+proof)
+     The value is always the same but we need to have the same proof, I think.
+     I guess we could construct it in the return_address_offset inductive prop.
+     I don't know how to do that
+     in backend/Asmgenproof0.v
+     Fixed it with Ptrofs.mkint_eq
 **** DONE [INTPTR][mixedsim][simulations][determ] prove determinacy of ASM
 ** TODO [INTPTR][mixedsim] prove the new external_call properties
    on each builtin function
@@ -610,6 +611,10 @@
    this could be added to preliminaries or introduction
 * TODO [INTPTR][pres] Presentation
   DEADLINE: <2017-08-04 Fri>
+** TODO [INTPTR][pres] Presentation at show&tell
+   SCHEDULED: <2017-08-04 Fri>
+** TODO [INTPTR][pres] Write show&tell summary
+   DEADLINE: <2017-07-28 Fri>
 ** TODO [INTPTR][pres] Presentations at the ENS
    SCHEDULED: <2017-08-31 Thu>
 ** TODO [INTPTR][pres] Presentations at the ENS
