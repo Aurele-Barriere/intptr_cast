@@ -1,5 +1,5 @@
 The goal of this work is to implement the quasi-concrete model in CompCert.
 In a first part, we show how the definitions have been modified to fit into CompCert.
-In a second part, we show the definition of memory injection has to be modified. It changes a lot of proofs in CompCert. As a consquence, we have to change the way CompCert performs abstract analysis.
+In a second part, we show how the definition of memory injection has to be modified. It changes a lot of proofs in CompCert. As a consquence, we have to change the way CompCert performs abstract analysis.
 In a third part, we present how adding non-determinism in every language of CompCert prevents us from using the same correctness proofs. We design a new proof, using mixed simulations. It relies on the observation that non-deterministic behavior is only encountered when using the capture function.
 Finally, we define and implement semantics for integer-pointer casts. This heavily relies on the semantics of the new capture function, meant to turn logical blocks into concrete blocks when needed.

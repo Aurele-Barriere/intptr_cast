@@ -72,8 +72,10 @@ A pointer is a pair $(l,i)$ of a block identifier and an offset inside that bloc
 
 Optimizations are still be possible with logical blocks, because they do not have concrete addresses, and integer-pointer casts are possible with concrete blocks.
 To allow as many optimizations as possible, we should use as many logical blocks as possible. Thus, new blocks should be made logical when allocated.
+
+\subsubsection{The capture function}
 However, for each pointer to integer cast, we need a concrete block. Then we transform each pointer to integer cast by adding a \textit{capture} function just before it. This function transforms a logical block into a concrete one, giving it a concrete address that still satisfy the memory consistency. Its semantics are described section~\ref{sec:capturesem}.
-It introduces non-determinism in every language of CompCert (including the assembly). This is handled in section~\ref{sec:mixedsim}.
+It introduces non-determinism in every language of CompCert (including the assembly), because a block can be captured at several addresses. This is handled in section~\ref{sec:mixedsim}.
 
 The quasi-concrete is described in many details in~\cite{DBLP:conf/pldi/KangHMGZV15}.
 \subsubsection{Optimization and casts examples}

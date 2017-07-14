@@ -555,25 +555,10 @@
        It should not be allowed to use the address of a concrete block, because maybe something was defined at the same place
        Then an external call could guess the address of this new thing.
 *** TODO memory injection
-    1) remind memory injection
-       injection is what defines public and private memory in CompCert
-       injection is what links memory before and after optimization
-    2) memory injection in the quasi concrete model
-       compcert tso : out of memory is no behavior (section 2.3)
-       if more concrete blocks in the source: source can succeed but target fail
-       explain why the source should not have more concrete blocks than the target
-    3) what needs to be changed
-       src_concrete
-       src_private
-       unchanged_on -> perhaps this should go in the memupdate part?
-    4) proofs of injection
-       initial memory for a program, etc...
-    5) abstract analysis
+     abstract analysis
        why do we need to analyze the private calls
        how do we change the abstract memory
        how do we change the analysis
-
-    see what is written in concrete_compcert.pdf, section 5.
 *** TODO mixed simulations
     1) simulations
        bisimulations, forward, backward
@@ -606,20 +591,27 @@
 ** TODO Add limits of quasi-concrete
    see section 3.7
    this could be added into the preliminaries
+   or in the evaluation
 ** TODO Add the state of int-ptr cast in CompCert
    see section 2.2
    this could be added to preliminaries or introduction
+** TODO Figures and details to add
+*** TODO optimization examples
+*** TODO back_sim, fwd_sim, mixed_sim figures
+*** TODO receptive and determinate definitions
+*** TODO atomic semantics figure
+*** TODO old and new correctness proofs
 * TODO [INTPTR][pres] Presentation
   DEADLINE: <2017-08-04 Fri>
 ** TODO [INTPTR][pres] Presentation at show&tell
    SCHEDULED: <2017-08-04 Fri>
 ** TODO [INTPTR][pres] Write show&tell summary
    DEADLINE: <2017-07-28 Fri>
-** TODO [INTPTR][pres] Presentations at the ENS
+** [INTPTR][pres] Presentations at the ENS
    SCHEDULED: <2017-08-31 Thu>
 ** TODO [INTPTR][pres] Presentations at the ENS
    SCHEDULED: <2017-09-05 Tue>
-** TODO [INTPTR][pres] Presentations at the ENS
+** [INTPTR][pres] Presentations at the ENS
    SCHEDULED: <2017-09-06 Wed>
 * DONE [INTPTR] Abstract
   DEADLINE: <2017-06-30 Fri>
@@ -643,3 +635,20 @@
   in standard C semantics, casting to integer then to pointer should give the same result.
   Also, we can assume that continuous values have continuous pointers.
   We should use the fact that analysis assumes that xor on pointers stays in the same block
+* TODO [INTPTR] Things to do before the end
+** DONE [INTPTR][plans] Pull request: mixed_simulation
+** TODO [INTPTR][plans] Finish DeadCodeproof with backward steps
+   DEADLINE: <2017-07-17 Mon>
+** TODO [INTPTR][plans] Pull request: DeadCodeproof_mixed
+   DEADLINE: <2017-07-17 Mon>
+** TODO [INTPTR][plans] Finish Constpropproof
+   DEADLINE: <2017-07-19 Wed>
+   Inop states should be stuttering, we should not need determinacy
+** TODO [INTPTR][plans] Pull request: Constpropproof_mixed
+   DEADLINE: <2017-07-19 Wed>
+** TODO [INTPTR][plans] Evaluation
+   DEADLINE: <2017-07-20 Thu>
+   Compile a few programs with the new compiler
+   Try to see when are optimization done, wand when they aren't,
+   Discuss its validity
+** TODO [INTPTR][plans] Finish report and presentation
