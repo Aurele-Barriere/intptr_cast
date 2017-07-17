@@ -3,7 +3,7 @@
 
 To prove the correctness of many passes, CompCert uses memory injections. Informally, memory injections are relations between two memories that are true when the two memories are similar. For instance, this is used when doing optimizations, to show that the memory of the source program is similar to the memory of the optimized programs.
 
-In CompCert, memory injection are parametrized with an \textit{injection function}, of type \texttt{block -> option(block * Z)}. This function establish a correspondance between blocks of the source memory and blocks of the target memory.
+In CompCert, memory injection are parametrized with an \textit{injection function}, of type \texttt{block -> option(block * Z)}. This function establish a correspondence between blocks of the source memory and blocks of the target memory.
 Informally, if $f(b_1)=\text{Some}(b_2,o)$, then the block $b_1$ in the source memory corresponds to the block $b_2$ in the target memory, with a shift in offsets of $o$. The values are preserved between the two blocks, and the pointers are modified to reflect the eventual change of logical address.
 The injection function also define \textit{private} and \textit{public memory}. Public memory is the set of blocks that are mapped to some other block. These blocks should be preserved by optimizations.
 Private memory is the set of blocks that are mapped to \texttt{None}. These blocks are only privately used and can be changed separately.
@@ -30,4 +30,15 @@ $$\forall b_1,\quad f(b_1)=\texttt{None}\implies b_1\text{ has address }\texttt{
 These two properties have been added to CompCert's memory injection. The proofs of every memory injection in CompCert have been updated. \todo{add implem in Annex}
 
 \subsection{Abstract Analysis}
-.\todo{...}
+\todo{Maybe this should be moved to the memupdate section?}
+
+For some optimization passes, CompCert performs abstract analysis of the code.
+
+For this purpose, any function call is analyzed and classed as either \textit{public} or \textit{private}. If the stack block is not accessible for the called function (i.e. if no pointer to the stack can be found in global variables or the function's arguments), then the call is considered private, and CompCert can perform analysis knowing that the called function cannot change the stack block. However, if such a pointer to the stack exists in the function's arguments or in global variables, then the call is considered public, and the optimizations made are weaker.
+
+With the new memory model, the stack block can also be accessible by a called function when the block has been captured and assigned to a concrete address.
+
+To reflect that, we changed the abstract memory definition to include a Boolean that states if the stack might have been captured. We also define its least upper bound, and change the way functions calls are analyzed to add that all function calls should be public if the stack block may have been captured.
+
+\todo{we said we couldn't guess addresses?}
+

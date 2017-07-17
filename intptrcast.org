@@ -500,10 +500,10 @@
 * TODO [INTPTR][report] Report
   DEADLINE: <2017-08-04 Fri>
   Outline:
-** TODO Introduction
+** DONE Introduction
    Introduction, context and motivation should be one third of the paper...
 *** DONE C semantics
-*** TODO Coq
+*** DONE Coq
 *** DONE CompCert
 ** DONE Preliminaries
 *** DONE Logical model
@@ -554,7 +554,7 @@
 
        It should not be allowed to use the address of a concrete block, because maybe something was defined at the same place
        Then an external call could guess the address of this new thing.
-*** TODO memory injection
+*** DONE memory injection
      abstract analysis
        why do we need to analyze the private calls
        how do we change the abstract memory
@@ -585,7 +585,7 @@
    Add a little time comparison to show that the compilation isn't slower and I think it should be anough.
 
 ** TODO Conclusion
-** TODO Annex
+** TODO Appendix
    Examples of optimizations? 
    With and without pointers (see [Kang et al] for examples in the quasi concrete model)
 ** TODO Add limits of quasi-concrete

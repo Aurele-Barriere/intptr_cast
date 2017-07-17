@@ -15,10 +15,9 @@ Because formal program verification is often done at source level, CompCert is a
 Between the source code and the target assembly code, CompCert goes through 25 passes, including several changes of language, all of which using the same memory model.
 The first three parse and convert the source code to CompCert C, and the last three perform printing of the assembly code, assembling and linking.
 In the middle, 19 back-end passes perform various transformations, 8 of which are optimizations.
-For this work, the pass from CompCert C to Clight is important, because \todo{...}.
 
 \subsubsection{Correctness}
-The parser and most of the back-end passes (see \textbf{Fig.\ref{fig:compcertpasses}.}) are verified with Coq\todo{foot note on Coq?}.
+The parser and most of the back-end passes (see \textbf{Fig.\ref{fig:compcertpasses}.}) are verified with Coq.
 In CompCert, the behavior of a program is a trace (a list of I/O operations) and an indication on the program's termination (does it terminates? is it on an error?). %this might need better phrasing
 The correctness theorem of CompCert states that the behavior of the generated code is one of the possible behaviors of the source code (C is non-deterministic). To prove it, it uses a backward simulation (see section~\ref{sec:mixedsim}).
 
@@ -45,7 +44,7 @@ $$\texttt{Block}=\{(v,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{
 With a logical model, programs have infinite memory.
 Moreover, a logical model can allow functions to have exclusive control over a logical block.
 When a block identifier does not escape when calling a function (\textit{i.e.} if the block identifier cannot be found inside the global variables or the function arguments), then the called function cannot access the block (see section~\ref{sec:memupdate}).% too long sentence?
-This allow for many optimizations. \todo{example}.
+This allow for many optimizations (see Figure~\ref{fig:examples}).
 
 However, logical models do not support integer-pointer casts. They can allow some arithmetic operations on offsets, but is impossible to get a physical address from a block.
 
