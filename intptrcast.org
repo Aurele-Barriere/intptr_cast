@@ -637,9 +637,15 @@
   We should use the fact that analysis assumes that xor on pointers stays in the same block
 * TODO [INTPTR] Things to do before the end
 ** DONE [INTPTR][plans] Pull request: mixed_simulation
-** TODO [INTPTR][plans] Finish DeadCodeproof with backward steps
+** TODO [INTPTR][plans] Finish CSEproof with backward steps
    DEADLINE: <2017-07-17 Mon>
-** TODO [INTPTR][plans] Pull request: DeadCodeproof_mixed
+*** DONE [INTPTR][plans][mixed] senv equiv commutativity
+*** TODO [INTPTR][plans][mixed] construct the external call with safety from the source
+*** TODO [INTPTR][plans][mixed] eval_builtin_args_lessdef has to be changed for backward step
+    the backward version does not seem to be true.
+*** TODO [INTPTR][plans][mixed] exists valu: check the old proof
+    use the analysis_correct_1 theorem.
+** TODO [INTPTR][plans] Pull request: CSEproof_mixed
    DEADLINE: <2017-07-17 Mon>
 ** TODO [INTPTR][plans] Finish Constpropproof
    DEADLINE: <2017-07-19 Wed>
@@ -649,6 +655,6 @@
 ** TODO [INTPTR][plans] Evaluation
    DEADLINE: <2017-07-20 Thu>
    Compile a few programs with the new compiler
-   Try to see when are optimization done, wand when they aren't,
+   Try to see when are optimization done, and when they aren't,
    Discuss its validity
 ** TODO [INTPTR][plans] Finish report and presentation
