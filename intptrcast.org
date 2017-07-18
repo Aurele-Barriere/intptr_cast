@@ -637,23 +637,32 @@
   We should use the fact that analysis assumes that xor on pointers stays in the same block
 * TODO [INTPTR] Things to do before the end
 ** DONE [INTPTR][plans] Pull request: mixed_simulation
-** TODO [INTPTR][plans] Finish CSEproof with backward steps
-   DEADLINE: <2017-07-17 Mon>
-*** DONE [INTPTR][plans][mixed] senv equiv commutativity
-*** TODO [INTPTR][plans][mixed] construct the external call with safety from the source
-*** TODO [INTPTR][plans][mixed] eval_builtin_args_lessdef has to be changed for backward step
-    the backward version does not seem to be true.
-*** TODO [INTPTR][plans][mixed] exists valu: check the old proof
-    use the analysis_correct_1 theorem.
-** TODO [INTPTR][plans] Pull request: CSEproof_mixed
-   DEADLINE: <2017-07-17 Mon>
-** TODO [INTPTR][plans] Finish Constpropproof
+** DONE [INTPTR][plans] Finish CSEproof with backward steps
    DEADLINE: <2017-07-19 Wed>
+*** DONE [INTPTR][plans][mixed] senv equiv commutativity
+*** DONE [INTPTR][plans][mixed] construct the external call with safety from the source
+    for the external step, we need the matching steps to have the same arguments
+*** DONE [INTPTR][plans][mixed] eval_builtin_args_lessdef has to be changed for backward step
+    the backward version does not seem to be true.
+*** DONE [INTPTR][plans][mixed] exists valu: check the old proof
+    use the analysis_correct_1 theorem.
+    I think now we just have to deal with this eval_builtin_args
+*** DONE [INTPTR][plans][mixed] use the same arguments for progress
+    Maybe we can change ec_mem_extends?
+    Not exactly the same arguments, but the vargs' of the new definition
+*** DONE [INTPTR][plans][mixed] show that we evaluate to the same thing in a less defined memory
+    we need to use the safety of the source.
+    if it evaluated to something undefined, then this would contradict the safety.
+    leave it to jeehoon after adding the safety hypothesis
+** DONE [INTPTR][plans] Pull request: CSEproof_mixed
+   DEADLINE: <2017-07-19 Wed>
+** TODO [INTPTR][plans] Finish Constpropproof
+   DEADLINE: <2017-07-21 Fri>
    Inop states should be stuttering, we should not need determinacy
 ** TODO [INTPTR][plans] Pull request: Constpropproof_mixed
-   DEADLINE: <2017-07-19 Wed>
+   DEADLINE: <2017-07-21 Fri>
 ** TODO [INTPTR][plans] Evaluation
-   DEADLINE: <2017-07-20 Thu>
+   DEADLINE: <2017-07-24 Mon>
    Compile a few programs with the new compiler
    Try to see when are optimization done, and when they aren't,
    Discuss its validity
