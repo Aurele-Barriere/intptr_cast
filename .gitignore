@@ -44,3 +44,6 @@ test/testop/compcert
 *.rtl.8
 *.s
 *.parsed.c
+*.nav
+*.out
+*.snm

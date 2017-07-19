@@ -50,14 +50,29 @@
   \titlepage%
 \end{frame}
 
-\begin{frame}{testframe}
-  Test Frame
-  \begin{block}{Test block}
-    \begin{itemize}
-    \item item1
-    \item item2
-    \end{itemize}
-  \end{block}
-\end{frame}
+\def\outline{
+  \begin{frame}
+    \frametitle{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\section{Introduction}
+\input{intro.tex}
+
+\section{State of the art}
+\outline
+\input{models.tex}
+
+\section{Contribution}
+\outline
+\input{contrib.tex}
+
+\section{Evaluation}
+\outline
+\input{eval.tex}
+
+\section{Conclusion}
+\input{conclusion.tex}
 
 \end{document}
