@@ -1,14 +1,105 @@
-\subsection{Logical Memory Model}
+\subsection{Memory Update}
 \begin{frame}{\subsecname}
+
+  \begin{block}{Updating the definition of the memory}
+    \begin{itemize}
+    \item Add a map \texttt{mem\_concrete: blocks -> Option Z}.
+    \item Remember the size of blocks at allocation.
+    \item Address-wise permissions.
+    \end{itemize}
+  \end{block}
+  \vfill
+  \begin{block}{Abstract Analysis}
+    The stack block can be accessible with pointers or if it concrete.
+  \end{block}
+    \vfill
+  \begin{exampleblock}{Proofs}
+    Every memory operation preserves memory consistency. Abstract analysis is sound.
+  \end{exampleblock}
+
+  
+\end{frame}
+
+\subsection{Memory Injection}
+\begin{frame}{\subsecname}
+
+  \comment{informal definition}
+  \vfill
+  \begin{block}{Changes}
+    \begin{itemize}
+    \item Concrete blocks mapped to concrete blocks, at the same address.
+    \item No concrete private source blocks.
+    \end{itemize}
+  \end{block}
+  \vfill
+  \begin{exampleblock}{Proofs}
+    Every memory operation preserves memory injection.
+  \end{exampleblock}
+  
+\end{frame}
+
+\subsection{Capture Semantics}
+\begin{frame}{\subsecname}
+
+  \comment{example}\\
+  \comment{In Clight}
 
 \end{frame}
 
-\subsection{Concrete Memory Model}
-\begin{frame}{\subsecname}
-
+\subsection{Mixed Simulations}
+\begin{frame}{Proving the correctness of CompCert}
+  \begin{block}{Semantics}
+    \comment{def and picture}
+  \end{block}
+  \vfill
+  \begin{columns}[T] % align columns
+    \begin{column}{.48\textwidth}
+      \begin{block}{Forward Simulation}
+        \comment{picture}
+      \end{block}
+    \end{column}%
+    \hfill%
+    \begin{column}{.48\textwidth}
+      \begin{block}{Backward Simulation}
+        \comment{picture}
+      \end{block}
+    \end{column}%
+  \end{columns}
+  \vfill
+  \begin{exampleblock}{Goal}
+    A backward simulation between C and ASM
+  \end{exampleblock}
 \end{frame}
 
-\subsection{Quasi-Concrete Memory Model}
-\begin{frame}{\subsecname}
+\begin{frame}{Changing the correctness proof}
+  \begin{alertblock}{Previous proof}
+    With determinism of the target language and a forward simulation, we can create a backward simulation.
+    Almost all passes were proved using forward simulation.
+    With the capture function, no language is deterministic.
+  \end{alertblock}
+  \vfill
+  \begin{block}{Atomic Semantics}
+    \comment{definition}
+  \end{block}
+  \vfill
+  \begin{exampleblock}{Handling non-deterministic behavior}
+    Non-deterministic behavior only for unknown external calls or builtin functions (capture).
+  \end{exampleblock}
+\end{frame}
 
+\begin{frame}{Mixed Simulations}
+  \begin{block}{Mixed Simulation}
+    \comment{def and picture}
+  \end{block}
+  \vfill
+  \begin{block}{Theorems}
+    \begin{itemize}
+    \item \comment{factor backward}
+    \item \comment{factor mixed}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{The new correctness proof}
+  \comment{illustrate the proof}
 \end{frame}

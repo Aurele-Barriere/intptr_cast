@@ -38,7 +38,14 @@
 
 \author{Aur\`ele Barri\`ere}
 
-
+\def\todo#1{{\color{red}TODO:\quad#1}}
+\def\addref#1{{\color{red}$[$#1$]$}}
+\def\undef{\textit{undef}}
+\def\states#1{\mathit{States_{#1}}}
+\def\step#1{\mathit{Step_{#1}}}
+\def\atstep#1{\mathit{AtomicStep_{#1}}}
+\def\traces{\mathit{Traces}}
+\def\comment#1{{\color{blue}\textit{#1}}}
 \def\outline{
   \begin{frame}
     \frametitle{Outline}
@@ -48,19 +55,18 @@
 
 \begin{frame}[plain]
   \titlepage%
+  \vfill
+  \begin{center}
+    \includegraphics[width=2.5cm]{img/enslogo.png}
+    \hfill
+    \includegraphics[width=2.5cm]{img/snulogo.png}
+  \end{center}
 \end{frame}
-
-\def\outline{
-  \begin{frame}
-    \frametitle{Outline}
-    \tableofcontents[currentsection]
-  \end{frame}
-}
 
 \section{Introduction}
 \input{intro.tex}
 
-\section{State of the art}
+\section{C Memory Models}
 \outline
 \input{models.tex}
 
