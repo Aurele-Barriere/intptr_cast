@@ -1,3 +1,120 @@
+\def\backward{
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}[%
+        every node/.style={circle,minimum size=3pt,minimum height=3pt, inner sep=0pt},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node [draw] (0) [color=blue, fill] {};
+      \node [draw] (1) [color=blue, fill, below left=of 0] {};
+      \node [draw] (2) [color=blue, fill, below=of 0] {};
+      \node [draw] (3) [color=blue, fill, below right=of 0] {};
+      \node [draw] (4) [color=blue, fill, below left=of 2] {};
+      \node [draw] (5) [color=blue, fill, below=of 2] {};
+      \node [draw] (6) [color=blue, fill, below=of 3] {};
+      \node [draw] (7) [color=red, fill, right=of 0, xshift=1.5cm] {};
+      \node [draw] (8) [color=red, fill, below left=of 7] {};
+      \node [draw] (9) [color=red, fill, below=of 7] {};
+      \node [draw] (10) [color=red, fill, below=of 8] {};
+      \node [draw] (11) [color=red, fill, below=of 9] {};
+      \path [draw] (0) edge[->]  node {} (1)
+      (0) edge[->]  node {} (2)
+      (0) edge[->]  node {} (3)
+      (2) edge[->]  node {} (4)
+      (2) edge[->]  node {} (5)
+      (3) edge[->]  node {} (6)
+      (7) edge[->]  node {} (8)
+      (7) edge[->]  node {} (9)
+      (8) edge[->]  node {} (10)
+      (9) edge[->]  node {} (11);
+      \draw[dashed] (0) -- (7);
+      \draw[dashed] (3) -- (8);
+      \draw[dashed] (2) -- (9);
+      \draw[dashed] (5) -- (11);
+      \draw[dashed] (6) -- (10);
+    \end{tikzpicture}
+    \label{fig:backward}
+  \end{figure}
+}
+
+\def\forward{
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}[%
+        every node/.style={rectangle,minimum size=3pt,minimum height=3pt, inner sep=0pt},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node [draw] (0) [color=red, fill] {};
+      \node [draw] (1) [color=red, fill, below right=of 0] {};
+      \node [draw] (2) [color=red, fill, below=of 0] {};
+      \node [draw] (3) [color=red, fill, below left=of 0] {};
+      \node [draw] (4) [color=red, fill, below right=of 2] {};
+      \node [draw] (5) [color=red, fill, below=of 2] {};
+      \node [draw] (6) [color=red, fill, below=of 3] {};
+      \node [draw] (7) [color=blue, fill, left=of 0, xshift=-1.5cm] {};
+      \node [draw] (8) [color=blue, fill, below right=of 7] {};
+      \node [draw] (9) [color=blue, fill, below=of 7] {};
+      \node [draw] (10) [color=blue, fill, below=of 8] {};
+      \node [draw] (11) [color=blue, fill, below=of 9] {};
+      \path [draw] (0) edge[->]  node {} (1)
+      (0) edge[->]  node {} (2)
+      (0) edge[->]  node {} (3)
+      (2) edge[->]  node {} (4)
+      (2) edge[->]  node {} (5)
+      (3) edge[->]  node {} (6)
+      (7) edge[->]  node {} (8)
+      (7) edge[->]  node {} (9)
+      (8) edge[->]  node {} (10)
+      (9) edge[->]  node {} (11);
+      \draw[dashed] (0) -- (7);
+      \draw[dashed] (3) -- (8);
+      \draw[dashed] (2) -- (9);
+      \draw[dashed] (5) -- (11);
+      \draw[dashed] (6) -- (10);
+    \end{tikzpicture}
+    \label{fig:forward}
+  \end{figure}
+}
+
+\def\mixed{
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}[%
+        every node/.style={rectangle,minimum size=4pt,minimum height=4pt, inner sep=0pt},
+        shorten >=2pt,
+        node distance=0.6cm
+      ]
+      \node [draw] (0) [color=blue, fill] {};
+      \node [draw] (1) [circle, color=blue, fill, below=of 0] {};
+      \node [draw] (2) [color=blue, fill, below left=of 1] {};
+      \node [draw] (3) [color=blue, fill, below=of 1] {};
+      \node [draw] (4) [color=blue, fill, below=of 3] {};
+      \node [draw] (5) [color=red, fill, right=of 0] {};
+      \node [draw] (6) [circle, color=red, fill, below=of 5] {};
+      \node [draw] (7) [circle, color=red, fill, below right=of 5] {};
+      \node [draw] (8) [color=red, fill, below=of 6] {};
+      \node [draw] (9) [color=red, fill, below=of 8] {};
+      \node [draw] (10) [color=red, fill, below right=of 8] {};
+      \path [draw] (0) edge[->]  node {} (1)
+      (1) edge[->]  node {} (2)
+      (1) edge[->]  node {} (3)
+      (3) edge[->]  node {} (4)
+      (5) edge[->]  node {} (6)
+      (5) edge[->]  node {} (7)
+      (6) edge[->]  node {} (8)
+      (8) edge[->]  node {} (9)
+      (8) edge[->]  node {} (10);
+      \draw[dashed] (0) -- (5);
+      \draw[dashed] (1) -- (6);
+      \draw[dashed] (3) -- (8);
+      \draw[dashed] (4) -- (9);
+    \end{tikzpicture}
+    \label{fig:mixed}
+  \end{figure}
+}
+
 \subsection{Memory Update}
 \begin{frame}{\subsecname}
 
@@ -10,7 +127,7 @@
   \end{block}
   \vfill
   \begin{block}{Abstract Analysis}
-    The stack block can be accessible with pointers or if it concrete.
+    The stack block can be accessible if it is concrete.
   \end{block}
     \vfill
     \begin{exampleblock}{Proofs}
@@ -26,7 +143,9 @@
 \subsection{Memory Injection}
 \begin{frame}{\subsecname}
 
-  \comment{informal definition}
+  \begin{block}{Memory Injection}
+    A map from some blocks of the source memory to blocks of the target memory.
+  \end{block}
   \vfill
   \begin{block}{Changes}
     \begin{itemize}
@@ -51,54 +170,58 @@
 
 \subsection{Mixed Simulations}
 \begin{frame}{Proving the correctness of CompCert}
-  \begin{block}{Semantics}
-    \comment{def and picture}
+  \begin{block}{SmallStep Semantics}
+    A relation between states (memory, program counter\dots).
   \end{block}
   \vfill
   \begin{columns}[T] % align columns
     \begin{column}{.48\textwidth}
       \begin{block}{Forward Simulation}
-        \comment{picture}
+        Step in source $\rightarrow$\\ Matching step in target\\
+        {\color{blue}Source\hfill\color{red}Target}
+        \forward
       \end{block}
     \end{column}%
     \hfill%
     \begin{column}{.48\textwidth}
       \begin{block}{Backward Simulation}
-        \comment{picture}
+        Step in target $\rightarrow$\\ Matching step in source\\
+        {\color{blue}Source\hfill\color{red}Target}
+        \backward
       \end{block}
     \end{column}%
   \end{columns}
-  \vfill
-  \begin{exampleblock}{Goal}
-    A backward simulation between C and ASM
-  \end{exampleblock}
 \end{frame}
 
 \begin{frame}{Changing the correctness proof}
+  \begin{exampleblock}{Goal}
+    A backward simulation between C and ASM.
+  \end{exampleblock}
+  \vfill
   \begin{alertblock}{Previous proof}
-    With determinism of the target language and a forward simulation, we can create a backward simulation.
-    Almost all passes were proved using forward simulation.
-    With the capture function, no language is deterministic.
+    Determinacy + forward simulation $\rightarrow$ backward simulation.\\
+    No more determinacy!
   \end{alertblock}
   \vfill
-  \begin{block}{Atomic Semantics}
-    \comment{definition}
-  \end{block}
-  \vfill
   \begin{exampleblock}{Handling non-deterministic behavior}
-    Non-deterministic behavior only for unknown external calls or builtin functions (capture).
+    Non-deterministic behavior only for unknown external calls or builtin functions (capture).\\
+    For every other state, we still have local determinism.
   \end{exampleblock}
 \end{frame}
 
 \begin{frame}{Mixed Simulations}
   \begin{block}{Mixed Simulation}
-    \comment{def and picture}
+    External state ($\bigcirc$): Local backward simulation.\\
+    Internal state ($\Box$): Local forward simulation.\\
+    {\color{blue}Source\hfill\color{red}Target}
+    \vspace{-0.8cm}
+    \mixed
   \end{block}
   \vfill
   \begin{block}{Theorems}
     \begin{itemize}
-    \item \comment{factor backward}
-    \item \comment{factor mixed}
+    \item MixedSim (A,B) $\rightarrow$ StrongMixedSim ((atomic A),B).
+    \item StrongMixedSim (A,B) $\rightarrow$ BackwardSim (A,B).
     \end{itemize}
   \end{block}
 \end{frame}
