@@ -47,3 +47,4 @@ test/testop/compcert
 *.nav
 *.out
 *.snm
+*.vrb

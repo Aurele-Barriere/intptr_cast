@@ -3,7 +3,7 @@
 
   \begin{block}{Updating the definition of the memory}
     \begin{itemize}
-    \item Add a map \texttt{mem\_concrete: blocks -> Option Z}.
+    \item Add a map \texttt{mem\_concrete: block -> Option Z}.
     \item Remember the size of blocks at allocation.
     \item Address-wise permissions.
     \end{itemize}
@@ -13,8 +13,11 @@
     The stack block can be accessible with pointers or if it concrete.
   \end{block}
     \vfill
-  \begin{exampleblock}{Proofs}
-    Every memory operation preserves memory consistency. Abstract analysis is sound.
+    \begin{exampleblock}{Proofs}
+      \begin{itemize}
+      \item Every memory operation preserves memory consistency.
+      \item Abstract analysis is sound.
+      \end{itemize}
   \end{exampleblock}
 
   

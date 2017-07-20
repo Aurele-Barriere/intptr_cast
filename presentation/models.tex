@@ -2,13 +2,21 @@
 \begin{frame}{\subsecname}
 
   \begin{block}{Memory blocks}
-    $$\texttt{Block}=\{(v,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{n}\}$$
+    \begin{itemize}
+    \item $\texttt{Block}=\{(v,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{n}\}$
+    \item Infinite memory.
+    \item Block ownership.
+    \end{itemize}
   \end{block}
   \vfill
-  \comment{Optimization examples}
+  \begin{minipage}{0.48\textwidth}
+      \lstinputlisting{listings/logical.c}
+  \end{minipage}
+  \begin{minipage}{0.48\textwidth}
+      \lstinputlisting{listings/logicaloptim.c}
+  \end{minipage}
   \vfill
-  \begin{alertblock}{No semantics for Integer-Pointer cast}
-    \comment{A few things are still defined}
+  \begin{alertblock}{No semantics for Integer-Pointer cast (unspecified)}
   \end{alertblock}
   
 \end{frame}
@@ -54,11 +62,28 @@
 
 \begin{frame}{The Capture Function}
 
-  \comment{Capture before every cast}\\
-  \comment{examples of optimizations}
+  \begin{minipage}{0.48\textwidth}
+    \lstinputlisting{listings/capture.c}
+  \end{minipage}
+  \begin{minipage}{0.48\textwidth}
+    \lstinputlisting{listings/captured.c}
+  \end{minipage}
   \vfill
   \begin{alertblock}{Non-determinism}
     A logical block can be captured at several different addresses.
   \end{alertblock}
   
+\end{frame}
+
+\begin{frame}{Examples}
+
+  \begin{minipage}{0.48\textwidth}
+    \lstinputlisting{listings/logical.c}
+  \end{minipage}
+  \begin{minipage}{0.48\textwidth}
+    \lstinputlisting{listings/logicaloptim.c}
+  \end{minipage}
+  \vfill
+  \lstinputlisting{listings/concrete.c}
+
 \end{frame}

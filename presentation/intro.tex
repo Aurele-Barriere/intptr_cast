@@ -1,21 +1,33 @@
-\begin{frame}{\secname : Integer-Pointer casting in C}
+\begin{frame}[fragile]{\secname : Integer-Pointer casting in C}
 
-  \comment{Example}
-  \vfill
+  \begin{minipage}{0.48\textwidth}
+    \lstinputlisting{listings/intro.c}
+  \end{minipage}
+  \begin{minipage}{0.48\textwidth}
   \begin{alertblock}{ISO C Standard}
+    \begin{itemize}
+    \item Defines semantics for C programs.
+    \item Undefined of unspecified behavior.
+    \item \texttt{uintptr\_t}
+    \end{itemize}
   \end{alertblock}
+  \end{minipage}
   \vfill
-  \begin{exampleblock}{Uses}
+  \begin{exampleblock}{Integer arithmetic on pointers has many uses}
+    Linux Kernel, JVM implementations, FreeBSD\dots
   \end{exampleblock}
   
 \end{frame}
 
 \begin{frame}{Giving semantics to Integer-Pointer Casts in C}
 
-  \comment{A new memory model with semantics and optimizations}\\
-  \comment{Reference the paper}\\
-  \comment{The benefits of giving semantics to cast}
-  
+  \begin{block}{Kang et al: A Formal C Memory Model Supporting Integer-Pointer Casts}
+    \begin{itemize}
+    \item Gives precise semantics to Int-Ptr casts.
+    \item Allow common optimizations
+    \end{itemize}
+  \end{block}
+
 \end{frame}
 
 
@@ -41,6 +53,7 @@
   \begin{block}{Goals}
     \begin{itemize}
     \item Implement the new memory model in CompCert.
+    \item Implement the Integer-Pointer cast semantics.
     \item Prove the correctness of compilation with this new model.
     \end{itemize}
   \end{block}
