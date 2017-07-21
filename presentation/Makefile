@@ -2,7 +2,7 @@ all: pres
 
 pres: pres.pdf
 
-pres.pdf: cmds.tex style.tex pres.tex intro.tex models.tex contrib.tex eval.tex conclusion.tex
+pres.pdf: cmds.tex style.tex pres.tex intro.tex models.tex correctnessproof.tex contrib.tex eval.tex conclusion.tex
 	pdflatex pres && pdflatex pres
 
 clean:

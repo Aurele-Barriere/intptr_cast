@@ -1,0 +1,213 @@
+\def\at#1{$\mathit{atomic}($#1$)$}
+\newlength{\xshift}
+\newlength{\yshift}
+\setlength{\xshift}{1cm}
+\setlength{\yshift}{-2.5cm}
+
+
+\def\oldprooffwds{
+  \begin{figure}
+    \begin{tikzpicture}[remember picture, overlay,%
+        every node/.style={rectangle, font=\tiny},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node[anchor=north west,
+      xshift=\xshift,
+      yshift=\yshift] 
+     at (current page.north west) (cc) {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \path [draw] (cc) edge[<-, above] node {backward} (cstrat);
+      \path [draw] (cstrat) edge[->, above] node {forward} (clight);
+      \path [draw] (clight) edge[->, above] node {forward} (dots);
+      \path [draw] (dots) edge[->, above] node {forward} (mach);
+      \path [draw] (mach) edge[->, above] node {forward} (asm);
+    \end{tikzpicture}
+  \end{figure}
+}
+
+
+\def\oldprooffwd{
+ \begin{figure}
+    \begin{tikzpicture}[remember picture, overlay,%
+        every node/.style={rectangle, font=\tiny},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node[anchor=north west,
+      xshift=\xshift,
+      yshift=\yshift] 
+     at (current page.north west) (cc) {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \path [draw] (cc) edge[<-, above] node {backward} (cstrat);
+      \path [draw] (cstrat) edge[->, bend left=20, above] node {forward} (asm);
+    \end{tikzpicture}
+  \end{figure}
+}
+
+\def\oldprooffactorbwd{
+   \begin{figure}
+    \begin{tikzpicture}[remember picture, overlay,%
+        every node/.style={rectangle, font=\tiny},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node[anchor=north west,
+      xshift=\xshift,
+      yshift=\yshift] 
+     at (current page.north west) (cc) {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \path [draw] (cc) edge[<-, bend right=20, below left] node {backward} (atcstrat);
+      \path [draw] (atcstrat) edge[<-, bend right=20, below] node {backward} (asm);
+    \end{tikzpicture}
+  \end{figure}
+}
+
+\def\oldprooffinal{
+   \begin{figure}
+    \begin{tikzpicture}[remember picture, overlay,%
+        every node/.style={rectangle, font=\tiny},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node[anchor=north west,
+      xshift=\xshift,
+      yshift=\yshift] 
+     at (current page.north west) (cc) {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \path [draw] (cc) edge[<-, bend right=70, below] node {backward} (asm);
+    \end{tikzpicture}
+  \end{figure}
+}
+ 
+\def\proofmixed{
+  \begin{figure}
+    \begin{tikzpicture}[remember picture, overlay,%
+        every node/.style={rectangle, font=\tiny},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node[anchor=north west,
+      xshift=\xshift,
+      yshift=\yshift] 
+     at (current page.north west) (cc) {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \node (atclight) [below=of clight] {\at{Clight}};
+      \node (atdots) [below=of dots] {\at{\dots}};
+      \node (atmach) [below=of mach] {\at{Mach}};
+      \path [draw] (cc) edge[<-, above] node {backward} (cstrat);
+      \path [draw] (cstrat) edge[<->, above] node {mixed} (clight);
+      \path [draw] (clight) edge[<->, above] node {mixed} (dots);
+      \path [draw] (dots) edge[<->, above] node {mixed} (mach);
+      \path [draw] (mach) edge[<->, above] node {mixed} (asm);
+    \end{tikzpicture}
+  \end{figure}
+}
+
+\def\proofmixedbwd{
+  \begin{figure}
+    \begin{tikzpicture}[remember picture, overlay,%
+        every node/.style={rectangle, font=\tiny},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node[anchor=north west,
+      xshift=\xshift,
+      yshift=\yshift] 
+     at (current page.north west) (cc) {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \node (atclight) [below=of clight] {\at{Clight}};
+      \node (atdots) [below=of dots] {\at{\dots}\vphantom{C}};
+      \node (atmach) [below=of mach] {\at{Mach}};
+      \path [draw] (cc) edge[<-, above] node {backward} (cstrat);
+      \path [draw] (atcstrat) edge[<-, right] node {backward} (clight);
+      \path [draw] (atclight) edge[<-, right] node {backward} (dots);
+      \path [draw] (atdots) edge[<-, right] node {backward} (mach);
+      \path [draw] (atmach) edge[<-, right] node {backward} (asm);
+    \end{tikzpicture}
+  \end{figure}
+}
+
+\def\proofatbwd{
+  \begin{figure}
+    \begin{tikzpicture}[remember picture, overlay,%
+        every node/.style={rectangle, font=\tiny},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node[anchor=north west,
+      xshift=\xshift,
+      yshift=\yshift] 
+     at (current page.north west) (cc) {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \node (atclight) [below=of clight] {\at{Clight}};
+      \node (atdots) [below=of dots] {\at{\dots}\vphantom{C}};
+      \node (atmach) [below=of mach] {\at{Mach}};
+      \path [draw] (cc) edge[<-, below left] node {backward} (atcstrat);
+      \path [draw] (atcstrat) edge[<-, bend right=90, below] node {backward} (atclight);
+      \path [draw] (atclight) edge[<-, bend right=90, below] node {backward} (atdots);
+      \path [draw] (atdots) edge[<-, bend right = 90, below] node {backward} (atmach);
+      \path [draw] (atmach) edge[<-, right] node {backward} (asm);
+    \end{tikzpicture}
+  \end{figure}
+}
+
+\def\prooffinal{
+  \begin{figure}
+    \begin{tikzpicture}[remember picture, overlay,%
+        every node/.style={rectangle, font=\tiny},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node[anchor=north west,
+      xshift=\xshift,
+      yshift=\yshift] 
+     at (current page.north west) (cc) {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \node (atclight) [below=of clight] {\at{Clight}};
+      \node (atdots) [below=of dots] {\at{\dots}\vphantom{C}};
+      \node (atmach) [below=of mach] {\at{Mach}};
+      \path [draw] (cc) edge[<-, bend right=70, below] node {backward} (asm);
+    \end{tikzpicture}
+  \end{figure}
+}

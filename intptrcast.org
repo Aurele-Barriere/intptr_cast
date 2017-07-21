@@ -598,6 +598,7 @@
 ** TODO Figures and details to add
 *** TODO optimization examples
 *** TODO back_sim, fwd_sim, mixed_sim figures
+    see the presentation
 *** TODO receptive and determinate definitions
 *** TODO atomic semantics figure
 *** TODO old and new correctness proofs
