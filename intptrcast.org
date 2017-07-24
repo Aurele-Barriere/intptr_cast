@@ -593,12 +593,12 @@
    this could be added to preliminaries or introduction
    uintptr_t
 ** TODO Figures and details to add
-*** TODO optimization examples
+*** DONE optimization examples
 *** DONE back_sim, fwd_sim, mixed_sim figures
     see the presentation
 *** TODO receptive and determinate definitions
 *** DONE old and new correctness proofs
-*** TODO some implems in appendix:
+*** DONE some implems in appendix:
     memory, memory injection
 * TODO [INTPTR][pres] Presentation
   DEADLINE: <2017-08-04 Fri>
@@ -606,6 +606,9 @@
    SCHEDULED: <2017-08-04 Fri>
 ** TODO [INTPTR][pres] Write show&tell summary
    DEADLINE: <2017-07-28 Fri>
+** TODO [INTPTR][pres] Write show&tell memo
+   DEADLINE: <2017-08-01 Tue>
+   report?
 ** [INTPTR][pres] Presentations at the ENS
    SCHEDULED: <2017-08-31 Thu>
 ** TODO [INTPTR][pres] Presentations at the ENS
