@@ -602,6 +602,8 @@
 *** TODO receptive and determinate definitions
 *** TODO atomic semantics figure
 *** TODO old and new correctness proofs
+*** TODO some implems in appendix:
+    memory, memory injection
 * TODO [INTPTR][pres] Presentation
   DEADLINE: <2017-08-04 Fri>
 ** TODO [INTPTR][pres] Presentation at show&tell

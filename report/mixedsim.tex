@@ -1,3 +1,89 @@
+\def\backwardforward{
+  \begin{figure}
+  \begin{subfigure}{.48\textwidth}
+    \centering
+    \begin{tikzpicture}[%
+        every node/.style={circle,minimum size=3pt,minimum height=3pt, inner sep=0pt},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node [draw] (0) [color=blue, fill] {};
+      \node [draw] (1) [color=blue, fill, below left=of 0] {};
+      \node [draw] (2) [color=blue, fill, below=of 0] {};
+      \node [draw] (3) [color=blue, fill, below right=of 0] {};
+      \node [draw] (4) [color=blue, fill, below left=of 2] {};
+      \node [draw] (5) [color=blue, fill, below=of 2] {};
+      \node [draw] (6) [color=blue, fill, below=of 3] {};
+      \node [draw] (7) [color=red, fill, right=of 0, xshift=1.5cm] {};
+      \node [draw] (8) [color=red, fill, below left=of 7] {};
+      \node [draw] (9) [color=red, fill, below=of 7] {};
+      \node [draw] (10) [color=red, fill, below=of 8] {};
+      \node [draw] (11) [color=red, fill, below=of 9] {};
+      \node (src) [above=of 0, yshift=-1cm] {\color{blue}Source};
+      \node (tgt) [above=of 7, yshift=-1cm] {\color{red}Target};
+      \path [draw] (0) edge[->]  node {} (1)
+      (0) edge[->]  node {} (2)
+      (0) edge[->]  node {} (3)
+      (2) edge[->]  node {} (4)
+      (2) edge[->]  node {} (5)
+      (3) edge[->]  node {} (6)
+      (7) edge[->]  node {} (8)
+      (7) edge[->]  node {} (9)
+      (8) edge[->]  node {} (10)
+      (9) edge[->]  node {} (11);
+      \draw[dashed] (0) -- (7);
+      \draw[dashed] (3) -- (8);
+      \draw[dashed] (2) -- (9);
+      \draw[dashed] (5) -- (11);
+      \draw[dashed] (6) -- (10);
+    \end{tikzpicture}
+    \caption{Example of backward simulation}
+    \label{fig:backward}
+    \end{subfigure}
+  \begin{subfigure}{.48\textwidth}
+    \centering
+    \begin{tikzpicture}[%
+        every node/.style={rectangle,minimum size=3pt,minimum height=3pt, inner sep=0pt},
+        shorten >=2pt,
+        node distance=1cm
+      ]
+      \node [draw] (0) [color=red, fill] {};
+      \node [draw] (1) [color=red, fill, below right=of 0] {};
+      \node [draw] (2) [color=red, fill, below=of 0] {};
+      \node [draw] (3) [color=red, fill, below left=of 0] {};
+      \node [draw] (4) [color=red, fill, below right=of 2] {};
+      \node [draw] (5) [color=red, fill, below=of 2] {};
+      \node [draw] (6) [color=red, fill, below=of 3] {};
+      \node [draw] (7) [color=blue, fill, left=of 0, xshift=-1.5cm] {};
+      \node [draw] (8) [color=blue, fill, below right=of 7] {};
+      \node [draw] (9) [color=blue, fill, below=of 7] {};
+      \node [draw] (10) [color=blue, fill, below=of 8] {};
+      \node [draw] (11) [color=blue, fill, below=of 9] {};
+      \node (src) [above=of 7, yshift=-0.5cm] {\color{blue}Source};
+      \node (tgt) [above=of 0, yshift=-0.5cm] {\color{red}Target};
+      \path [draw] (0) edge[->]  node {} (1)
+      (0) edge[->]  node {} (2)
+      (0) edge[->]  node {} (3)
+      (2) edge[->]  node {} (4)
+      (2) edge[->]  node {} (5)
+      (3) edge[->]  node {} (6)
+      (7) edge[->]  node {} (8)
+      (7) edge[->]  node {} (9)
+      (8) edge[->]  node {} (10)
+      (9) edge[->]  node {} (11);
+      \draw[dashed] (0) -- (7);
+      \draw[dashed] (3) -- (8);
+      \draw[dashed] (2) -- (9);
+      \draw[dashed] (5) -- (11);
+      \draw[dashed] (6) -- (10);
+    \end{tikzpicture}
+    \caption{Example of forward simulation}
+    \label{fig:forward}
+    \end{subfigure}
+    \caption{Examples of simulations}
+  \end{figure}
+}
+
 \label{sec:mixedsim}
 In the quasi-concrete memory model, with the addition of the \textit{capture} function, every language of CompCert is now non-deterministic. Indeed, giving a concrete address to a logical block is a non-deterministic operation, whereas the logical allocation used so far in CompCert was deterministic.
 
@@ -5,7 +91,6 @@ In the quasi-concrete memory model, with the addition of the \textit{capture} fu
 To prove the correctness of CompCert, one must prove that the behavior of the generated target code is one of the behaviors of the original source code. 
 To do so, CompCert uses \textit{backward simulations} between the semantics of the source code and the generated code.
 In CompCert, the semantics of each language is defined. The semantics of a program is a set of states (with initial and final states) and a relation between states meaning that one can go from one state to another whith a given observable trace.
-\todo{pictures? see compcert\_overview.pdf}
 
 \subsubsection{Definition: Semantics of a program p}: $\mathit{Sem}(p) = (\states{p},I_p,F_p,\step{p})$ where $\step{p}\subseteq\states {p}\times\traces\times\states{p}$ and $I,F\subseteq\states{p}$. $t\in\traces$ is a trace, \textit{i.e.} a list of observable events (system call, store or load).
 
@@ -20,10 +105,12 @@ A backward simulation is a weaker simulation that proves semantics preservation 
       $\quad(ss_1,st_1)\in R~\wedge~(st_1,t,st_2)\in\step{tp}\implies$\\
       $\exists ss_2\in\states{sp}, (ss_1,t,ss_2)\in\step{sp}$
 \end{itemize}
-Informally, each time the target program takes a step to a new state, the source program also takes a step to a matching state. This is enough to claim that the target's behavior is a refinment of the source's behavior.
-\todo{some tree picture to describe backward sim}
+Informally, each time the target program takes a step to a new state, the source program also takes a step to a matching state. This is enough to claim that the target's behavior is a refinment of the source's behavior. An example can be seen Figure~\ref{fig:backward}. The relation is described with the dashed lines. We can see that every target behavior matches a source behavior.
 
-\subsubsection{Forward Simulations} One can similarly define a forward simulation in a symmetric way: each time the source program takes a step to a new state, the target program also takes a step to a matching state. This means that the target's behavior extends the source's behavior.
+\subsubsection{Forward Simulations} One can similarly define a forward simulation in a symmetric way: each time the source program takes a step to a new state, the target program also takes a step to a matching state. This means that the target's behavior extends the source's behavior. An example can be seen Figure~\ref{fig:forward}.
+
+\backwardforward
+
 
 \subsubsection{Theorem: forward to backward} If the target language is \textit{determinate} and the source language is \textit{receptive} and there is a forward simulation between the semantics of $sp$ and $tp$, then we can construct a backward simulation between the semantics of $sp$ and $tp$. \todo{definition of receptive and determinate}
 
@@ -62,8 +149,7 @@ The previous proof in CompCert used the following reasoning:
 
 \subsection{Non-determinism}
 In the quasi-concrete model, the intermediate and target languages of CompCert are no longer \textit{determinate}. Indeed, the \textit{capture} function can give any address to a logical block, as long as it doesn't overlap with other blocks.
-
-The use of forward reasoning is no longer relevant, because \todo{no determinate, and no forward external call properties}
+Thus, the use of forward simulations is no longer relevant.
 
 \subsection{Mixed simulations and properties}
 To prove the correctness of CompCert with the new memory model, we introduce \textit{mixed simulations}. Informally, at each state of the semantics, either we have a local forward simulation, or a local backward simulation. For most steps, we use the forward reasoning, but for external calls (such as \textit{capture} and other unknown functions that might capture blocks), we use a backward reasoning.

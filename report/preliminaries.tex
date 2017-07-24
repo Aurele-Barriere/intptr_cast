@@ -1,3 +1,4 @@
+\label{sec:prelim}
 \subsection{CompCert}
 \begin{center}
 \begin{figure}
@@ -18,13 +19,13 @@ In the middle, 19 back-end passes perform various transformations, 8 of which ar
 
 \subsubsection{Correctness}
 The parser and most of the back-end passes (see \textbf{Fig.\ref{fig:compcertpasses}.}) are verified with Coq.
-In CompCert, the behavior of a program is a trace (a list of I/O operations) and an indication on the program's termination (does it terminates? is it on an error?). %this might need better phrasing
+In CompCert, the behavior of a program is a trace (a list of I/O operations) and an indication on the program's termination.
 The correctness theorem of CompCert states that the behavior of the generated code is one of the possible behaviors of the source code (C is non-deterministic). To prove it, it uses a backward simulation (see section~\ref{sec:mixedsim}).
 
 \subsubsection{Optimizations}
 CompCert performs the following optimizations:
 Instruction selection, Common sub-expression elimination, Tail call elimination, Dead code elimination, Function inlining, Branch tuneling, Constant propagation and Register allocation~\cite{compcertoverview}.
-\todo{Examples the ones that will be used: DCE, DAE, CP}
+\todo{Examples for the ones that will be used: DCE, DAE, CP, in appendix}
  
 
 \subsection{Memory Models}
@@ -46,10 +47,10 @@ Moreover, a logical model can allow functions to have exclusive control over a l
 When a block identifier does not escape when calling a function (\textit{i.e.} if the block identifier cannot be found inside the global variables or the function arguments), then the called function cannot access the block (see section~\ref{sec:memupdate}).% too long sentence?
 This allow for many optimizations (see Figure~\ref{fig:examples}).
 
-However, logical models do not support integer-pointer casts. They can allow some arithmetic operations on offsets, but is impossible to get a physical address from a block.
+However, logical models do not support integer-pointer casts. They can allow some arithmetic operations on offsets, but it is impossible to get a physical address from a block.
 
 \subsubsection{Concrete Model}
-The concrete model aims to reflect the memory of a real machine.
+The concrete model aims to reflect the memory of a real machine, to give a more intuitive semantics to pointer manipulation. 
 The memory itself is a $2^{32}$-sized array of values, and \texttt{Allocated}, a list of allocated blocks.
 Blocks are simply a pair of a concrete address and a size.
 $$\texttt{Block}=\{(p,n)~|~p\in\texttt{int32},n\in\texttt{int32}\}$$
@@ -58,7 +59,7 @@ $$\textit{No overflow:}\quad\forall (p,n)\in\texttt{Allocated}, [p,p+n]\subseteq
 $$\textit{No overlap:}\quad\forall (p_1,n_1), (p_2,n_2)\in\texttt{Allocated}, [p_1,p_1+n_1]\text{ and }[p_2,p_2+n_2]\text{ are disjoint.}$$
 In the concrete model, integer-pointer cast is possible because concrete addresses are already integer values.
 
-However, optimizations such as constant propagation and dead allocation elimination are not supported in many cases, because external functions might change the value of any address. In the concrete model, there is no ownership notion, and every address is always accessible.
+However, optimizations such as constant propagation and dead allocation elimination are not supported in many cases, because external functions might change the value of any address. In the concrete model, there is no ownership of memory blocks, and every address is always accessible.
 \subsubsection{Quasi-concrete model}
 In~\cite{DBLP:conf/pldi/KangHMGZV15}, a new memory model is presented. The motivation is to have a memory model which allows integer-pointer casting, but still supports common optimizations.
 This is achieved with the following definitions.
@@ -73,7 +74,7 @@ Optimizations are still be possible with logical blocks, because they do not hav
 To allow as many optimizations as possible, we should use as many logical blocks as possible. Thus, new blocks should be made logical when allocated.
 
 \subsubsection{The capture function}
-However, for each pointer to integer cast, we need a concrete block. Then we transform each pointer to integer cast by adding a \textit{capture} function just before it. This function transforms a logical block into a concrete one, giving it a concrete address that still satisfy the memory consistency. Its semantics are described section~\ref{sec:capturesem}.
+However, for each pointer to integer cast, we need a concrete block. Then we transform each pointer to integer cast by adding a \textit{capture} function just before it. This function transforms a logical block into a concrete one, giving it a concrete address that still satisfies the memory consistency. Its semantics are described section~\ref{sec:capturesem}.
 It introduces non-determinism in every language of CompCert (including the assembly), because a block can be captured at several addresses. This is handled in section~\ref{sec:mixedsim}.
 
 The quasi-concrete is described in many details in~\cite{DBLP:conf/pldi/KangHMGZV15}.

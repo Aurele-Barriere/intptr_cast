@@ -21,9 +21,10 @@ When compiled with most compilers, those programs behave as expected from the pr
 % motivation of the Kanget al. paper
 Defining a precise, formal semantics for integer-pointer casting and pointer manipulation would allow CompCert to compile even more C programs in a certified way.
 The semantics of pointer manipulation depends on the memory model of the compiler.
-As of today, CompCert uses a logical memory model~\cite{leroy:hal-00703441}, where every memory block is an abstract object without a concrete memory address. Such a memory model enables many optimizations, because a program can never guess the location of a block and modify it without a pointer. \todo{example}.
+As of today, CompCert uses a logical memory model~\cite{leroy:hal-00703441}, where every memory block is an abstract object without a concrete memory address. Such a memory model enables many optimizations, because a program can never guess the location of a block and modify it without a pointer (see section~\ref{sec:prelim}).
 However, integer-pointer casting isn't possible.
-Other works have investigated using a concrete memory model, to reflect the state of a real machine's memory \addref{ref}. But then, most optimizations cannot be done anymore without changing the behavior of the program \todo{either go back to the example or reference a later section}.
+Other works have investigated using a concrete memory model, to reflect the state of a real machine's memory~\cite{DBLP:conf/popl/TuchKN07}\cite{Norrish98cformalised}. But then, most optimizations cannot be done anymore without changing the behavior of the program.
+
 In~\cite{DBLP:conf/pldi/KangHMGZV15}, Kang et al suggest a quasi-concrete model, in which there are both logical and concrete memory blocks. The main idea is to use logical blocks by default, that can allow optimizations, and use concrete blocks when the concrete address of a memory block is needed.
 
 % contribution

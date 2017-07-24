@@ -11,15 +11,15 @@ The memory also contains the identifier of the next block to be allocated.
 
 We start by adding to the memory a map \texttt{mem\_concrete} from blocks to a value that is either \texttt{None}, for logical blocks, or \texttt{Some} address, for concrete blocks.
 
-Because the size of blocks was not remembered by CompCert, we add a map \texttt{mem\_offset\_bounds} from blocks to a pair of numbers, describing the range of offsets for which the block has been allocated. We need to add both bounds, because CompCert does not always allocate blocks starting at offset 0. \todo{example, memory overhead when doing malloc?}
+Because the size of blocks was not remembered by CompCert, we add a map \texttt{mem\_offset\_bounds} from blocks to a pair of numbers, describing the range of offsets for which the block has been allocated. We need to add both bounds, because CompCert does not always allocate blocks starting at offset 0.
 
-CompCert uses the permissions to know what address have been freed. This differs from the block-wise validity boolean described in section~\ref{subsec:models}.
-In fact, CompCert \texttt{free} operation is not performed on whole blocks, but on a range of offsets of a block. It allows memory blocks to contain more than one variable. This is the case for instance when \todo{stackframe? other cases?}.
+CompCert uses the permissions to know what addresses have been freed. This differs from the block-wise validity boolean described in section~\ref{subsec:models}.
+In fact, CompCert \texttt{free} operation is not performed on whole blocks, but on a range of offsets of a block. It allows memory blocks to contain more than one variable.
 
 \subsection{Consistency}
 Because we added concrete addresses to some blocks, we need to define several consistency properties.
 
-We add the predicate \texttt{addresses\_in\_range}, implementing the \textit{No overflow} property of section~\ref{subsec:models}. It states that every allocated address is in the range $]0,2^{32}[$ \todo{explain why first and last address are reserved}.
+We add the predicate \texttt{addresses\_in\_range}, implementing the \textit{No overflow} property of section~\ref{subsec:models}. It states that every allocated address is in the range $]0,2^{32}[$ (the first and last address should not be allocated).
 
 We add the predicate \texttt{no\_concrete\_overlap}, implementing the \textit{No overlap} property of section~\ref{subsec:models}. Because the permissions are address-wise in CompCert, and blocks can be freed partially, we change the definition of \textit{No overlap}. Informally, we use the following definition: for each concrete address, there is at most one block where the address is inside the allocated range and hasn't been freed. This allows to allocate blocks over freed memory.
 
@@ -53,3 +53,14 @@ Record mem' : Type := mkmem {
           (addr_in_block mem_concrete mem_offset_bounds mem_access addr);
 }.
 \end{lstlisting}}
+
+
+\subsection{Abstract Analysis}
+
+For some optimization passes, CompCert performs abstract analysis of the code.
+
+For this purpose, any function call is analyzed and classed as either \textit{public} or \textit{private}. If the stack block is not accessible for the called function (i.e. if no pointer to the stack can be found in global variables or the function's arguments), then the call is considered private, and CompCert can perform analysis knowing that the called function cannot change the stack block. However, if such a pointer to the stack exists in the function's arguments or in global variables, then the call is considered public, and the optimizations made are weaker.
+
+With the new memory model, the stack block can also be accessible by a called function when the block has been captured and assigned to a concrete address.
+
+To reflect that, we changed the abstract memory definition to include a Boolean that states if the stack might have been captured. We also define its least upper bound, and change the way functions calls are analyzed to add that all function calls should be public if the stack block may have been captured.
