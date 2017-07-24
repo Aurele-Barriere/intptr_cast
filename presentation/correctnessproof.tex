@@ -179,9 +179,9 @@
       \node (atdots) [below=of dots] {\at{\dots}\vphantom{C}};
       \node (atmach) [below=of mach] {\at{Mach}};
       \path [draw] (cc) edge[<-, below left] node {backward} (atcstrat);
-      \path [draw] (atcstrat) edge[<-, bend right=90, below] node {backward} (atclight);
-      \path [draw] (atclight) edge[<-, bend right=90, below] node {backward} (atdots);
-      \path [draw] (atdots) edge[<-, bend right = 90, below] node {backward} (atmach);
+      \path [draw] (atcstrat.300) edge[<-, bend right=90, below] node {backward} (atclight);
+      \path [draw] (atclight.300) edge[<-, bend right=90, below] node {backward} (atdots);
+      \path [draw] (atdots.300) edge[<-, bend right = 90, below] node {backward} (atmach);
       \path [draw] (atmach) edge[<-, right] node {backward} (asm);
     \end{tikzpicture}
   \end{figure}

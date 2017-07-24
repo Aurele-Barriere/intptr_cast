@@ -84,6 +84,67 @@
   \end{figure}
 }
 
+\def\at#1{$\mathit{atomic}($#1$)$}
+
+\def\oldproof{
+    \begin{tikzpicture}[%
+        every node/.style={rectangle, font=\small},
+        shorten >=2pt,
+        node distance=2cm
+      ]
+      \node (cc) {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \path [draw] (cc) edge[<-, above,line width=1pt] node {1. backward} (cstrat);
+      \path [draw] (cstrat) edge[->, above,line width=1pt] node {1. forward} (clight);
+      \path [draw] (clight) edge[->, above,line width=1pt] node {1. forward} (dots);
+      \path [draw] (dots) edge[->, above,line width=1pt] node {1. forward} (mach);
+      \path [draw] (mach) edge[->, above,line width=1pt] node {1. forward} (asm);
+      \path [draw] (cstrat) edge[->, bend left=20, above,line width=1pt] node {2. forward} (asm);
+      \path [draw] (atcstrat) edge[->, above left,line width=1pt] node {3. forward} (asm);
+      \path [draw] (cc) edge[<-, bend right=20, above right,line width=1pt] node {4. backward} (atcstrat);
+      \path [draw] (atcstrat) edge[<-, bend right=20, above left,line width=1pt] node {4. backward} (asm);
+      \path [draw] (cc) edge[<-, bend right=70, below,line width=1pt] node {5. backward} (asm);
+    \end{tikzpicture}
+}
+
+\def\mixedproof{
+    \begin{tikzpicture}[%
+        every node/.style={rectangle, font=\small},
+        shorten >=2pt,
+        node distance=2cm
+      ]
+      \node (cc) [] {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \node (atclight) [below=of clight] {\at{Clight}};
+      \node (atdots) [below=of dots] {\at{\dots}};
+      \node (atmach) [below=of mach] {\at{Mach}};
+      \path [draw] (cc) edge[<-, above,line width=1pt] node {1. backward} (cstrat);
+      \path [draw] (cstrat) edge[<->, above,line width=1pt] node {1. mixed} (clight);
+      \path [draw] (clight) edge[<->, above,line width=1pt] node {1. mixed} (dots);
+      \path [draw] (dots) edge[<->, above,line width=1pt] node {1. mixed} (mach);
+      \path [draw] (mach) edge[<->, above,line width=1pt] node {1. mixed} (asm);
+      \path [draw] (atcstrat) edge[<-,below right,line width=1pt] node {2. backward} (clight);
+      \path [draw] (atclight) edge[<-,below right,line width=1pt] node {2. backward} (dots);
+      \path [draw] (atdots) edge[<-,below right,line width=1pt] node {2. backward} (mach);
+      \path [draw] (atmach) edge[<-,above left,line width=1pt] node {2. backward} (asm);
+      \path [draw] (cc) edge[<-,above right,line width=1pt] node {3. backward} (atcstrat);
+      \path [draw] (atcstrat.300) edge[<-, bend right=90, below,line width=1pt] node {3. backward} (atclight);
+      \path [draw] (atclight.300) edge[<-, bend right=90, below,line width=1pt] node {3. backward} (atdots);
+      \path [draw] (atdots.300) edge[<-, bend right = 90, below,line width=1pt] node {3. backward} (atmach);
+      \path [draw] (cc) edge[<-, bend right=90, below,line width=1pt] node {4. backward} (asm);
+    \end{tikzpicture}
+}
+
 \label{sec:mixedsim}
 In the quasi-concrete memory model, with the addition of the \textit{capture} function, every language of CompCert is now non-deterministic. Indeed, giving a concrete address to a logical block is a non-deterministic operation, whereas the logical allocation used so far in CompCert was deterministic.
 
@@ -136,16 +197,23 @@ Informally, $\mathit{Atomic}$ of a semantics is the same semantics where steps w
 To prove the correctness of the compilation, we need to prove that for every source C program $sp$, if $tp$ is the compiled ASM program, then we have a backward simulation between $\mathit{Sem}(sp)$ and $\mathit{Sem}(tp)$.
 
 The previous proof in CompCert used the following reasoning:
-\begin{itemize}
-\item Prove a forward simulation for each pass between CStrategy and ASM.
+\begin{enumerate}
+\item Prove a forward simulation for each pass between CStrategy and ASM. Prove a backward simulation between CompCert C and Cstrategy.
 \item Use the simulation composition theorem to deduce a forward simulation between CStrategy and ASM
 \item Use the Factor forward simulation theorem to deduce a forward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
-\item Use the forward to backward theorem to deduce a backward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
-\item Prove a backward simulation between CompCert C and Cstrategy.
-\item Use the factor backward theorem to prove a simulation between CompCert C and $\mathit{Atomic}(\text{CStrategy})$.
+\item Use the forward to backward theorem to deduce a backward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM, as well as a backward simulation between CompCert C and $\mathit{Atomic}(\text{CStrategy})$.
 \item Use the simulation composition theorem to deduce a backward simulation between CompCert C and ASM.
-\end{itemize}
-\todo{figure}
+\end{enumerate}
+
+This proof is illustrated Figure~\ref{fig:oldproof}.
+
+\begin{figure}
+  \makebox[\textwidth][c]{\oldproof}
+  \caption{The previous correctness proof}
+  \label{fig:oldproof}
+\end{figure}
+
+\todo{This is likely to go in appendix}
 
 \subsection{Non-determinism}
 In the quasi-concrete model, the intermediate and target languages of CompCert are no longer \textit{determinate}. Indeed, the \textit{capture} function can give any address to a logical block, as long as it doesn't overlap with other blocks.
@@ -169,14 +237,17 @@ To prove the correctness of CompCert with the new memory model, we introduce \te
 .\todo{...}
 
 \subsection{The new correctness proof}
-\begin{itemize}
-\item Prove a mixed simulation for each pass between CStrategy and ASM.
-\item Use the Factor mixed simulation theorem for each pass between CStrategy and ASM.
-\item Use the Mixed to Backward simulation theorem for each pass between CStrategy and ASM.
-\item Use the Factor backward simulation theorem for each pass between CStrategy and ASM.
-\item Use the Simulation composition theorem to deduce a backward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
-\item Prove a backward simulation between CompCert C and Cstrategy.
-\item Use the factor backward theorem to prove a simulation between CompCert C and $\mathit{Atomic}(\text{CStrategy})$.
-\item Use the simulation composition theorem to deduce a backward simulation between CompCert C and ASM.
-\end{itemize}
-\todo{figure}
+\begin{enumerate}
+\item Prove a mixed simulation for each pass between CStrategy and ASM. We can use the previous forward simulation proof for every non-external states. The backward simulation between CompCert C and CStrategy is unchanged.
+\item We use the mixed to backward simulation theorem on every mixed simulation.
+\item We use the factor backward simulation theorem on every backward simulation.
+\item We use the composition of backward simulations to deduce a backward simulation between CompCert C and ASM.
+\end{enumerate}
+
+The proof is illustrated Figure~\ref{fig:mixedproof}.
+
+\begin{figure}
+  \makebox[\textwidth][c]{\mixedproof}
+  \caption{The new correctness proof}
+  \label{fig:mixedproof}
+\end{figure}
