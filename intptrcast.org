@@ -559,7 +559,7 @@
        why do we need to analyze the private calls
        how do we change the abstract memory
        how do we change the analysis
-*** TODO mixed simulations
+*** DONE mixed simulations
     1) simulations
        bisimulations, forward, backward
     2) the proof of correctness in CompCert
@@ -584,24 +584,20 @@
    Discuss why it should be ok.
    Add a little time comparison to show that the compilation isn't slower and I think it should be anough.
 
-** TODO Conclusion
-** TODO Appendix
-   Examples of optimizations? 
-   With and without pointers (see [Kang et al] for examples in the quasi concrete model)
-** TODO Add limits of quasi-concrete
+   Limits of the model:
    see section 3.7
-   this could be added into the preliminaries
-   or in the evaluation
+
+** TODO Conclusion
 ** TODO Add the state of int-ptr cast in CompCert
    see section 2.2
    this could be added to preliminaries or introduction
+   uintptr_t
 ** TODO Figures and details to add
 *** TODO optimization examples
-*** TODO back_sim, fwd_sim, mixed_sim figures
+*** DONE back_sim, fwd_sim, mixed_sim figures
     see the presentation
 *** TODO receptive and determinate definitions
-*** TODO atomic semantics figure
-*** TODO old and new correctness proofs
+*** DONE old and new correctness proofs
 *** TODO some implems in appendix:
     memory, memory injection
 * TODO [INTPTR][pres] Presentation

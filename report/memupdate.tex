@@ -26,7 +26,7 @@ We add the predicate \texttt{no\_concrete\_overlap}, implementing the \textit{No
 For every memory operation that changes the memory (allocation, store, free, capture), we prove that it preserves the memory consistency.
 
 \subsection{Implementation}
-Here is the new memory, as written in CompCert.
+Here is the new memory, as written in CompCert. \todo{likely to go in appendix}
 {\footnotesize
 \begin{lstlisting}
 Record mem' : Type := mkmem {

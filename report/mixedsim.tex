@@ -84,6 +84,47 @@
   \end{figure}
 }
 
+\def\mixed{
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}[%
+        every node/.style={rectangle,minimum size=4pt,minimum height=4pt, inner sep=0pt},
+        shorten >=2pt,
+        node distance=0.6cm
+      ]
+      \node [draw] (0) [color=blue, fill] {};
+      \node [draw] (1) [circle, color=blue, fill, below=of 0] {};
+      \node [draw] (2) [color=blue, fill, below left=of 1] {};
+      \node [draw] (3) [color=blue, fill, below=of 1] {};
+      \node [draw] (4) [color=blue, fill, below=of 3] {};
+      \node [draw] (5) [color=red, fill, right=of 0] {};
+      \node [draw] (6) [circle, color=red, fill, below=of 5] {};
+      \node [draw] (7) [circle, color=red, fill, below right=of 5] {};
+      \node [draw] (8) [color=red, fill, below=of 6] {};
+      \node [draw] (9) [color=red, fill, below=of 8] {};
+      \node [draw] (10) [color=red, fill, below right=of 8] {};
+      \node (src) [left=of 0] {\color{blue}Source};
+      \node (tgt) [right=of 5] {\color{red}Target};
+ 
+      \path [draw] (0) edge[->]  node {} (1)
+      (1) edge[->]  node {} (2)
+      (1) edge[->]  node {} (3)
+      (3) edge[->]  node {} (4)
+      (5) edge[->]  node {} (6)
+      (5) edge[->]  node {} (7)
+      (6) edge[->]  node {} (8)
+      (8) edge[->]  node {} (9)
+      (8) edge[->]  node {} (10);
+      \draw[dashed] (0) -- (5);
+      \draw[dashed] (1) -- (6);
+      \draw[dashed] (3) -- (8);
+      \draw[dashed] (4) -- (9);
+    \end{tikzpicture}
+    \caption{Example of mixed simulation}
+    \label{fig:mixed}
+  \end{figure}
+}
+
 \def\at#1{$\mathit{atomic}($#1$)$}
 
 \def\oldproof{
@@ -172,13 +213,11 @@ Informally, each time the target program takes a step to a new state, the source
 
 \backwardforward
 
-
-\subsubsection{Theorem: forward to backward} If the target language is \textit{determinate} and the source language is \textit{receptive} and there is a forward simulation between the semantics of $sp$ and $tp$, then we can construct a backward simulation between the semantics of $sp$ and $tp$. \todo{definition of receptive and determinate}
+\subsubsection{Theorem: forward to backward} If the target language is \textit{determinate} and the source language is \textit{receptive} and there is a forward simulation between the semantics of $sp$ and $tp$, then we can construct a backward simulation between the semantics of $sp$ and $tp$. \todo{definition of receptive and determinate + give intuition on the proof}
 
 \subsubsection{Theorems: simulation composition} Let $S_1,S_2,S_3$ be semantics.
 If there is are forward simulations between $S_1$ and $S_2$, and between $S_2$ and $S_3$, then there is a forward simulation between $S_1$ and $S_3$.
 If there is are backward simulations between $S_1$ and $S_2$, and between $S_2$ and $S_3$, then there is a backward simulation between $S_1$ and $S_3$.
-
 
 \subsection{Atomic Semantics and properties}
 \subsubsection{Definition: Atomic Semantics} $\mathit{Atomic}(\states{p},I_p,F_p,\step{p}) = (\traces\times\states{p},\{[]\}\times I_p,\{[]\}\times F_p,\atstep{p})$ where $[]$ is the empty trace and $\atstep{p}$ is defined as follow:
@@ -187,7 +226,7 @@ If there is are backward simulations between $S_1$ and $S_2$, and between $S_2$ 
 \item $(s_1,ev::t,s_2)\in\step{p}\implies(([],s_1),[ev],(t,s_2))\in\atstep{p}$
 \item $((ev::t,s),[ev],(t,s))\in\atstep{p}$
 \end{itemize}
-Informally, $\mathit{Atomic}$ of a semantics is the same semantics where steps with multiple events have been replaced with several single-event steps. This is illustrated figure \todo{example}.
+Informally, $\mathit{Atomic}$ of a semantics is the same semantics where steps with multiple events traces have been replaced with several single-event steps.
 
 \subsubsection{Theorem: Factor forward simulation} If there is a forward simulation between $S_1$ and $S_2$ and $S_2$ has \textit{single events}, then there is a forward simulation between $\mathit{Atomic}(S_1)$ and $S_2$.
 
@@ -201,7 +240,7 @@ The previous proof in CompCert used the following reasoning:
 \item Prove a forward simulation for each pass between CStrategy and ASM. Prove a backward simulation between CompCert C and Cstrategy.
 \item Use the simulation composition theorem to deduce a forward simulation between CStrategy and ASM
 \item Use the Factor forward simulation theorem to deduce a forward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
-\item Use the forward to backward theorem to deduce a backward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM, as well as a backward simulation between CompCert C and $\mathit{Atomic}(\text{CStrategy})$.
+\item Use the forward to backward theorem to deduce a backward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM, as well as the factor backward theorem to deduce a backward simulation between CompCert C and $\mathit{Atomic}(\text{CStrategy})$.
 \item Use the simulation composition theorem to deduce a backward simulation between CompCert C and ASM.
 \end{enumerate}
 
@@ -220,21 +259,23 @@ In the quasi-concrete model, the intermediate and target languages of CompCert a
 Thus, the use of forward simulations is no longer relevant.
 
 \subsection{Mixed simulations and properties}
-To prove the correctness of CompCert with the new memory model, we introduce \textit{mixed simulations}. Informally, at each state of the semantics, either we have a local forward simulation, or a local backward simulation. For most steps, we use the forward reasoning, but for external calls (such as \textit{capture} and other unknown functions that might capture blocks), we use a backward reasoning.
+To prove the correctness of CompCert with the new memory model, we introduce \textit{mixed simulations}. Informally, at each state of the semantics, either we have a local forward simulation, or a local backward simulation. For most steps, we use forward reasoning (and it can be proved by adapting the previous forward simulation proof that used to be in CompCert), but for external calls (such as \textit{capture} and other unknown functions that might capture blocks), we use a backward reasoning. This is illustrated Figure~\ref{fig:mixed}, with round states being the states where an external function is called.
 
 \subsubsection{Definition: Mixed Simulation} Let $sp$ a source program and $tp$ a target program. A mixed simulation is a relation $R$ such that
 \begin{itemize}
 \item $\forall i\in I_{tp}, \exists i'\in I_{sp}, (i,i')\in R$
-\item \todo{...}
-\item $\forall t\in\traces, ss_1\in\states{sp},st_1,st_2\in\states{tp},$\\
-      $\quad(ss_1,st_1)\in R~\wedge~(st_1,t,st_2)\in\step{tp}\implies$\\
-      $\exists ss_2\in\states{sp}, (ss_1,t,ss_2)\in\step{sp}$\todo{change it for mixed definition}
+\item $\forall t\in\traces, ss_1\in\states{sp},st_1\in\states{tp},\quad(ss_1,st_1)\in R\implies ($\\
+      $\textbf{Forward: }\wedge\forall ss_2, (ss_1,t,ss_2)\in\step{sp}\implies\exists st_2, (st_1,t,st_2)\in\step{tp}  \quad\vee$\\
+      $\textbf{Backward: }\forall st_2, (st_1,t,st_2)\in\step{tp}\implies\exists ss_2, (ss_1,t,ss_2)\in\step{sp} \quad)$
+\item Every state where forward reasonning is applied should have \textit{local determinacy}
 \end{itemize}
 
-\subsubsection{Theorem: Factor mixed simulation}
-.\todo{...}
+\mixed
+
 \subsubsection{Theorem: Mixed to Backward simulation}
-.\todo{...}
+If there is a mixed simulation between $S_1$ and $S_2$, then there is a backward simulation between $\mathit{Atomic}(S_1)$ and $S_2$.
+
+To prove it, we use the local determinacy of states with forward reasonning, in a similar way to the Forward to Backward simulation theorem. This theorem also requires several hypothesis on the source and target languages (\texttt{single\_events}, \texttt{well\_behaved}) that we proved for each mixed simulation used in the correctness proof.
 
 \subsection{The new correctness proof}
 \begin{enumerate}
