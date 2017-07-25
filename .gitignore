@@ -25,6 +25,9 @@ test/compcert
 test/testop/gcco1
 test/testop/gcco2
 test/testop/compcert
+test/capturetest/gcco1
+test/capturetest/gcco2
+test/capturetest/compcert
 *.o
 *.alloctrace
 *.cm

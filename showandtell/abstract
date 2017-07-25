@@ -1,0 +1,12 @@
+Title: Implementing a C Memory Model Supporting Integer-Pointer Casts in CompCert
+
+
+Abstract:
+
+The ISO C standard does not define semantics for integer-pointer casts. The certified C compiler CompCert uses an abstract memory model which allows for many optimizations, but in which the behavior of such casts is undefined. In [1], Kang et al. present a new formal memory model that supports integer-pointer casts semantics, while still allowing common optimizations.
+
+In this talk, I will present what I did during my internship to implement this model in CompCert.
+I present the memory model, its implementation and the changes made to memory injection.
+Then I present the new correctness proof of CompCert, using mixed simulations to deal with non-deterministic behaviors.
+
+[1] Jeehoon Kang, Chung-Kil Hur, William Mansky, Dmitri Garbuzov, Steve Zdancewic, and Viktor Vafeiadis. A formal C memory model supporting integer-pointer casts. In Proceedings of the 36th ACM SIGPLAN Conference on Programming Language Design and Implementation, Portland, OR, USA, June 15-17, 2015, pages 326–335, 2015.
