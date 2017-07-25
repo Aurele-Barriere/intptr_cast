@@ -26,34 +26,7 @@ We add the predicate \texttt{no\_concrete\_overlap}, implementing the \textit{No
 For every memory operation that changes the memory (allocation, store, free, capture), we prove that it preserves the memory consistency.
 
 \subsection{Implementation}
-Here is the new memory, as written in CompCert. \todo{likely to go in appendix}
-{\footnotesize
-\begin{lstlisting}
-Record mem' : Type := mkmem {
-  mem_contents: PMap.t (ZMap.t memval);  (**r [block -> offset -> memval] *)
-  mem_access: PMap.t (Z -> perm_kind -> option permission);
-  (**r [block -> offset -> kind -> option permission] *)
-  mem_concrete: PMap.t (option Z); (** [block -> option Z] **)
-  mem_offset_bounds : PMap.t (Z*Z); (** [block -> Z * Z ] **)
-  nextblock: block;
-  access_max:
-    forall b ofs, perm_order'' (mem_access#b ofs Max) (mem_access#b ofs Cur);
-  nextblock_noaccess:
-    forall b ofs k, ~(Plt b nextblock) -> mem_access#b ofs k = None;
-  contents_default:
-    forall b, fst mem_contents#b = Undef;
-  nextblocks_logical:
-    forall b, ~(Plt b nextblock) -> mem_concrete#b = None;
-  addresses_in_range:
-    forall bo addr
-    (IN_BLOCK: addr_in_block mem_concrete mem_offset_bounds mem_access addr bo),
-      in_range addr (1,max_address);
-  no_concrete_overlap:
-    forall addr, uniqueness
-          (addr_in_block mem_concrete mem_offset_bounds mem_access addr);
-}.
-\end{lstlisting}}
-
+The new implementation can be found in Appendix, section~\ref{subsec:memimplem}.
 
 \subsection{Abstract Analysis}
 

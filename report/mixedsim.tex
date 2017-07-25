@@ -228,34 +228,14 @@ If there is are backward simulations between $S_1$ and $S_2$, and between $S_2$ 
 \end{itemize}
 Informally, $\mathit{Atomic}$ of a semantics is the same semantics where steps with multiple events traces have been replaced with several single-event steps.
 
-\subsubsection{Theorem: Factor forward simulation} If there is a forward simulation between $S_1$ and $S_2$ and $S_2$ has \textit{single events}, then there is a forward simulation between $\mathit{Atomic}(S_1)$ and $S_2$.
-
 \subsubsection{Theorem: Factor backward simulation} If there is a backward simulation between $S_1$ and $S_2$ and $S_1$ has \textit{single events}, then there is a forward simulation between $S_1$ and $\mathit{Atomic}(S_2)$.
 
-\subsection{The correctness proof in CompCert}
+\subsection{Non-determinism}
 To prove the correctness of the compilation, we need to prove that for every source C program $sp$, if $tp$ is the compiled ASM program, then we have a backward simulation between $\mathit{Sem}(sp)$ and $\mathit{Sem}(tp)$.
 
-The previous proof in CompCert used the following reasoning:
-\begin{enumerate}
-\item Prove a forward simulation for each pass between CStrategy and ASM. Prove a backward simulation between CompCert C and Cstrategy.
-\item Use the simulation composition theorem to deduce a forward simulation between CStrategy and ASM
-\item Use the Factor forward simulation theorem to deduce a forward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
-\item Use the forward to backward theorem to deduce a backward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM, as well as the factor backward theorem to deduce a backward simulation between CompCert C and $\mathit{Atomic}(\text{CStrategy})$.
-\item Use the simulation composition theorem to deduce a backward simulation between CompCert C and ASM.
-\end{enumerate}
+Previously, in CompCert, the proof of correctness used forward simulations for almost every pass, then used the forward to backward simulation theorem to deduce a backward simulation between CompCertC and ASM. More details on this proof can be found in Appendix, section~\ref{subsec:oldproof}.
 
-This proof is illustrated Figure~\ref{fig:oldproof}.
-
-\begin{figure}
-  \makebox[\textwidth][c]{\oldproof}
-  \caption{The previous correctness proof}
-  \label{fig:oldproof}
-\end{figure}
-
-\todo{This is likely to go in appendix}
-
-\subsection{Non-determinism}
-In the quasi-concrete model, the intermediate and target languages of CompCert are no longer \textit{determinate}. Indeed, the \textit{capture} function can give any address to a logical block, as long as it doesn't overlap with other blocks.
+However, in the quasi-concrete model, the intermediate and target languages of CompCert are no longer \textit{determinate}. Indeed, the \textit{capture} function can give any address to a logical block, as long as it doesn't overlap with other blocks.
 Thus, the use of forward simulations is no longer relevant.
 
 \subsection{Mixed simulations and properties}

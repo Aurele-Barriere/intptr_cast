@@ -112,6 +112,7 @@
 \end{figure}
 
 \subsection{Memory implementation}
+\label{subsec:memimplem}
 The new definition of the memory is the following:
 
 \begin{lstlisting}[basicstyle=\footnotesize]
@@ -141,6 +142,7 @@ no_concrete_overlap:
 \end{lstlisting}
 
 \subsection{Memory injection}
+\label{subsec:injectimplem}
 The new definition of memory injection is the following:
 
 \begin{lstlisting}[basicstyle=\footnotesize]
@@ -167,3 +169,51 @@ mk_inject {
     perm m1 b1 ofs k p \/ ~perm m1 b1 ofs Max Nonempty
 }.
 \end{lstlisting}
+
+\subsection{The previous correctness proof}
+\label{subsec:oldproof}
+\def\oldproof{
+    \begin{tikzpicture}[%
+        every node/.style={rectangle, font=\small},
+        shorten >=2pt,
+        node distance=2cm
+      ]
+      \node (cc) {CompCert C};
+      \node (cstrat) [right=of cc] {CStrategy};
+      \node (clight) [right=of cstrat] {Clight};
+      \node (dots) [right=of clight] {\dots\vphantom{C}};
+      \node (mach) [right=of dots] {Mach};
+      \node (asm) [right=of mach] {ASM};
+      \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
+      \path [draw] (cc) edge[<-, above,line width=1pt] node {1. backward} (cstrat);
+      \path [draw] (cstrat) edge[->, above,line width=1pt] node {1. forward} (clight);
+      \path [draw] (clight) edge[->, above,line width=1pt] node {1. forward} (dots);
+      \path [draw] (dots) edge[->, above,line width=1pt] node {1. forward} (mach);
+      \path [draw] (mach) edge[->, above,line width=1pt] node {1. forward} (asm);
+      \path [draw] (cstrat) edge[->, bend left=20, above,line width=1pt] node {2. forward} (asm);
+      \path [draw] (atcstrat) edge[->, above left,line width=1pt] node {3. forward} (asm);
+      \path [draw] (cc) edge[<-, bend right=20, above right,line width=1pt] node {4. backward} (atcstrat);
+      \path [draw] (atcstrat) edge[<-, bend right=20, above left,line width=1pt] node {4. backward} (asm);
+      \path [draw] (cc) edge[<-, bend right=70, below,line width=1pt] node {5. backward} (asm);
+    \end{tikzpicture}
+}
+
+\subsubsection{Theorem: Factor forward simulation} If there is a forward simulation between $S_1$ and $S_2$ and $S_2$ has \textit{single events}, then there is a forward simulation between $\mathit{Atomic}(S_1)$ and $S_2$.
+
+\subsubsection{Correctness proof}
+The previous proof in CompCert used the following reasoning:
+\begin{enumerate}
+\item Prove a forward simulation for each pass between CStrategy and ASM. Prove a backward simulation between CompCert C and Cstrategy.
+\item Use the simulation composition theorem to deduce a forward simulation between CStrategy and ASM
+\item Use the Factor forward simulation theorem to deduce a forward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM.
+\item Use the forward to backward theorem to deduce a backward simulation between $\mathit{Atomic}(\text{CStrategy})$ and ASM, as well as the factor backward theorem to deduce a backward simulation between CompCert C and $\mathit{Atomic}(\text{CStrategy})$.
+\item Use the simulation composition theorem to deduce a backward simulation between CompCert C and ASM.
+\end{enumerate}
+
+This proof is illustrated Figure~\ref{fig:oldproof}.
+
+\begin{figure}
+  \makebox[\textwidth][c]{\oldproof}
+  \caption{The previous correctness proof}
+  \label{fig:oldproof}
+\end{figure}
