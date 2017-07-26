@@ -4,12 +4,14 @@
 
 extern void g();
 
-int a;
+int f() {
+  int a = 0;
+  int* q = &a;
+  g();
+  return a;
+}
 
 int main() {
-  a = 0;
-  int b = (int) &a;
-  g();
-  return b;
+  f();
+  return 0;
 }
-  

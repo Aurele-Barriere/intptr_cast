@@ -522,7 +522,7 @@
    Finally, the model seems to be compatible with other works, with some adaptation.
    [6][7]Krebber
    
-** TODO Contribution
+** DONE Contribution
 *** DONE memory update
     1) adding fields
        mem_concrete, mem_offset_bounds
@@ -566,7 +566,7 @@
     3) Non-determinism
     4) Mixed simulations and properties
     5) The new proof of correctness
-*** TODO semantics
+*** DONE semantics
 ** TODO Evaluation?
    Anything admitted? 
    Maybe test the changes made to abstract analysis to see if we don't loose too much private calls
@@ -582,7 +582,7 @@
    
    Then we show when there are optimizations and where they cannot be done (concrete blocks).
    Discuss why it should be ok.
-   Add a little time comparison to show that the compilation isn't slower and I think it should be anough.
+   Add a little time comparison to show that the compilation isn't slower and I think it should be enough.
 
    Limits of the model:
    see section 3.7
@@ -604,7 +604,7 @@
   DEADLINE: <2017-08-04 Fri>
 ** TODO [INTPTR][pres] Presentation at show&tell
    SCHEDULED: <2017-08-04 Fri>
-** TODO [INTPTR][pres] Write show&tell summary
+** DONE [INTPTR][pres] Write show&tell summary
    DEADLINE: <2017-07-28 Fri>
 ** TODO [INTPTR][pres] Write show&tell memo
    DEADLINE: <2017-08-01 Tue>
@@ -659,7 +659,7 @@
 ** DONE [INTPTR][plans] Pull request: CSEproof_mixed
    DEADLINE: <2017-07-19 Wed>
 ** TODO [INTPTR][plans] Evaluation
-   DEADLINE: <2017-07-24 Mon>
+   DEADLINE: <2017-07-28 Mon>
    Compile a few programs with the new compiler
    Try to see when are optimization done, and when they aren't,
    Discuss its validity

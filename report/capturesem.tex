@@ -1,4 +1,44 @@
 \label{sec:capturesem}
-\todo{capturesem: explain where is the capture function added}\\
-\todo{discuss out of memory}
 
+\begin{figure}
+\begin{subfigure}{.48\textwidth}
+  \begin{lstlisting}[language=C]
+int main() {
+  int a = 0;
+  int b = (int) &a;
+  return 0;
+}
+  \end{lstlisting}
+  \caption{C source program}
+  \label{fig:capturec}
+\end{subfigure}
+\begin{subfigure}{.48\textwidth}
+  \begin{lstlisting}[language=C]
+int main(void)
+{
+  int a;
+  int b;
+  a = 0;
+  builtin builtin __capture(&a);
+  b = (int) &a;
+  return 0;
+  return 0;
+}
+  \end{lstlisting}
+  \caption{Clight program}
+  \label{fig:captureclight}
+\end{subfigure}
+\caption{CompCert now automatically inserts the capture function before casts}
+\label{fig:captureexample}
+\end{figure}
+
+
+
+In this section, the implementation has been done by Juneyoung Lee.
+
+The capture function is the new builtin function to turn logical blocks into concrete blocks.
+To be sure that casting from pointer to integer is always possible, the capture function should be called before every such cast.
+
+The function is added in the first verified pass of CompCert, when translating CompCert C programs into Clight.
+
+The results can be seen on the Figure~\ref{fig:captureexample}. We can notice the capture of the memory block of \texttt{a} just before casting it's address to an integer.

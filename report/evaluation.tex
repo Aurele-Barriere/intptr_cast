@@ -1,5 +1,76 @@
-\todo{test optimizations, test the modification of the abstract analysis (private calls)}\\
-\todo{See where are optimizations done, where they aren't}\\
-\todo{This should be similar to what's done in Kang et al. paper, except that this time we can show compiled programs.}\\
+\subsection{Correctness}
+The correctness of CompCert with the new memory model hasn't been entirely proved yet.
+The remaining proofs are most of the proofs of mixed simulations.
+However, we remain confident that such a mixed simulation exists for every pass. One mixed simulation has been proved (\texttt{CSEproof}, an optimization pass from RTL to RTL), and others should be very similar. The intuition behind any mixed simulation proof is the same: use the previous forward simulation proof to prove a local foward simulation of non-external states, then use the new properties of external calls to prove the local backward simlulation of external states.
 
-\todo{Discuss what's still admitted, and why it should be ok}
+\todo{out of memory?}
+
+\subsection{Examples}
+Even if the semantics of casting has not been fully implemented yet, it is already possible to compile some C programs with our modified version of CompCert. We can see that the new model successfully gives semantics to integer-pointer casting, but also allow many optimizations when using logical blocks.
+
+This is illustrated Figure~\ref{fig:cplogical}. We can see that constant propagation is done, and the program returns 0. This is explained by the fact that the memory block of \texttt{a} is logical, and thus the function \texttt{f()} has ownership of this memory block. The compiler deduce that \texttt{a} cannot be accessed by the function \texttt{g()}, and thus performs constant propagation.
+However, if the block is made concrete, then \texttt{f()} looses owenership of \texttt{a} and constant propagation should not be done. This is illustrated Figure~\ref{fig:cpconcrete}, where the memory block of \texttt{a} has to be captured due to the pointer-to-integer cast.
+
+\begin{figure}
+\begin{subfigure}{.48\textwidth}
+  \begin{lstlisting}[language=C]
+extern void g();
+
+int f() {
+  int a = 0;
+  int* q = &a;
+  g();
+  return a;
+}
+\end{lstlisting}
+  \caption{C source program}
+\end{subfigure}
+\begin{subfigure}{.48\textwidth}
+  \begin{lstlisting}
+f() {
+    6:	x4 = 0
+    5:	int32[stack(0)] = x4
+    4:	nop
+    3:	x3 = "g"()
+    2:	x2 = 0
+    1:	return x2
+}
+\end{lstlisting}
+  \caption{Optimized RTL program}
+\end{subfigure}
+\caption{Constant propagation on logical blocks}
+\label{fig:cplogical}
+\end{figure}
+
+\begin{figure}
+\begin{subfigure}{.48\textwidth}
+  \begin{lstlisting}[language=C]
+extern void g();
+int f() {
+  int a = 0;
+  int* q = &a;
+  int b = (int) q;
+  g();
+  return a;
+}
+\end{lstlisting}
+  \caption{C source program}
+\end{subfigure}
+\begin{subfigure}{.48\textwidth}
+  \begin{lstlisting}
+f() {
+    8:	x5 = 0
+    7:	int32[stack(0)] = x5
+    6:	x2 = stack(0) (int)
+    5:	_ = builtin __capture(x2)
+    4:	nop
+    3:	x4 = "g"()
+    2:	x3 = int32[stack(0)]
+    1:	return x3
+}
+\end{lstlisting}
+  \caption{Optimized RTL program}
+\end{subfigure}
+\caption{No Constant propagation on concrete blocks}
+\label{fig:cpconcrete}
+\end{figure}
