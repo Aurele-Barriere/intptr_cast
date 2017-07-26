@@ -4,10 +4,11 @@
 
 extern void g();
 
+int a;
+
 int main() {
-  int a = 0;
-  int * p = &a;
-  int b = (int) p;
+  a = 0;
+  int b = (int) &a;
   g();
   return b;
 }

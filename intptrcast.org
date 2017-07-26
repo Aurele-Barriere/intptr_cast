@@ -422,7 +422,7 @@
 *** TODO [INTPTR][mixedsim][simulations] CshmgenProof | Clight2 -> Csharpminor
 *** TODO [INTPTR][mixedsim][simulations] Cminorgenproof | Csharpminor -> Cminor
 *** TODO [INTPTR][mixedsim][simulations] Selectionproof | Cminor -> CminorSel
-*** TODO [INTPTR][mixedsim][simulations] RTLgenproog | CminorSel -> RTL
+*** TODO [INTPTR][mixedsim][simulations] RTLgenproof | CminorSel -> RTL
 *** TODO [INTPTR][mixedsim][simulations] Tailcallproof | RTL -> RTL
 *** TODO [INTPTR][mixedsim][simulations] Inliningproof | RTL -> RTL
 *** TODO [INTPTR][mixedsim][simulations] Renumberproof | RTL -> RTL
@@ -658,11 +658,6 @@
     leave it to jeehoon after adding the safety hypothesis
 ** DONE [INTPTR][plans] Pull request: CSEproof_mixed
    DEADLINE: <2017-07-19 Wed>
-** TODO [INTPTR][plans] Finish Constpropproof
-   DEADLINE: <2017-07-21 Fri>
-   Inop states should be stuttering, we should not need determinacy
-** TODO [INTPTR][plans] Pull request: Constpropproof_mixed
-   DEADLINE: <2017-07-21 Fri>
 ** TODO [INTPTR][plans] Evaluation
    DEADLINE: <2017-07-24 Mon>
    Compile a few programs with the new compiler
