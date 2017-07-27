@@ -66,7 +66,7 @@
 %\subtitle{Subtitle Text, if any}
 
 \authorinfo{Aur\`ele Barri\`ere}
-	{}
+	{ENS Rennes}
            {aurele.barriere@ens-rennes.fr}
 
 \maketitle
@@ -77,7 +77,7 @@
 
 \begin{abstract}
 
-The ISO C standard does not define semantics for integer-pointer casts. The certified C compiler CompCert uses an abstract memory model which allows for many optimizations, but in which the behavior of such casts is undefined. In [1], Kang et al. present a new formal memory model that supports integer-pointer casts semantics, while still allowing common optimizations.
+The ISO standard for the C programming language does not define semantics for integer-pointer casts. The certified C compiler CompCert uses an abstract memory model which allows for many optimizations, but in which the behavior of such casts is undefined. In [1], Kang et al. present a new formal memory model that supports integer-pointer casts semantics, while still allowing common optimizations.
 
 In this talk, I will present what I did during my internship to implement this model in CompCert.
 I present the memory model, its implementation and the changes made to memory injection.
@@ -85,6 +85,33 @@ Then I present the new correctness proof of CompCert, using mixed simulations to
  
 \end{abstract}
 
+
+\section{The new memory model}
+I start by presenting the memory model introduced in [1]. It uses the benefits of logical and concrete memory models.
+
+In a logical model, the memory is infinite and a memory block is accessible only if there exists some pointer to it. This allows block ownership by function: if the address of a block does not escape via global pointers or function arguments, then called functions cannot access the block. This is required for many optimizations, such as constant propagation. However, in a logical model, memory blocks lack a concrete address, and thus integer-pointer casting has no semantics. CompCert uses a logical memory model.
+
+In a concrete model, each mmory block has a concrete address. Integer-pointer cast semantics can be easily defined. However, many common optimizations fail because every memory address is accessible by any function.
+
+In [1], Kang et al. suggest the quasi-concrete model. In this model, memory blocks can be either concrete (with a concrete memory address in a finite memory) or logical (no concrete address). When logical blocks are used, optimizations are possible. Concrete memory blocks allow integer-pointer casts. To allow for as much optimizations as possible, memory blocks should be logical when allocated, and only be made concrete before an integer-pointer cast. This transformation is done with a new builtin function, the \textit{capture} of a memory block.
+
+\section{The quasi-concrete model in CompCert}
+The new memory model was implemented in CompCert. We changed the memory definition. We added memory consistency for the concrete blocks (no overlapping blocks and no memory overflow). We changed definitions in abstract analysis to reflect that the stack can be accessible if it has been captured. We proved that memory operations preserve memory consistency.
+
+\section{Memory Injection}
+The notion of memory injection is used to express that two memories are similar. For instance, the memory of the target program should be similar in a way to the source program memory. This definition had to be changed when we added concrete blocks. Then we had to prove that every memory operation preserves memory injection. The properties of external calls and builtin functions had to be changed as well. 
+
+\section{Mixed simulation}
+To prove the correctness of CompCert, we must prove that the behavior of the target program is one of the behaviors of the source program. To do se, we prove a \textit{backward simulation} between CompCert C and ASM. To construct this simulation, CompCert used to prove \textit{forward simulations} for each pass, then use determinism of the target language to build the backward simulation.
+However, with the new memory model, because the \textit{capture} function is non-deterministic, such a proof cannot be used. But non-deterministic behavior can be precisely located to builtin functions and unknown external calls. We used this to adapt the forward simulations into mixed simulations. We present the definition of mixed simulations, show that we can prove mixed simulations for every CompCert pass. Then we design a new correctness proof exloiting those simulations.
+
+\section{Conclusion}
+We successfully implemented the new memory model.
+We designed a new proof for compiler correctness.
+
+Not all mixed simulations have been proved. However, we are confident that the proofs should all be similar, and one mixed simulation has been fully proved. The intuition of every mixed simulation proof is the same: use the previous forward simulation proofs to prove that there is a local forward simulation for most states, and use the new external call properties to prove that there is a local backward simulations for the remaining states.
+
+The implementation of cast semantics has not been finished. However, the insertion of the capture function has been done, and the remaining work should be straightforward.
 
 
 % We recommend abbrvnat bibliography style.
