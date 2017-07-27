@@ -7,7 +7,7 @@ However, we remain confident that such a mixed simulation exists for every pass.
 \todo{out of memory?}
 
 \subsection{Examples}
-Even if the semantics of casting has not been fully implemented yet, it is already possible to compile some C programs with our modified version of CompCert. We can see that the new model successfully gives semantics to integer-pointer casting, but also allow many optimizations when using logical blocks.
+Even if the semantics of casting has not been fully implemented yet, it is already possible to compile some C programs with our modified version of CompCert. We can see that the new model successfully gives semantics to integer-pointer casting, but also allow optimizations when using logical blocks.
 
 This is illustrated Figure~\ref{fig:cplogical}. We can see that constant propagation is done, and the program returns 0. This is explained by the fact that the memory block of \texttt{a} is logical, and thus the function \texttt{f()} has ownership of this memory block. The compiler deduce that \texttt{a} cannot be accessed by the function \texttt{g()}, and thus performs constant propagation.
 However, if the block is made concrete, then \texttt{f()} looses owenership of \texttt{a} and constant propagation should not be done. This is illustrated Figure~\ref{fig:cpconcrete}, where the memory block of \texttt{a} has to be captured due to the pointer-to-integer cast.
