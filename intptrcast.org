@@ -567,7 +567,7 @@
     4) Mixed simulations and properties
     5) The new proof of correctness
 *** DONE semantics
-** TODO Evaluation?
+** DONE Evaluation?
    Anything admitted? 
    Maybe test the changes made to abstract analysis to see if we don't loose too much private calls
    See what optimizations are successful

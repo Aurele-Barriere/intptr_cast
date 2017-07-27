@@ -16,6 +16,9 @@ Because the size of blocks was not remembered by CompCert, we add a map \texttt{
 CompCert uses the permissions to know what addresses have been freed. This differs from the block-wise validity boolean described in section~\ref{subsec:models}.
 In fact, CompCert \texttt{free} operation is not performed on whole blocks, but on a range of offsets of a block. It allows memory blocks to contain more than one variable.
 
+The new implementation can be found in Appendix, section~\ref{subsec:memimplem}.
+
+
 \subsection{Consistency}
 Because we added concrete addresses to some blocks, we need to define several consistency properties.
 
@@ -24,9 +27,6 @@ We add the predicate \texttt{addresses\_in\_range}, implementing the \textit{No 
 We add the predicate \texttt{no\_concrete\_overlap}, implementing the \textit{No overlap} property of section~\ref{subsec:models}. Because the permissions are address-wise in CompCert, and blocks can be freed partially, we change the definition of \textit{No overlap}. Informally, we use the following definition: for each concrete address, there is at most one block where the address is inside the allocated range and hasn't been freed. This allows to allocate blocks over freed memory.
 
 For every memory operation that changes the memory (allocation, store, free, capture), we prove that it preserves the memory consistency.
-
-\subsection{Implementation}
-The new implementation can be found in Appendix, section~\ref{subsec:memimplem}.
 
 \subsection{Abstract Analysis}
 
