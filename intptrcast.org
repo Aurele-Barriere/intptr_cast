@@ -587,7 +587,7 @@
    Limits of the model:
    see section 3.7
 
-** TODO Conclusion
+** DONE Conclusion
 ** TODO Add the state of int-ptr cast in CompCert
    see section 2.2
    this could be added to preliminaries or introduction
@@ -658,7 +658,7 @@
     leave it to jeehoon after adding the safety hypothesis
 ** DONE [INTPTR][plans] Pull request: CSEproof_mixed
    DEADLINE: <2017-07-19 Wed>
-** TODO [INTPTR][plans] Evaluation
+** DONE [INTPTR][plans] Evaluation
    DEADLINE: <2017-07-28 Mon>
    Compile a few programs with the new compiler
    Try to see when are optimization done, and when they aren't,

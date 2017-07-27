@@ -1,18 +1,37 @@
 \begin{frame}{\secname: Correctness}
 
   \begin{alertblock}{Admitted Theorems}
-    \comment{list}
+    Most mixed simulations.
   \end{alertblock}
   \vfill
   \begin{exampleblock}{Finishing the proofs}
-    \comment{why the admitted theorems should be true}\\
-    \comment{Proved mixed simulations: CSEproof,\dots}
+    One mixed simulation is finished. Others should be very similar.
   \end{exampleblock}
+  \vfill
+  \begin{alertblock}{Casts semantics not fully implemented}
+    We can still see the capture, and compile some C programs.
+  \end{alertblock}
   
 \end{frame}
 
 \begin{frame}{\secname: Optimizations}
 
-  \comment{todo: run programs with cast}
+    \begin{minipage}{0.48\textwidth}
+    \begin{center}
+      \lstinputlisting{listings/evallogical.c}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.48\textwidth}
+    \lstinputlisting{listings/evallogicalopt.c}
+  \end{minipage}
+  \vfill
+  \begin{minipage}{0.48\textwidth}
+    \begin{center}
+      \lstinputlisting{listings/evalconcrete.c}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.48\textwidth}
+    \lstinputlisting{listings/evalconcreteopt.c}
+  \end{minipage}
 
 \end{frame}

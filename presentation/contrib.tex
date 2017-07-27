@@ -160,11 +160,23 @@
   
 \end{frame}
 
-\subsection{Capture Semantics}
+\subsection{Capture Insertion}
 \begin{frame}{\subsecname}
 
-  \comment{example}\\
-  \comment{In Clight}
+  \begin{block}{Insert capture before each cast}
+  Done by Juneyoung Lee.\\
+  Between CompCert C and Clight.
+  \end{block}
+  \vfill
+  \begin{minipage}{0.48\textwidth}
+    \begin{center}
+      \lstinputlisting{listings/captureinsert.c}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.48\textwidth}
+    \lstinputlisting{listings/captureinsert.clight}
+  \end{minipage}
+
 
 \end{frame}
 

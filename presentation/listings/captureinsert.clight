@@ -1,0 +1,10 @@
+int main(void)
+{
+  int a;
+  int b;
+  a = 0;
+  builtin builtin __capture(&a);
+  b = (int) &a;
+  return 0;
+  return 0;
+}

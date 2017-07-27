@@ -4,8 +4,9 @@ We successfully implemented the new memory model in CompCert. We also changed ma
 Casting semantics have not been changed yet, but we believe it to be straightforward. We already added the \textit{capture} function when needed.
 Currently, we modified or added more than 5 kloc of Coq in CompCert.
 
-This work shows that the memory model introduced in~\cite{DBLP:conf/pldi/KangHMGZV15} can be used in CompCert. We can verify that it allows optimizations whn logical blocks are used. The model also allows semantics for any integer-pointer casts that are not too complicated for a programmer to keep in mind.
+This work shows that the memory model introduced in~\cite{DBLP:conf/pldi/KangHMGZV15} can be used in CompCert. We can verify that it allows optimizations when logical blocks are used. The model also allows semantics for any integer-pointer casts that are not too complicated for a programmer to keep in mind.
 
-We also believe that the work on mixed simulations could be used in other contexts, when dealing with non-deterministic behaviors. As long as this non-determinism can be located, we can prove a mixed simulation where forward simulations wouldn't be possible, and still use it to construct the backward simulations needed for behavior refinement.
+We also believe that the work on mixed simulations could be used in other contexts, when dealing with non-deterministic behaviors. As long as this non-determinism can be located, we can prove a mixed simulation where forward simulations wouldn't be possible, and still use it to construct the backward simulations needed for compiler correctness.
 
 Future work should first focus on finishing the implementation.
+\todo{anything else?}
