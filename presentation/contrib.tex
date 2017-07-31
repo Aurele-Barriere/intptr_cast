@@ -148,10 +148,7 @@
   \end{block}
   \vfill
   \begin{block}{Changes}
-    \begin{itemize}
-    \item Concrete blocks mapped to concrete blocks, at the same address.
-    \item No concrete private source blocks.
-    \end{itemize}
+  Concrete blocks in the source should be preserved, at the same address, in the target.
   \end{block}
   \vfill
   \begin{exampleblock}{Proofs}
@@ -217,7 +214,7 @@
   \vfill
   \begin{exampleblock}{Handling non-deterministic behavior}
     Non-deterministic behavior only for unknown external calls or builtin functions (capture).\\
-    For every other state, we still have local determinism.
+    For every other state, we still have local determinacy.
   \end{exampleblock}
 \end{frame}
 
@@ -235,37 +232,37 @@
   \end{block}
 \end{frame}
 
-\begin{frame}{The previous correctness proof}
-  \oldprooffwds
-  \vfill
-  \begin{block}{Theorem}
-    Forward Simulation Composition.
-  \end{block}
-\end{frame}
-
-\begin{frame}{The previous correctness proof}
-  \oldprooffwd
-  \vfill
-  \begin{block}{Theorems}
-  \begin{itemize}
-    \item ForwardSim(A,B) $\rightarrow$ BackwardSim(atomic(A),B).
-    \item BackwardSim(A,B) $\rightarrow$ BackwardSim(A,atomic(B)).
-  \end{itemize}
-  \end{block}
-\end{frame}
-
-\begin{frame}{The previous correctness proof}
-  \oldprooffactorbwd
-  \vfill
-  \begin{block}{Theorem}
-    Backward Simulation Composition.
-  \end{block}
-\end{frame}
-
-\begin{frame}{The previous correctness proof}
-  \oldprooffinal
-\end{frame}
-
+%\begin{frame}{The previous correctness proof}
+%  \oldprooffwds
+%  \vfill
+%  \begin{block}{Theorem}
+%    Forward Simulation Composition.
+%  \end{block}
+%\end{frame}
+%
+%\begin{frame}{The previous correctness proof}
+%  \oldprooffwd
+%  \vfill
+%  \begin{block}{Theorems}
+%  \begin{itemize}
+%    \item ForwardSim(A,B) $\rightarrow$ BackwardSim(atomic(A),B).
+%    \item BackwardSim(A,B) $\rightarrow$ BackwardSim(A,atomic(B)).
+%  \end{itemize}
+%  \end{block}
+%\end{frame}
+%
+%\begin{frame}{The previous correctness proof}
+%  \oldprooffactorbwd
+%  \vfill
+%  \begin{block}{Theorem}
+%    Backward Simulation Composition.
+%  \end{block}
+%\end{frame}
+%
+%\begin{frame}{The previous correctness proof}
+%  \oldprooffinal
+%\end{frame}
+%
 \begin{frame}{The new correctness proof}
   \proofmixed
   \vfill
