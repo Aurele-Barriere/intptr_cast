@@ -9,12 +9,13 @@
     \end{itemize}
   \end{block}
   \vfill
-  \begin{minipage}{0.48\textwidth}
-      \lstinputlisting{listings/logical.c}
-  \end{minipage}
-  \begin{minipage}{0.48\textwidth}
-      \lstinputlisting{listings/logicaloptim.c}
-  \end{minipage}
+  \begin{center}
+    \begin{tabular}{l c r}
+      \lstinputlisting[linewidth=3cm]{listings/logical.c} &
+      $\xrightarrow[\text{Dead Alloc Elimination}]{\text{Constant Propagation}}$ &
+      \lstinputlisting[linewidth=3cm]{listings/logicaloptim.c}
+    \end{tabular}
+  \end{center}
   \vfill
   \begin{alertblock}{No semantics for Integer-Pointer cast (unspecified)}
   \end{alertblock}
@@ -62,12 +63,10 @@
 
 \begin{frame}{The Capture Function}
 
-  \begin{minipage}{0.48\textwidth}
-    \lstinputlisting{listings/capture.c}
-  \end{minipage}
-  \begin{minipage}{0.48\textwidth}
-    \lstinputlisting{listings/captured.c}
-  \end{minipage}
+  \begin{tabular}{l c r}
+    \lstinputlisting[linewidth=4.3cm]{listings/capture.c} & $\longrightarrow$ &
+    \lstinputlisting[linewidth=4.3cm]{listings/captured.c}
+  \end{tabular}
   \vfill
   \begin{alertblock}{Non-determinism}
     A logical block can be captured at several different addresses.
@@ -76,24 +75,16 @@
 \end{frame}
 
 \begin{frame}{Examples}
-
-  \begin{minipage}{0.48\textwidth}
-    \begin{center}
-      \lstinputlisting{listings/logical.c}
-    \end{center}
-  \end{minipage}
-  \begin{minipage}{0.48\textwidth}
-    \lstinputlisting{listings/logicaloptim.c}
-  \end{minipage}
+  \begin{tabular}{l c r}
+    \lstinputlisting[linewidth=3cm]{listings/logical.c} &
+    $\xrightarrow[\text{Quasi-Concrete Model}]{\text{Logical Model}}$ & 
+    \lstinputlisting[linewidth=3.5cm]{listings/logicaloptim.c}
+  \end{tabular}
   \vfill
-  \begin{minipage}{0.48\textwidth}
-    \begin{center}
-      \lstinputlisting{listings/concrete.c}
-    \end{center}
-  \end{minipage}
-  \begin{minipage}{0.48\textwidth}
-    \lstinputlisting{listings/concretecaptured.c}
-  \end{minipage}
-
+  \begin{tabular}{l c r}
+    \lstinputlisting[linewidth=4cm]{listings/concrete.c} &
+    $\xrightarrow{\text{Quasi-Concrete Model}}$ &
+    \lstinputlisting[linewidth=4cm]{listings/concretecaptured.c}
+  \end{tabular}
 
 \end{frame}

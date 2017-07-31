@@ -54,3 +54,4 @@ test/capturetest/compcert
 *.cls
 showandtell/showandtell.pdf
 report/annot.pdf
+*.dvi

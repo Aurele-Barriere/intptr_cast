@@ -15,23 +15,16 @@
 \end{frame}
 
 \begin{frame}{\secname: Optimizations}
-
-    \begin{minipage}{0.48\textwidth}
-    \begin{center}
-      \lstinputlisting{listings/evallogical.c}
-    \end{center}
-  \end{minipage}
-  \begin{minipage}{0.48\textwidth}
-    \lstinputlisting{listings/evallogicalopt.c}
-  \end{minipage}
+  \begin{tabular}{l c r}
+    \lstinputlisting[linewidth=4cm]{listings/evallogical.c} &
+    $\longrightarrow$ &
+    \lstinputlisting[linewidth=6cm]{listings/evallogicalopt.c}
+  \end{tabular}
   \vfill
-  \begin{minipage}{0.48\textwidth}
-    \begin{center}
-      \lstinputlisting{listings/evalconcrete.c}
-    \end{center}
-  \end{minipage}
-  \begin{minipage}{0.48\textwidth}
-    \lstinputlisting{listings/evalconcreteopt.c}
-  \end{minipage}
+  \begin{tabular}{l c r}
+    \lstinputlisting[linewidth=4cm]{listings/evalconcrete.c} &
+    $\longrightarrow$ & 
+    \lstinputlisting[linewidth=6.5cm]{listings/evalconcreteopt.c}
+  \end{tabular}
 
 \end{frame}
