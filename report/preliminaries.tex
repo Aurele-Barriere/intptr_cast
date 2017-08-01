@@ -65,18 +65,18 @@ This is achieved with the following definitions.
 A block can be either logical or concrete, in which case it has a concrete address. This is represented by the value $p$.
 $$\texttt{Block}=\{(v,p,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{n},p\in\texttt{int32}\cup\{\undef\}\}$$
 The concrete blocks need to be consistent:
-$$\textit{No overflow:}\quad\forall (v,p,n,c)\in\texttt{Blocks}, (p\neq\undef~\wedge~ v=\textit{true})\implies[p,p+n]~\subseteq~]0,2^{32}[$$
-$$\textit{No overlap:}\quad\forall (p_1,n_1), (p_2,n_2)\in\texttt{Blocks}, (p_1\neq\undef~\wedge~p_2\neq\undef ~\wedge~ v_1=v_2=\textit{true})\implies$$ $$[p_1,p_1+n_1]\text{ and }[p_2,p_2+n_2]\text{ are disjoint.}$$
+$$\textit{No overflow:}\quad\forall (v,p,n,c)\in\texttt{Block}, (p\neq\undef~\wedge~ v=\textit{true})\implies[p,p+n]~\subseteq~]0,2^{32}[$$
+$$\textit{No overlap:}\quad\forall (p_1,n_1), (p_2,n_2)\in\texttt{Block}, (p_1\neq\undef~\wedge~p_2\neq\undef ~\wedge~ v_1=v_2=\textit{true})\implies$$ $$[p_1,p_1+n_1]\text{ and }[p_2,p_2+n_2]\text{ are disjoint.}$$
 A pointer is a pair $(l,i)$ of a block identifier and an offset inside that block. If the block $l$ starts at the address $p\neq\undef$, then $(l,i)$ can be cast as the integer $p+i$ and vice versa (thanks to the property of no overlapping, an integer can correspond to at most one valid concrete block).
 
 Optimizations are still be possible with logical blocks, because they do not have concrete addresses, and integer-pointer casts are possible with concrete blocks.
 To allow as many optimizations as possible, we should use as many logical blocks as possible. Thus, new blocks should be made logical when allocated.
 
 \subsubsection{The capture function}
-However, for each pointer to integer cast, we need a concrete block. Then we transform each pointer to integer cast by adding a \textit{capture} function just before it. This function transforms a logical block into a concrete one, giving it a concrete address that still satisfies the memory consistency. Its semantics are described section~\ref{sec:capturesem}.
+However, for each pointer to integer cast, we need a concrete block. Then we transform each pointer to integer cast by adding a \textit{capture} function just before it. This new builtin function transforms a logical block into a concrete one, giving it a concrete address that still satisfies the memory consistency.
 It introduces non-determinism in every language of CompCert (including the assembly), because a block can be captured at several addresses. This is handled in section~\ref{sec:mixedsim}.
 
-The quasi-concrete is described in many details in~\cite{DBLP:conf/pldi/KangHMGZV15}.
+The quasi-concrete memory model is described in many details in~\cite{DBLP:conf/pldi/KangHMGZV15}.
 \subsubsection{Optimization and casts examples}
 
 \lstset{}

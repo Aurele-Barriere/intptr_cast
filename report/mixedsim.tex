@@ -213,11 +213,11 @@ Informally, each time the target program takes a step to a new state, the source
 
 \backwardforward
 
-\subsubsection{Theorem: forward to backward} If the target language is \textit{determinate} and the source language is \textit{receptive} and there is a forward simulation between the semantics of $sp$ and $tp$, then we can construct a backward simulation between the semantics of $sp$ and $tp$. \todo{definition of receptive and determinate + give intuition on the proof}
+\subsubsection{Theorem: forward to backward} If the target language is \textit{determinate} (a weaker version of determinism) and the source language is \textit{receptive} and there is a forward simulation between the semantics of $sp$ and $tp$, then we can construct a backward simulation between the semantics of $sp$ and $tp$. Informally, if the target language is determinate, then for a given trace, there can be only one target step. However, with the source language being receptive, there will exists one matching step for any possible trace. We can then deduce that any target step is matched with a corresponding source step.
 
 \subsubsection{Theorems: simulation composition} Let $S_1,S_2,S_3$ be semantics.
-If there is are forward simulations between $S_1$ and $S_2$, and between $S_2$ and $S_3$, then there is a forward simulation between $S_1$ and $S_3$.
-If there is are backward simulations between $S_1$ and $S_2$, and between $S_2$ and $S_3$, then there is a backward simulation between $S_1$ and $S_3$.
+If there is a forward simulation between $S_1$ and $S_2$, and between $S_2$ and $S_3$, then there is a forward simulation between $S_1$ and $S_3$.
+If there is a backward simulation between $S_1$ and $S_2$, and between $S_2$ and $S_3$, then there is a backward simulation between $S_1$ and $S_3$.
 
 \subsection{Atomic Semantics and properties}
 \subsubsection{Definition: Atomic Semantics} $\mathit{Atomic}(\states{p},I_p,F_p,\step{p}) = (\traces\times\states{p},\{[]\}\times I_p,\{[]\}\times F_p,\atstep{p})$ where $[]$ is the empty trace and $\atstep{p}$ is defined as follow:
@@ -255,7 +255,7 @@ To prove the correctness of CompCert with the new memory model, we introduce \te
 \subsubsection{Theorem: Mixed to Backward simulation}
 If there is a mixed simulation between $S_1$ and $S_2$, then there is a backward simulation between $\mathit{Atomic}(S_1)$ and $S_2$.
 
-To prove it, we use the local determinacy of states with forward reasonning, in a similar way to the Forward to Backward simulation theorem. This theorem also requires several hypothesis on the source and target languages (\texttt{single\_events}, \texttt{well\_behaved}) that we proved for each mixed simulation used in the correctness proof.
+To prove it, we use the local determinacy and local receptivity of states with forward reasonning, in a similar way to the Forward to Backward simulation theorem. This theorem also requires several hypothesis on the source and target languages (\texttt{single\_events}, \texttt{well\_behaved}) that we proved for each mixed simulation used in the correctness proof.
 
 \subsection{The new correctness proof}
 \begin{enumerate}

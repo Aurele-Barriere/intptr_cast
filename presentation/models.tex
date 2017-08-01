@@ -47,7 +47,8 @@
 
   \begin{block}{Memory blocks}
     \begin{itemize}
-    \item $\texttt{Block}=\{(v,p,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{n},p\in\texttt{int32}\cup\{\undef\}\}$.
+    \item $\texttt{Block}=\{(v,p,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{n},$\\
+      $\mathbf{p\in\texttt{int32}\cup\{\undef\}}\}$.
     \item Memory consistency (\textbf{No overflow}, \textbf{No overlap}) for concrete blocks.
     \end{itemize}
   \end{block}
