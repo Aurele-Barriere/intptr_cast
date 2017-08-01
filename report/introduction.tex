@@ -35,6 +35,9 @@ We present the difficulties of the implementation, and the changes that needed t
 
 % outline
 At first, we remind the reader about the different memory models in section~\ref{sec:prelim}.
-Then we present the implementation of the new memory model (section~\ref{sec:memupdate}). Section~\ref{sec:meminj} shows how the notion of memory injections had to be changed. Then in section~\ref{sec:mixedsim}, we present our mixed simulation reasoning, used to prove the correctness of the extended language. In section~\ref{sec:capturesem}, we discuss the implementation of the \texttt{capture} function.
+Then, we present the work that has been done in CompCert.
+In section~\ref{sec:memupdate}, we show how the definition of memory have been modified to fit into CompCert.
+In section~\ref{sec:meminj}, we show how the definition of memory injection have been modified. It changes a lot of proofs in CompCert.
+In section~\ref{sec:mixedsim}, we present how adding non-determinism in every language of CompCert prevents us from using the same correctness proofs. We design a new proof, using mixed simulations. It relies on the observation that non-deterministic behavior is only encountered when using the capture function.
+In section~\ref{sec:capturesem}, we discuss the implementation of the \texttt{capture} function.
 Finally, we discuss in section~\ref{sec:eval} the results of the implementation and its effect on optimizations. 
-% related works?

@@ -15,7 +15,7 @@ For the same purposes, some have investigated the use of a concrete memory model
 More recently,~\cite{besson:hal-01093312} and~\cite{DBLP:conf/itp/BessonBW15} present the use of a new memory model using symbolic values. The idea is to use symbolic values instead of expressions to delay their evaluation. This successfully gives semantics to several C idioms: alignment constraints, bit-fields\dots However, as it is a deterministic semantics, programs that introduce non-deterministic behaviors due to allocation are still undefined.
 
 % back to our work
-In this work, we present a new approach to deal with non-determinism in CompCert, and give semantics to every integer-pointer casts and pointer manipulation.
+In this work, we presented a new approach to deal with non-determinism in CompCert, and give semantics to every integer-pointer casts and pointer manipulation.
 
 %Other related works
 Another approach to deal with finite memories has been used in CompCertTSO~\cite{DBLP:journals/jacm/SevcikVNJS13}, where all memory operations are done on a single finite logical block. Even if it uses a different memory model, the authors of~\cite{DBLP:conf/pldi/KangHMGZV15} are confident that the quasi-concrete model could handle address threads like CompCertTSO.
