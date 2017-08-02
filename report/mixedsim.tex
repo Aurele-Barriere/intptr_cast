@@ -192,7 +192,7 @@ In the quasi-concrete memory model, with the addition of the \textit{capture} fu
 \subsection{Simulations in CompCert and properties}
 To prove the correctness of CompCert, one must prove that the behavior of the generated target code is one of the behaviors of the original source code. 
 To do so, CompCert uses \textit{backward simulations} between the semantics of the source code and the generated code.
-In CompCert, the semantics of each language is defined. The semantics of a program is a set of states (with initial and final states) and a relation between states meaning that one can go from one state to another whith a given observable trace.
+In CompCert, the semantics of each language is defined. The semantics of a program is a set of states (with initial and final states) and a relation between states meaning that one can go from one state to another with a given observable trace.
 
 \subsubsection{Definition: Semantics of a program p}: $\mathit{Sem}(p) = (\states{p},I_p,F_p,\step{p})$ where $\step{p}\subseteq\states {p}\times\traces\times\states{p}$ and $I,F\subseteq\states{p}$. $t\in\traces$ is a trace, \textit{i.e.} a list of observable events (system call, store or load).
 
@@ -247,7 +247,7 @@ To prove the correctness of CompCert with the new memory model, we introduce \te
 \item $\forall t\in\traces, ss_1\in\states{sp},st_1\in\states{tp},\quad(ss_1,st_1)\in R\implies ($\\
       $\textbf{Forward: }\wedge\forall ss_2, (ss_1,t,ss_2)\in\step{sp}\implies\exists st_2, (st_1,t,st_2)\in\step{tp}  \quad\vee$\\
       $\textbf{Backward: }\forall st_2, (st_1,t,st_2)\in\step{tp}\implies\exists ss_2, (ss_1,t,ss_2)\in\step{sp} \quad)$
-\item Every state where forward reasonning is applied should have \textit{local determinacy}
+\item Every state where forward reasoning is applied should have \textit{local determinacy}
 \end{itemize}
 
 \mixed
@@ -255,7 +255,7 @@ To prove the correctness of CompCert with the new memory model, we introduce \te
 \subsubsection{Theorem: Mixed to Backward simulation}
 If there is a mixed simulation between $S_1$ and $S_2$, then there is a backward simulation between $\mathit{Atomic}(S_1)$ and $S_2$.
 
-To prove it, we use the local determinacy and local receptivity of states with forward reasonning, in a similar way to the Forward to Backward simulation theorem. This theorem also requires several hypothesis on the source and target languages (\texttt{single\_events}, \texttt{well\_behaved}) that we proved for each mixed simulation used in the correctness proof.
+To prove it, we use the local determinacy and local receptivity of states with forward reasoning, in a similar way to the Forward to Backward simulation theorem. This theorem also requires several hypothesis on the source and target languages (\texttt{single\_events}, \texttt{well\_behaved}) that we proved for each mixed simulation used in the correctness proof.
 
 \subsection{The new correctness proof}
 \begin{enumerate}
