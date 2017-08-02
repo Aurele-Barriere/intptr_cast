@@ -177,18 +177,18 @@
 \begin{frame}{Proving the correctness of CompCert}
   \begin{columns}[T] % align columns
     \begin{column}{.48\textwidth}
-      \begin{block}{Forward Simulation}
-        Step in source $\rightarrow$\\ Matching step in target\\
-        {\color{blue}Source\hfill\color{red}Target}
-        \forward
-      \end{block}
-    \end{column}%
-    \hfill%
-    \begin{column}{.48\textwidth}
       \begin{block}{Backward Simulation}
         Step in target $\rightarrow$\\ Matching step in source\\
         {\color{blue}Source\hfill\color{red}Target}
         \backward
+      \end{block}
+    \end{column}%
+    \hfill
+    \begin{column}{.48\textwidth}
+      \begin{block}{Forward Simulation}
+        Step in source $\rightarrow$\\ Matching step in target\\
+        {\color{blue}Source\hfill\color{red}Target}
+        \forward
       \end{block}
     \end{column}%
   \end{columns}

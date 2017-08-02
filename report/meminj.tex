@@ -4,7 +4,7 @@
 To prove the correctness of many passes, CompCert uses memory injections. Informally, memory injections are relations between two memories that are true when the two memories are similar. For instance, this is used when doing optimizations, to show that the memory of the source program is similar to the memory of the optimized programs.
 
 In CompCert, memory injection are parametrized with an \textit{injection function}, of type \texttt{block -> option(block * Z)}. This function establish a correspondence between blocks of the source memory and blocks of the target memory.
-Informally, if $f(b_1)=\text{Some}(b_2,o)$, then the block $b_1$ in the source memory corresponds to the block $b_2$ in the target memory, with a shift in offsets of $o$. The values are preserved between the two blocks, and the pointers are modified to reflect the eventual change of logical address.
+Informally, if $f(b_1)=\text{Some}(b_2,o)$, then the block $b_1$ in the source memory corresponds to the block $b_2$ in the target memory, with a shift in offsets of $o$. The values are preserved between the two blocks, and the pointers are modified to reflect the change of logical addresses.
 The injection function also define \textit{private} and \textit{public memory}. Public memory is the set of blocks that are mapped to some other block. These blocks should be preserved by optimizations.
 Private memory is the set of blocks that are mapped to \texttt{None}. These blocks are only privately used and can be changed separately.
 For instance, when performing an unknown external call in both the source and target programs, CompCert assumes that it preserves the memory injection. Thus, the new public memories are equivalent but the call may have changed the private part.

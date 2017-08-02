@@ -207,7 +207,7 @@ A backward simulation is a weaker simulation that proves semantics preservation 
       $\quad(ss_1,st_1)\in R~\wedge~(st_1,t,st_2)\in\step{tp}\implies$\\
       $\exists ss_2\in\states{sp}, (ss_1,t,ss_2)\in\step{sp}$
 \end{itemize}
-Informally, each time the target program takes a step to a new state, the source program also takes a step to a matching state. This is enough to claim that the target's behavior is a refinment of the source's behavior. An example can be seen Figure~\ref{fig:backward}. The relation is described with the dashed lines. We can see that every target behavior matches a source behavior.
+Informally, each time the target program takes a step to a new state, the source program also takes a step to a matching state. This is enough to claim that the target's behavior is a refinement of the source's behavior. An example can be seen Figure~\ref{fig:backward}. The relation is described with the dashed lines. We can see that every target behavior matches a source behavior.
 
 \subsubsection{Forward Simulations} One can similarly define a forward simulation in a symmetric way: each time the source program takes a step to a new state, the target program also takes a step to a matching state. This means that the target's behavior extends the source's behavior. An example can be seen Figure~\ref{fig:forward}.
 
