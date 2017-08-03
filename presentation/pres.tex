@@ -48,7 +48,7 @@
 \def\traces{\mathit{Traces}}
 \def\comment#1{{\color{blue}\textit{#1}}}
 \def\outline{
-  \begin{frame}
+  \begin{frame}[plain,noframenumbering]
     \frametitle{Outline}
     \tableofcontents[currentsection]
   \end{frame}
@@ -62,7 +62,7 @@
   float
 }
 
-\begin{frame}[plain]
+\begin{frame}[plain,noframenumbering]
   \titlepage%
   \vfill
   \begin{center}
@@ -76,16 +76,16 @@
 \input{intro.tex}
 
 \section{C Memory Models}
-\outline
+%\outline
 \input{models.tex}
 
 \input{correctnessproof.tex}
 \section{Contribution}
-\outline
+%\outline
 \input{contrib.tex}
 
 \section{Evaluation}
-\outline
+%\outline
 \input{eval.tex}
 
 \section{Conclusion}

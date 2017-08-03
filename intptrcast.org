@@ -448,7 +448,7 @@
 *** TODO [INTPTR][mixedsim][simulations] Allocproof | RTL -> LTL
 *** TODO [INTPTR][mixedsim][simulations] Tunelingproof | LTL -> LTL
 *** TODO [INTPTR][mixedsim][simulations] Linearizeproof | LTL -> Linear
-*** TODO [INTPTR][mixedsim][simulations] Cleanuplabelsproof | Linear -> Linear
+*** DONE [INTPTR][mixedsim][simulations] Cleanuplabelsproof | Linear -> Linear
 *** TODO [INTPTR][mixedsim][simulations] Debugvarproof | Linear -> Linear
 *** TODO [INTPTR][mixedsim][simulations] Stackingproof | Linear -> Mach
 *** TODO [INTPTR][mixedsim][simulations] Asmgenproof | Mach -> ASM
