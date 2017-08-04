@@ -497,7 +497,7 @@
 * TODO [INTPTR] Definition of max_address
   This might just be Ptrofs.max_unsigned   
   
-* TODO [INTPTR][report] Report
+* DONE [INTPTR][report] Report
   DEADLINE: <2017-08-04 Fri>
   Outline:
 ** DONE Introduction
@@ -588,10 +588,6 @@
    see section 3.7
 
 ** DONE Conclusion
-** TODO Add the state of int-ptr cast in CompCert
-   see section 2.2
-   this could be added to preliminaries or introduction
-   uintptr_t
 ** DONE Figures and details to add
 *** DONE optimization examples
 *** DONE back_sim, fwd_sim, mixed_sim figures
@@ -637,7 +633,7 @@
   in standard C semantics, casting to integer then to pointer should give the same result.
   Also, we can assume that continuous values have continuous pointers.
   We should use the fact that analysis assumes that xor on pointers stays in the same block
-* TODO [INTPTR] Things to do before the end
+* DONE [INTPTR] Things to do before the end
 ** DONE [INTPTR][plans] Pull request: mixed_simulation
 ** DONE [INTPTR][plans] Finish CSEproof with backward steps
    DEADLINE: <2017-07-19 Wed>
@@ -663,4 +659,4 @@
    Compile a few programs with the new compiler
    Try to see when are optimization done, and when they aren't,
    Discuss its validity
-** TODO [INTPTR][plans] Finish report and presentation
+** DONE [INTPTR][plans] Finish report and presentation
