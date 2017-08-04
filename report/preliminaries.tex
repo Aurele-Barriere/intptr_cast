@@ -43,7 +43,7 @@ $$\texttt{Block}=\{(v,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{
 
 With a logical model, programs have infinite memory.
 Moreover, a logical model can allow functions to have exclusive control over a logical block.
-When a block identifier does not escape when calling a function (\textit{i.e.} if the block identifier cannot be found inside the global variables or the function arguments), then the called function cannot access the block (see section~\ref{sec:memupdate}).% too long sentence?
+When a block identifier does not escape when calling a function (\textit{i.e.} if the block identifier cannot be found inside the global variables or the function arguments), then the called function cannot access the block (see section~\ref{sec:memupdate}).
 This allow for many optimizations (see Figure~\ref{fig:examples}).
 
 However, logical models do not support integer-pointer casts. They can allow some arithmetic operations on offsets, but it is impossible to get a physical address from a block.
@@ -69,7 +69,7 @@ $$\textit{No overflow:}\quad\forall (v,p,n,c)\in\texttt{Block}, (p\neq\undef~\we
 $$\textit{No overlap:}\quad\forall (p_1,n_1), (p_2,n_2)\in\texttt{Block}, (p_1\neq\undef~\wedge~p_2\neq\undef ~\wedge~ v_1=v_2=\textit{true})\implies$$ $$[p_1,p_1+n_1]\text{ and }[p_2,p_2+n_2]\text{ are disjoint.}$$
 A pointer is a pair $(l,i)$ of a block identifier and an offset inside that block. If the block $l$ starts at the address $p\neq\undef$, then $(l,i)$ can be cast as the integer $p+i$ and vice versa (thanks to the property of no overlapping, an integer can correspond to at most one valid concrete block).
 
-Optimizations are still be possible with logical blocks, because they do not have concrete addresses, and integer-pointer casts are possible with concrete blocks.
+Optimizations are still possible with logical blocks, because they do not have concrete addresses, and integer-pointer casts are possible with concrete blocks.
 To allow as many optimizations as possible, we should use as many logical blocks as possible. Thus, new blocks should be made logical when allocated.
 
 \subsubsection{The capture function}
@@ -130,6 +130,6 @@ Using a concrete model, the block containing the value of \texttt{a} is mapped t
 Using the quasi-concrete model, a new block is allocated for the allocation of \texttt{a}. Since it is new, it is a logical block, without a concrete address. Thus, \texttt{g()} cannot modify the value of \texttt{a} and the program can once again be transformed into Fig.\ref{fig:cpdae}.
 
 %second example
-Consider the program Fig.\ref{fig:concrete}, where the address of \texttt{a} is cast as an integer. Unlike with a concrete model, using a logical model defines no semantics for this program. With the quasi-concrete model, the block containing the value of \texttt{a} is transformed into a concrete one just before the cast. No optimization is possible, because \texttt{g()} can possibly modify any concrete block, but the semantics of the program is defined.
+Consider the program Fig.\ref{fig:concrete}, where the address of \texttt{a} is cast as an integer. Unlike with a concrete model, using a logical model defines no semantics for this program. With the quasi-concrete model, the block containing the value of \texttt{a} is transformed into a concrete one just before the cast. No optimization is possible, because \texttt{g()} might modify any concrete block, but the semantics of the program is defined.
 
 

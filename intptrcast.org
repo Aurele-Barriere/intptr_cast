@@ -600,9 +600,9 @@
 *** DONE old and new correctness proofs
 *** DONE some implems in appendix:
     memory, memory injection
-* TODO [INTPTR][pres] Presentation
+* DONE [INTPTR][pres] Presentation
   DEADLINE: <2017-08-04 Fri>
-** TODO [INTPTR][pres] Presentation at show&tell
+** DONE [INTPTR][pres] Presentation at show&tell
    SCHEDULED: <2017-08-04 Fri>
 ** DONE [INTPTR][pres] Write show&tell summary
    DEADLINE: <2017-07-28 Fri>
