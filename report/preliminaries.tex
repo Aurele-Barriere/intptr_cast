@@ -2,7 +2,7 @@
 \subsection{CompCert}
 \begin{figure}
 \begin{center}
-\includegraphics[scale=1]{img/passes.png}
+\includegraphics[scale=1.15]{img/passes.png}
 \caption{Verified CompCert passes\hspace{\linewidth}S \textbf{Source: }\texttt{http://compcert.inria.fr/compcert-C.html}}
 \label{fig:compcertpasses}
 \end{center}
@@ -43,7 +43,7 @@ $$\texttt{Block}=\{(v,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{
 
 With a logical model, programs have infinite memory.
 Moreover, a logical model can allow functions to have exclusive control over a logical block.
-When a block identifier does not escape when calling a function (\textit{i.e.} if the block identifier cannot be found inside the global variables or the function arguments), then the called function cannot access the block (see section~\ref{sec:memupdate}).
+When a block identifier does not escape when calling a function (\textit{i.e.} if a pointer to the block identifier cannot be found inside the global variables or the function arguments), then the called function cannot access the block (see section~\ref{sec:memupdate}).
 This allow for many optimizations (see Figure~\ref{fig:examples}).
 
 However, logical models do not support integer-pointer casts. They can allow some arithmetic operations on offsets, but it is impossible to get a physical address from a block.
@@ -56,7 +56,7 @@ $$\texttt{Block}=\{(p,n)~|~p\in\texttt{int32},n\in\texttt{int32}\}$$
 The concrete memory should require from the allocated blocks to be consistent:
 $$\textit{No overflow:}\quad\forall (p,n)\in\texttt{Allocated}, [p,p+n]\subseteq]0,2^{32}[$$
 $$\textit{No overlap:}\quad\forall (p_1,n_1), (p_2,n_2)\in\texttt{Allocated}, [p_1,p_1+n_1]\text{ and }[p_2,p_2+n_2]\text{ are disjoint.}$$
-In the concrete model, integer-pointer cast is possible because concrete addresses are already integer values.
+In the concrete model, integer-pointer cast is possible because concrete addresses already are integer values.
 
 However, optimizations such as constant propagation and dead allocation elimination are not supported in many cases, because external functions might change the value of any address. In the concrete model, there is no ownership of memory blocks, and every address is always accessible.
 \subsubsection{Quasi-concrete model}

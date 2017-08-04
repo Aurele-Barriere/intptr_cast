@@ -5,7 +5,7 @@
     \begin{tikzpicture}[%
         every node/.style={circle,minimum size=3pt,minimum height=3pt, inner sep=0pt},
         shorten >=2pt,
-        node distance=1cm
+        node distance=1.5cm, >=latex
       ]
       \node [draw] (0) [color=blue, fill] {};
       \node [draw] (1) [color=blue, fill, below left=of 0] {};
@@ -45,7 +45,7 @@
     \begin{tikzpicture}[%
         every node/.style={rectangle,minimum size=3pt,minimum height=3pt, inner sep=0pt},
         shorten >=2pt,
-        node distance=1cm
+        node distance=1.5cm, >=latex
       ]
       \node [draw] (0) [color=red, fill] {};
       \node [draw] (1) [color=red, fill, below right=of 0] {};
@@ -90,7 +90,7 @@
     \begin{tikzpicture}[%
         every node/.style={rectangle,minimum size=4pt,minimum height=4pt, inner sep=0pt},
         shorten >=2pt,
-        node distance=0.6cm
+        node distance=1.3cm, >=latex
       ]
       \node [draw] (0) [color=blue, fill] {};
       \node [draw] (1) [circle, color=blue, fill, below=of 0] {};
@@ -228,7 +228,7 @@ If there is a backward simulation between $S_1$ and $S_2$, and between $S_2$ and
 \end{itemize}
 Informally, $\mathit{Atomic}$ of a semantics is the same semantics where steps with multiple events traces have been replaced with several single-event steps.
 
-\subsubsection{Theorem: Factor backward simulation} If there is a backward simulation between $S_1$ and $S_2$ and $S_1$ has \textit{single events}, then there is a forward simulation between $S_1$ and $\mathit{Atomic}(S_2)$.
+\subsubsection{Theorem: Factor backward simulation} If there is a backward simulation between $S_1$ and $S_2$ and $S_1$ has \textit{single events}, then there is a backward simulation between $S_1$ and $\mathit{Atomic}(S_2)$.
 
 \subsection{Non-determinism}
 To prove the correctness of the compilation, we need to prove that for every source C program $sp$, if $tp$ is the compiled ASM program, then we have a backward simulation between $\mathit{Sem}(sp)$ and $\mathit{Sem}(tp)$.

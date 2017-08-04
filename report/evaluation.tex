@@ -1,5 +1,13 @@
+The correctness of CompCert with the new memory model hasn't been entirely proved yet.
+The remaining proofs are most of the proofs of mixed simulations.
+However, we remain confident that such a mixed simulation exists for every pass. One mixed simulation has been proved (\texttt{CSEproof}, an optimization pass), and others should be very similar. The intuition behind any mixed simulation proof is the same: use the previous forward simulation proof to prove a local forward simulation of non-external states, then use the new properties of external calls to prove the local backward simulation of external states.
+
+Even if the semantics of casting has not been fully implemented yet, it is already possible to compile some C programs with our modified version of CompCert. We can see that the new model successfully gives semantics to integer-pointer casting, but also allow optimizations when using logical blocks.
+This is illustrated Figure~\ref{fig:cplogical}. We can see that constant propagation is done, and the program returns 0. This is explained by the fact that the memory block of \texttt{a} is logical, and thus the function \texttt{f()} has ownership of this memory block. The compiler deduces that \texttt{a} cannot be accessed by the function \texttt{g()}, and thus performs constant propagation.
+However, if the block is made concrete, then \texttt{f()} looses ownership of \texttt{a} and constant propagation should not be done. This is illustrated Figure~\ref{fig:cpconcrete}, where the memory block of \texttt{a} has to be captured due to the pointer-to-integer cast.
+
 \label{sec:eval}
-\begin{figure}[H]
+\begin{figure}
 \begin{subfigure}{.48\textwidth}
   \begin{lstlisting}[language=C,basicstyle=\small]
 extern void g();
@@ -7,7 +15,8 @@ int f() {
   int a = 0;
   int* q = &a;
   g();
-  return a; }
+  return a;
+}
 \end{lstlisting}
 \end{subfigure}
 \begin{subfigure}{.48\textwidth}
@@ -18,13 +27,14 @@ f() {
     4:	nop
     3:	x3 = "g"()
     2:	x2 = 0
-    1:	return x2 }
+    1:	return x2
+    }
 \end{lstlisting}
 \end{subfigure}
 \caption{Constant propagation on logical blocks}
 \label{fig:cplogical}
 \end{figure}
-\begin{figure}[H]
+\begin{figure}
 \begin{subfigure}{.48\textwidth}
   \begin{lstlisting}[language=C,basicstyle=\small]
 extern void g();
@@ -33,7 +43,8 @@ int f() {
   int* q = &a;
   int b = (int) q;
   g();
-  return a; }
+  return a;
+}
 \end{lstlisting}
 \end{subfigure}
 \begin{subfigure}{.48\textwidth}
@@ -46,17 +57,10 @@ f() {
     4:	nop
     3:	x4 = "g"()
     2:	x3 = int32[stack(0)]
-    1:	return x3 }
+    1:	return x3
+    }
 \end{lstlisting}
 \end{subfigure}
 \caption{No Constant propagation on concrete blocks}
 \label{fig:cpconcrete}
 \end{figure}
-
-The correctness of CompCert with the new memory model hasn't been entirely proved yet.
-The remaining proofs are most of the proofs of mixed simulations.
-However, we remain confident that such a mixed simulation exists for every pass. One mixed simulation has been proved (\texttt{CSEproof}, an optimization pass), and others should be very similar. The intuition behind any mixed simulation proof is the same: use the previous forward simulation proof to prove a local forward simulation of non-external states, then use the new properties of external calls to prove the local backward simulation of external states.
-
-Even if the semantics of casting has not been fully implemented yet, it is already possible to compile some C programs with our modified version of CompCert. We can see that the new model successfully gives semantics to integer-pointer casting, but also allow optimizations when using logical blocks.
-This is illustrated Figure~\ref{fig:cplogical}. We can see that constant propagation is done, and the program returns 0. This is explained by the fact that the memory block of \texttt{a} is logical, and thus the function \texttt{f()} has ownership of this memory block. The compiler deduces that \texttt{a} cannot be accessed by the function \texttt{g()}, and thus performs constant propagation.
-However, if the block is made concrete, then \texttt{f()} looses ownership of \texttt{a} and constant propagation should not be done. This is illustrated Figure~\ref{fig:cpconcrete}, where the memory block of \texttt{a} has to be captured due to the pointer-to-integer cast.

@@ -1,6 +1,5 @@
 \label{sec:memupdate}
-To begin, the quasi-concrete memory model described in~\cite{DBLP:conf/pldi/KangHMGZV15} has been implemented in CompCert. 
-
+To begin, the quasi-concrete memory model described in~\cite{DBLP:conf/pldi/KangHMGZV15} has been implemented in CompCert.
 However, the definition has to be changed to adapt to CompCert's current memory model~\cite{leroy:hal-00703441}.
 
 \subsection{Adapting the definition to CompCert}
@@ -24,7 +23,7 @@ Because we added concrete addresses to some blocks, we need to define several co
 
 We add the predicate \texttt{addresses\_in\_range}, implementing the \textit{No overflow} property of section~\ref{subsec:models}. It states that every allocated address is in the range $]0,2^{32}[$ (the first and last address should not be allocated).
 
-We add the predicate \texttt{no\_concrete\_overlap}, implementing the \textit{No overlap} property of section~\ref{subsec:models}. Because the permissions are address-wise in CompCert, and blocks can be freed partially, we change the definition of \textit{No overlap}. Informally, we use the following definition: for each concrete address, there is at most one block where the address is inside the allocated range and hasn't been freed. This allows allocating blocks over freed memory.
+We add the predicate \texttt{no\_concrete\_overlap}, implementing the \textit{No overlap} property of section~\ref{subsec:models}. Because the permissions are address-wise in CompCert and blocks can be freed partially, we change the definition of \textit{No overlap}. Informally, we use the following definition: for each concrete address, there is at most one block where the address is inside the allocated range and hasn't been freed. This allows allocating blocks over freed memory.
 
 For every memory operation that changes the memory (allocation, store, free, capture), we prove that it preserves the memory consistency.
 
