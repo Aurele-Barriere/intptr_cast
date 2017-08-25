@@ -224,62 +224,18 @@
   \end{block}
 \end{frame}
 
-%\begin{frame}{The previous correctness proof}
-%  \oldprooffwds
-%  \vfill
-%  \begin{block}{Theorem}
-%    Forward Simulation Composition.
-%  \end{block}
-%\end{frame}
-%
-%\begin{frame}{The previous correctness proof}
-%  \oldprooffwd
-%  \vfill
-%  \begin{block}{Theorems}
-%  \begin{itemize}
-%    \item ForwardSim(A,B) $\rightarrow$ BackwardSim(atomic(A),B).
-%    \item BackwardSim(A,B) $\rightarrow$ BackwardSim(A,atomic(B)).
-%  \end{itemize}
-%  \end{block}
-%\end{frame}
-%
-%\begin{frame}{The previous correctness proof}
-%  \oldprooffactorbwd
-%  \vfill
-%  \begin{block}{Theorem}
-%    Backward Simulation Composition.
-%  \end{block}
-%\end{frame}
-%
-%\begin{frame}{The previous correctness proof}
-%  \oldprooffinal
-%\end{frame}
-%
+
 \begin{frame}{The new correctness proof}
-  \proofmixed
-  \vfill
-  \begin{block}{Theorem}
-    MixedSim (A,B) $\rightarrow$ BackwardSim ((atomic A),B).
+  \vspace{-0.4cm}
+  \proofmixedall
+  \vspace{-0.5cm}
+  \begin{block}{Theorems}
+    \begin{enumerate}
+    \item Mixed simulations.
+    \item MixedSim (A,B) $\rightarrow$ BackwardSim ((atomic A),B).
+    \item BackwardSim(A,B) $\rightarrow$ BackwardSim(A,atomic(B)).
+    \item Backward Simulation Composition.
+    \end{enumerate}
   \end{block}
+  
 \end{frame}
-
-\begin{frame}[noframenumbering]{The new correctness proof}
-  \proofmixedbwd
-  \vfill
-  \begin{block}{Theorem}
-    BackwardSim(A,B) $\rightarrow$ BackwardSim(A,atomic(B)).
-  \end{block}
-\end{frame}
-
-\begin{frame}[noframenumbering]{The new correctness proof}
-  \proofatbwd
-  \vfill
-  \begin{block}{Theorem}
-    Backward Simulation Composition.
-  \end{block}
-\end{frame}
-
-\begin{frame}[noframenumbering]{The new correctness proof}
-  \prooffinal
-\end{frame}
-

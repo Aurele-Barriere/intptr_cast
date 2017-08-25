@@ -6,6 +6,7 @@
     \item It successfully gives semantics to Integer-Pointer casts.
     \item It allows optimizations.
     \item The proof of correctness is almost finished.
+    \item Already added 5kloc of Coq.
     \end{itemize}
   \end{exampleblock}
   \vfill
@@ -16,43 +17,4 @@
     \end{itemize}
   \end{block}
   
-\end{frame}
-
-
-\begin{frame}[plain,noframenumbering]{}
-  %last takeaway frame
-  \begin{center}
-  \begin{figure}
-  \begin{tikzpicture}[%
-      every node/.style={rectangle, font=\tiny},
-      shorten >=2pt,
-      node distance=1.1cm
-    ]
-    \node (cc) [] {CompCert C};
-    \node (cstrat) [right=of cc] {CStrategy};
-    \node (clight) [right=of cstrat] {Clight};
-    \node (dots) [right=of clight] {\dots\vphantom{C}};
-    \node (mach) [right=of dots] {Mach};
-    \node (asm) [right=of mach] {ASM};
-    \node (atcstrat) [below=of cstrat] {\at{CStrategy}};
-    \node (atclight) [below=of clight] {\at{Clight}};
-    \node (atdots) [below=of dots] {\at{\dots}};
-    \node (atmach) [below=of mach] {\at{Mach}};
-    \path [draw] (cc) edge[<-, above] node {1. backward} (cstrat);
-    \path [draw] (cstrat) edge[<->, above] node {1. mixed} (clight);
-    \path [draw] (clight) edge[<->, above] node {1. mixed} (dots);
-    \path [draw] (dots) edge[<->, above] node {1. mixed} (mach);
-    \path [draw] (mach) edge[<->, above] node {1. mixed} (asm);
-    \path [draw] (atcstrat) edge[<-,below right] node {2. backward} (clight);
-    \path [draw] (atclight) edge[<-,below right] node {2. backward} (dots);
-    \path [draw] (atdots) edge[<-,below right] node {2. backward} (mach);
-    \path [draw] (atmach) edge[<-,above left] node {2. backward} (asm);
-    \path [draw] (cc) edge[<-,above right] node {3. backward} (atcstrat);
-    \path [draw] (atcstrat.300) edge[<-, bend right=90, below] node {3. backward} (atclight);
-    \path [draw] (atclight.300) edge[<-, bend right=90, below] node {3. backward} (atdots);
-    \path [draw] (atdots.300) edge[<-, bend right = 90, below] node {3. backward} (atmach);
-    \path [draw] (cc) edge[<-, bend right=90, below] node {4. backward} (asm);
-  \end{tikzpicture}
-  \end{figure}
-  \end{center}
 \end{frame}

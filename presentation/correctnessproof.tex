@@ -211,3 +211,39 @@
     \end{tikzpicture}
   \end{figure}
 }
+
+
+\def\proofmixedall{
+  \begin{figure}
+  \begin{tikzpicture}[%
+      every node/.style={rectangle, font=\tiny},
+      shorten >=2pt,
+      node distance=1.1cm
+    ]
+    \node (cc) [] {\color{purple}\bf CompCert C};
+    \node (cstrat) [right=of cc] {\color{purple}\bf CStrategy};
+    \node (clight) [right=of cstrat] {\color{purple}\bf Clight};
+    \node (dots) [right=of clight] {\color{purple}\bf\dots\vphantom{C}};
+    \node (mach) [right=of dots] {\color{purple}\bf Mach};
+    \node (asm) [right=of mach] {\color{purple}\bf ASM};
+    \node (atcstrat) [below=of cstrat] {\color{purple}\bf \at{CStrategy}};
+    \node (atclight) [below=of clight] {\color{purple}\bf \at{Clight}};
+    \node (atdots) [below=of dots] {\color{purple}\bf \at{\dots}};
+    \node (atmach) [below=of mach] {\color{purple}\bf \at{Mach}};
+    \path [draw] (cc) edge[<-, above] node {1. backward} (cstrat);
+    \path [draw] (cstrat) edge[<->, above] node {1. mixed} (clight);
+    \path [draw] (clight) edge[<->, above] node {1. mixed} (dots);
+    \path [draw] (dots) edge[<->, above] node {1. mixed} (mach);
+    \path [draw] (mach) edge[<->, above] node {1. mixed} (asm);
+    \path [draw] (atcstrat) edge[<-,below right] node {2. backward} (clight);
+    \path [draw] (atclight) edge[<-,below right] node {2. backward} (dots);
+    \path [draw] (atdots) edge[<-,below right] node {2. backward} (mach);
+    \path [draw] (atmach) edge[<-,above left] node {2. backward} (asm);
+    \path [draw] (cc) edge[<-,above right] node {3. backward} (atcstrat);
+    \path [draw] (atcstrat.300) edge[<-, bend right=90, below] node {3. backward} (atclight);
+    \path [draw] (atclight.300) edge[<-, bend right=90, below] node {3. backward} (atdots);
+    \path [draw] (atdots.300) edge[<-, bend right = 90, below] node {3. backward} (atmach);
+    \path [draw] (cc) edge[<-, bend right=90, below] node {4. backward} (asm);
+  \end{tikzpicture}
+  \end{figure}
+}
