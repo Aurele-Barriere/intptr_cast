@@ -230,20 +230,20 @@
     \node (atclight) [below=of clight] {\color{purple}\bf \at{Clight}};
     \node (atdots) [below=of dots] {\color{purple}\bf \at{\dots}};
     \node (atmach) [below=of mach] {\color{purple}\bf \at{Mach}};
-    \path [draw] (cc) edge[<-, above] node {1. backward} (cstrat);
-    \path [draw] (cstrat) edge[<->, above] node {1. mixed} (clight);
-    \path [draw] (clight) edge[<->, above] node {1. mixed} (dots);
-    \path [draw] (dots) edge[<->, above] node {1. mixed} (mach);
-    \path [draw] (mach) edge[<->, above] node {1. mixed} (asm);
-    \path [draw] (atcstrat) edge[<-,below right] node {2. backward} (clight);
-    \path [draw] (atclight) edge[<-,below right] node {2. backward} (dots);
-    \path [draw] (atdots) edge[<-,below right] node {2. backward} (mach);
-    \path [draw] (atmach) edge[<-,above left] node {2. backward} (asm);
-    \path [draw] (cc) edge[<-,above right] node {3. backward} (atcstrat);
-    \path [draw] (atcstrat.300) edge[<-, bend right=90, below] node {3. backward} (atclight);
-    \path [draw] (atclight.300) edge[<-, bend right=90, below] node {3. backward} (atdots);
-    \path [draw] (atdots.300) edge[<-, bend right = 90, below] node {3. backward} (atmach);
-    \path [draw] (cc) edge[<-, bend right=90, below] node {4. backward} (asm);
+    \pause[1] \path [draw] (cc) edge[<-, above] node {1. backward} (cstrat);
+    \pause[1] \path [draw] (cstrat) edge[<->, above] node {1. mixed} (clight);
+    \pause[1] \path [draw] (clight) edge[<->, above] node {1. mixed} (dots);
+    \pause[1] \path [draw] (dots) edge[<->, above] node {1. mixed} (mach);
+    \pause[1] \path [draw] (mach) edge[<->, above] node {1. mixed} (asm);
+    \pause[2] \path [draw] (atcstrat) edge[<-,below right] node {2. backward} (clight);
+    \pause[2] \path [draw] (atclight) edge[<-,below right] node {2. backward} (dots);
+    \pause[2] \path [draw] (atdots) edge[<-,below right] node {2. backward} (mach);
+    \pause[2] \path [draw] (atmach) edge[<-,above left] node {2. backward} (asm);
+    \pause[3] \path [draw] (cc) edge[<-,above right] node {3. backward} (atcstrat);
+    \pause[3] \path [draw] (atcstrat.300) edge[<-, bend right=90, below] node {3. backward} (atclight);
+    \pause[3] \path [draw] (atclight.300) edge[<-, bend right=90, below] node {3. backward} (atdots);
+    \pause[3] \path [draw] (atdots.300) edge[<-, bend right = 90, below] node {3. backward} (atmach);
+    \pause[4] \path [draw] (cc) edge[<-, bend right=90, below] node {4. backward} (asm);
   \end{tikzpicture}
   \end{figure}
 }

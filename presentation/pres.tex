@@ -1,5 +1,5 @@
 \documentclass[page number]{beamer}
-\usetheme{metropaurele}
+\usetheme[sectionpage=none,numbering=fraction,progressbar=foot]{metropolis}
 \usepackage{etex}
 \usepackage{graphicx, booktabs} % For tabulars
 \usepackage{pgf,tikz}
@@ -30,6 +30,13 @@
    \addtocounter{framenumber}{\value{framenumberappendix}}
 }
 
+% colors
+\definecolor{mDarkRed}{HTML}{6F1616}
+\definecolor{mDarkGreen}{HTML}{106235}
+\definecolor{mBlack}{HTML}{000000}
+\setbeamercolor{alerted text}{fg=mDarkRed}
+\setbeamercolor{example text}{fg=mDarkGreen}
+\setbeamercolor{title separator}{fg=purple,bg=mBlack}
 
 \begin{document}
 \title[Int-Ptr casts in CompCert]{Implementing a memory model supporting int-ptr casts in CompCert}
@@ -75,6 +82,7 @@
 \section{Introduction}
 \input{intro.tex}
 
+\metroset{sectionpage=progressbar}
 \section{C Memory Models}
 %\outline
 \input{models.tex}
@@ -88,6 +96,7 @@
 %\outline
 \input{eval.tex}
 
+\metroset{sectionpage=none}
 \section{Conclusion}
 \input{conclusion.tex}
 
