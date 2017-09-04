@@ -1,4 +1,5 @@
 \documentclass[page number]{beamer}
+\usetheme{metropaurele}
 \usepackage{etex}
 \usepackage{graphicx, booktabs} % For tabulars
 \usepackage{pgf,tikz}
@@ -14,10 +15,7 @@
 \usepackage{listings}
 \usepackage{mathtools}
 
-\input{style}
-
 \makeatletter
-\input{cmds}
 \makeatother
 
 \setcounter{tocdepth}{1} % remove subsection from table of contents
@@ -37,7 +35,8 @@
 \title[Int-Ptr casts in CompCert]{Implementing a memory model supporting int-ptr casts in CompCert}
 
 
-\author{Aur\`ele Barri\`ere}
+\author[Aur\`ele Barri\`ere]{Aur\`ele Barri\`ere\hspace{3.6cm} \textbf{Supervisor:} Prof. Chung-Kil Hur}
+\date{September 5, 2017}
 
 \def\todo#1{{\color{red}TODO:\quad#1}}
 \def\addref#1{{\color{red}$[$#1$]$}}
@@ -58,13 +57,14 @@
 \lstset{%
   basicstyle=\footnotesize,
   language=C,
-  keywordstyle=\color{basicPurple}\textbf,
+  keywordstyle=\color{purple}\textbf,
   float
 }
 
 \begin{frame}[plain,noframenumbering]
-  \titlepage%
-  \vfill
+  \vspace{-2cm}
+  \maketitle
+  \vspace{-4cm}
   \begin{center}
     \includegraphics[width=2.5cm]{img/enslogo.png}
     \hfill

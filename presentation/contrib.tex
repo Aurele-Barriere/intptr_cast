@@ -119,60 +119,61 @@
 \begin{frame}{\subsecname}
 
   \begin{block}{Updating the definition of the memory}
-    \begin{itemize}
-    \item Add a map \texttt{mem\_concrete: block -> Option Z}.
-    \item Remember the size of blocks at allocation.
-    \item Address-wise permissions.
-    \end{itemize}
+  Add a map \texttt{mem\_concrete: block -> Option Z}.
   \end{block}
   \vfill
   \begin{block}{Abstract Analysis}
     The stack block can be accessible if it is concrete.
   \end{block}
     \vfill
+    \begin{block}{Memory Injection}
+    Concrete blocks should be preserved at the same address.
+    \end{block}
+    \vfill
     \begin{exampleblock}{Proofs}
       \begin{itemize}
       \item Every memory operation preserves memory consistency.
       \item Abstract analysis is sound.
+      \item Memory injections are preserved.
       \end{itemize}
   \end{exampleblock}
 
   
 \end{frame}
 
-\subsection{Memory Injection}
-\begin{frame}{\subsecname}
-
-  \begin{block}{Memory Injection}
-    A map from some blocks of the source memory to blocks of the target memory.
-  \end{block}
-  \vfill
-  \begin{block}{Changes}
-  Concrete blocks in the source should be preserved, at the same address, in the target.
-  \end{block}
-  \vfill
-  \begin{exampleblock}{Proofs}
-    Every memory operation preserves memory injection.
-  \end{exampleblock}
-  
-\end{frame}
-
-\subsection{Capture Insertion}
-\begin{frame}{\subsecname}
-
-  \begin{block}{Insert capture before each cast}
-  Done by Juneyoung Lee.\\
-  Between CompCert C and Clight.
-  \end{block}
-  \vfill
-  \begin{tabular}{l c r}        
-    \lstinputlisting[linewidth=4cm]{listings/captureinsert.c} &
-    $\longrightarrow$ & 
-    \lstinputlisting[linewidth=6.2cm]{listings/captureinsert.clight}
-  \end{tabular}
-
-\end{frame}
-
+%\subsection{Memory Injection}
+%\begin{frame}{\subsecname}
+%
+%  \begin{block}{Memory Injection}
+%    A map from some blocks of the source memory to blocks of the target memory.
+%  \end{block}
+%  \vfill
+%  \begin{block}{Changes}
+%  Concrete blocks in the source should be preserved, at the same address, in the target.
+%  \end{block}
+%  \vfill
+%  \begin{exampleblock}{Proofs}
+%    Every memory operation preserves memory injection.
+%  \end{exampleblock}
+%  
+%\end{frame}
+%
+%\subsection{Capture Insertion}
+%\begin{frame}{\subsecname}
+%
+%  \begin{block}{Insert capture before each cast}
+%  Done by Juneyoung Lee.\\
+%  Between CompCert C and Clight.
+%  \end{block}
+%  \vfill
+%  \begin{tabular}{l c r}        
+%    \lstinputlisting[linewidth=4cm]{listings/captureinsert.c} &
+%    $\longrightarrow$ & 
+%    \lstinputlisting[linewidth=6.2cm]{listings/captureinsert.clight}
+%  \end{tabular}
+%
+%\end{frame}
+%
 \subsection{Mixed Simulations}
 \begin{frame}{Proving the correctness of CompCert}
   \begin{columns}[T] % align columns
@@ -212,8 +213,8 @@
 
 \begin{frame}{Mixed Simulations}
   \begin{block}{Mixed Simulation}
-    External state ($\bigcirc$): Local backward simulation.\\
-    Internal state ($\Box$): Local forward simulation.\\
+    Backward state ($\bigcirc$): Local backward simulation.\\
+    Forward state ($\Box$): Local forward simulation.\\
     {\color{blue}Source\hfill\color{red}Target}
     \vspace{-0.8cm}
     \mixed

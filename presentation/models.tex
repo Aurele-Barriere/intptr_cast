@@ -26,15 +26,17 @@
 \begin{frame}{\subsecname}
 
   \begin{block}{Memory blocks}
-    $$\texttt{Block}=\{(p,n)~|~p\in\texttt{int32},n\in\texttt{int32}\}$$
-  \end{block}
-  \vfill
-  \begin{block}{Memory Consistency}
+    Blocks are given a concrete address and a size.\\
+    \textbf{Memory consistency:}
     \begin{itemize}
-    \item \textbf{No overflow:} $\quad\forall (p,n)\in\texttt{Allocated}, [p,p+n]\subseteq]0,2^{32}[$.
-      \item \textbf{No overlap:} $\quad\forall (p_1,n_1), (p_2,n_2)\in\texttt{Allocated},$\\ $[p_1,p_1+n_1]\text{ and }[p_2,p_2+n_2]\text{ are disjoint.}$
+    \item Blocks should not overflow the finite memory.
+    \item Blocks should not be overlapping.
     \end{itemize}
   \end{block}
+  \vfill
+  \begin{exampleblock}{Int-Ptr cast}
+    Easy semantics for Integer-pointer casts.
+  \end{exampleblock}
   \vfill
   \begin{alertblock}{No optimizations}
     A function can access any memory address.
@@ -48,7 +50,7 @@
   \begin{block}{Memory blocks}
     \begin{itemize}
     \item $\texttt{Block}=\{(v,p,n,c)~|~v\in\texttt{Bool},n\in\mathbb{N},c\in\texttt{Val}^{n},$\\
-      $\mathbf{p\in\texttt{int32}\cup\{\undef\}}\}$.
+      {\color{purple}$\mathbf{p\in\texttt{int32}\cup\{\undef\}}$}$\}$.
     \item Memory consistency (\textbf{No overflow}, \textbf{No overlap}) for concrete blocks.
     \end{itemize}
   \end{block}
